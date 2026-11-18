@@ -1,0 +1,1432 @@
+{
+  "config": {
+    "run_root": "E:\\Trae Project\\Research\\PEG\\peg\\artifacts\\runs\\edit",
+    "chat_model": "deepseek-ai/DeepSeek-V4.1-Flash",
+    "embed_model": "bge-m3-8k",
+    "top_k": 10,
+    "concurrency": 8
+  },
+  "cost": {
+    "calls": 140,
+    "wall_s": 113.2
+  },
+  "summary": {
+    "FUSION": {
+      "base": {
+        "n": 30,
+        "EM": 0.6333333333333333,
+        "F1": 0.7750793650793651,
+        "unknown_rate": 0.1
+      },
+      "delta": {
+        "n": 10,
+        "EM": 0.4,
+        "F1": 0.5066666666666667,
+        "unknown_rate": 0.2
+      },
+      "all": {
+        "n": 40,
+        "EM": 0.575,
+        "F1": 0.7079761904761905,
+        "unknown_rate": 0.125
+      }
+    },
+    "HOST": {
+      "base": {
+        "n": 30,
+        "EM": 0.5666666666666667,
+        "F1": 0.6861904761904761,
+        "unknown_rate": 0.2
+      },
+      "delta": {
+        "n": 10,
+        "EM": 0.4,
+        "F1": 0.44000000000000006,
+        "unknown_rate": 0.3
+      },
+      "all": {
+        "n": 40,
+        "EM": 0.525,
+        "F1": 0.6246428571428572,
+        "unknown_rate": 0.225
+      }
+    },
+    "PEG": {
+      "base": {
+        "n": 30,
+        "EM": 0.6666666666666666,
+        "F1": 0.7703174603174604,
+        "unknown_rate": 0.13333333333333333
+      },
+      "delta": {
+        "n": 10,
+        "EM": 0.4,
+        "F1": 0.5066666666666667,
+        "unknown_rate": 0.2
+      },
+      "all": {
+        "n": 40,
+        "EM": 0.6,
+        "F1": 0.7044047619047619,
+        "unknown_rate": 0.15
+      }
+    }
+  },
+  "probes": {
+    "n": 10,
+    "by_arm": {
+      "PEG": {
+        "code_in_answer": 10,
+        "n": 10
+      },
+      "HOST": {
+        "code_in_answer": 0,
+        "n": 10
+      }
+    },
+    "detail": [
+      {
+        "title": "Ed Wood (film)",
+        "code": "ZX-00",
+        "arm": "PEG",
+        "answer": "ZX-00",
+        "code_in_answer": true
+      },
+      {
+        "title": "Ed Wood (film)",
+        "code": "ZX-00",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      },
+      {
+        "title": "Scott Derrickson",
+        "code": "ZX-01",
+        "arm": "PEG",
+        "answer": "ZX-01",
+        "code_in_answer": true
+      },
+      {
+        "title": "Scott Derrickson",
+        "code": "ZX-01",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      },
+      {
+        "title": "Woodson, Arkansas",
+        "code": "ZX-02",
+        "arm": "PEG",
+        "answer": "ZX-02",
+        "code_in_answer": true
+      },
+      {
+        "title": "Woodson, Arkansas",
+        "code": "ZX-02",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      },
+      {
+        "title": "Tyler Bates",
+        "code": "ZX-03",
+        "arm": "PEG",
+        "answer": "ZX-03",
+        "code_in_answer": true
+      },
+      {
+        "title": "Tyler Bates",
+        "code": "ZX-03",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      },
+      {
+        "title": "Ed Wood",
+        "code": "ZX-04",
+        "arm": "PEG",
+        "answer": "ZX-04",
+        "code_in_answer": true
+      },
+      {
+        "title": "Ed Wood",
+        "code": "ZX-04",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      },
+      {
+        "title": "Deliver Us from Evil (2014 film)",
+        "code": "ZX-05",
+        "arm": "PEG",
+        "answer": "ZX-05",
+        "code_in_answer": true
+      },
+      {
+        "title": "Deliver Us from Evil (2014 film)",
+        "code": "ZX-05",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      },
+      {
+        "title": "Adam Collis",
+        "code": "ZX-06",
+        "arm": "PEG",
+        "answer": "ZX-06",
+        "code_in_answer": true
+      },
+      {
+        "title": "Adam Collis",
+        "code": "ZX-06",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      },
+      {
+        "title": "Sinister (film)",
+        "code": "ZX-07",
+        "arm": "PEG",
+        "answer": "ZX-07",
+        "code_in_answer": true
+      },
+      {
+        "title": "Sinister (film)",
+        "code": "ZX-07",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      },
+      {
+        "title": "Conrad Brooks",
+        "code": "ZX-08",
+        "arm": "PEG",
+        "answer": "ZX-08",
+        "code_in_answer": true
+      },
+      {
+        "title": "Conrad Brooks",
+        "code": "ZX-08",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      },
+      {
+        "title": "Doctor Strange (2016 film)",
+        "code": "ZX-09",
+        "arm": "PEG",
+        "answer": "ZX-09",
+        "code_in_answer": true
+      },
+      {
+        "title": "Doctor Strange (2016 film)",
+        "code": "ZX-09",
+        "arm": "HOST",
+        "answer": "unknown",
+        "code_in_answer": false
+      }
+    ]
+  },
+  "per_query": [
+    {
+      "qid": "5a8b57f25542995d1e6f1371",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Yes",
+      "reference": "yes",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8b57f25542995d1e6f1371",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Yes",
+      "reference": "yes",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8b57f25542995d1e6f1371",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Yes",
+      "reference": "yes",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8c7595554299585d9e36b6",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Chief of Protocol of the United States",
+      "reference": "Chief of Protocol",
+      "EM": 0.0,
+      "F1": 0.6666666666666666,
+      "unknown": false
+    },
+    {
+      "qid": "5a8c7595554299585d9e36b6",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "United States ambassador to Ghana and Czechoslovakia",
+      "reference": "Chief of Protocol",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8c7595554299585d9e36b6",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "United States ambassador to Ghana and Czechoslovakia",
+      "reference": "Chief of Protocol",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a85ea095542994775f606a8",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Animorphs",
+      "reference": "Animorphs",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a85ea095542994775f606a8",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "unknown",
+      "reference": "Animorphs",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5a85ea095542994775f606a8",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Animorphs",
+      "reference": "Animorphs",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5adbf0a255429947ff17385a",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "unknown",
+      "reference": "no",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5adbf0a255429947ff17385a",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "unknown",
+      "reference": "no",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5adbf0a255429947ff17385a",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "unknown",
+      "reference": "no",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5a8e3ea95542995a26add48d",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "unknown",
+      "reference": "Greenwich Village, New York City",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5a8e3ea95542995a26add48d",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Greenwich Village",
+      "reference": "Greenwich Village, New York City",
+      "EM": 0.0,
+      "F1": 0.5714285714285715,
+      "unknown": false
+    },
+    {
+      "qid": "5a8e3ea95542995a26add48d",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Greenwich Village",
+      "reference": "Greenwich Village, New York City",
+      "EM": 0.0,
+      "F1": 0.5714285714285715,
+      "unknown": false
+    },
+    {
+      "qid": "5abd94525542992ac4f382d2",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "YG Entertainment",
+      "reference": "YG Entertainment",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5abd94525542992ac4f382d2",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "YG Entertainment",
+      "reference": "YG Entertainment",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5abd94525542992ac4f382d2",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "YG Entertainment",
+      "reference": "YG Entertainment",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a85b2d95542997b5ce40028",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Eenasul Fateh",
+      "reference": "Eenasul Fateh",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a85b2d95542997b5ce40028",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Eenasul Fateh",
+      "reference": "Eenasul Fateh",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a85b2d95542997b5ce40028",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Eenasul Fateh",
+      "reference": "Eenasul Fateh",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a87ab905542996e4f3088c1",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "4,000",
+      "reference": "3,677 seated",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a87ab905542996e4f3088c1",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "4,000",
+      "reference": "3,677 seated",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a87ab905542996e4f3088c1",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "4,000",
+      "reference": "3,677 seated",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7bbb64554299042af8f7cc",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Terry Richardson",
+      "reference": "Terry Richardson",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7bbb64554299042af8f7cc",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Terry Richardson",
+      "reference": "Terry Richardson",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7bbb64554299042af8f7cc",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Terry Richardson",
+      "reference": "Terry Richardson",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8db19d5542994ba4e3dd00",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Yes",
+      "reference": "yes",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8db19d5542994ba4e3dd00",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Yes",
+      "reference": "yes",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8db19d5542994ba4e3dd00",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Yes",
+      "reference": "yes",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7166395542994082a3e814",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Kansas Song",
+      "reference": "Kansas Song",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7166395542994082a3e814",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Kansas Song",
+      "reference": "Kansas Song",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7166395542994082a3e814",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Kansas Song",
+      "reference": "Kansas Song",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a877e5d5542993e715abf7d",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "David Weissman",
+      "reference": "David Weissman",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a877e5d5542993e715abf7d",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "David Weissman",
+      "reference": "David Weissman",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a877e5d5542993e715abf7d",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "David Weissman",
+      "reference": "David Weissman",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab3b0bf5542992ade7c6e39",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "1999",
+      "reference": "1999",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab3b0bf5542992ade7c6e39",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "1999",
+      "reference": "1999",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab3b0bf5542992ade7c6e39",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "1999",
+      "reference": "1999",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab6d09255429954757d337d",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "1945 to 1969",
+      "reference": "from 1986 to 2013",
+      "EM": 0.0,
+      "F1": 0.28571428571428575,
+      "unknown": false
+    },
+    {
+      "qid": "5ab6d09255429954757d337d",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "1986 to 2013",
+      "reference": "from 1986 to 2013",
+      "EM": 0.0,
+      "F1": 0.8571428571428571,
+      "unknown": false
+    },
+    {
+      "qid": "5ab6d09255429954757d337d",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "1986 to 2013",
+      "reference": "from 1986 to 2013",
+      "EM": 0.0,
+      "F1": 0.8571428571428571,
+      "unknown": false
+    },
+    {
+      "qid": "5a75e05c55429976ec32bc5f",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "unknown",
+      "reference": "9,984",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5a75e05c55429976ec32bc5f",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "9,984",
+      "reference": "9,984",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a75e05c55429976ec32bc5f",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "unknown",
+      "reference": "9,984",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5ab3e45655429976abd1bcd4",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "North Atlantic Conference",
+      "reference": "the North Atlantic Conference",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab3e45655429976abd1bcd4",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "North Atlantic Conference",
+      "reference": "the North Atlantic Conference",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab3e45655429976abd1bcd4",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "North Atlantic Conference",
+      "reference": "the North Atlantic Conference",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab29c24554299449642c932",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "yes",
+      "reference": "yes",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab29c24554299449642c932",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "yes",
+      "reference": "yes",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab29c24554299449642c932",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Yes",
+      "reference": "yes",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae0d4c9554299603e418468",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "1969 until 1974",
+      "reference": "1969 until 1974",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae0d4c9554299603e418468",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "1969 until 1974",
+      "reference": "1969 until 1974",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae0d4c9554299603e418468",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "1969 until 1974",
+      "reference": "1969 until 1974",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8133725542995ce29dcbdb",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Robert Erskine Childers",
+      "reference": "Robert Erskine Childers DSC",
+      "EM": 0.0,
+      "F1": 0.8571428571428571,
+      "unknown": false
+    },
+    {
+      "qid": "5a8133725542995ce29dcbdb",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Robert Erskine Childers",
+      "reference": "Robert Erskine Childers DSC",
+      "EM": 0.0,
+      "F1": 0.8571428571428571,
+      "unknown": false
+    },
+    {
+      "qid": "5a8133725542995ce29dcbdb",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Robert Erskine Childers",
+      "reference": "Robert Erskine Childers DSC",
+      "EM": 0.0,
+      "F1": 0.8571428571428571,
+      "unknown": false
+    },
+    {
+      "qid": "5ae7a8175542993210983ed8",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Pedro Rodríguez",
+      "reference": "Pedro Rodríguez",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae7a8175542993210983ed8",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Pedro Rodríguez",
+      "reference": "Pedro Rodríguez",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae7a8175542993210983ed8",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Pedro Rodríguez",
+      "reference": "Pedro Rodríguez",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae6050f55429929b0807a5e",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "unknown",
+      "reference": "Sonic",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5ae6050f55429929b0807a5e",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "unknown",
+      "reference": "Sonic",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5ae6050f55429929b0807a5e",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Sonic the Hedgehog",
+      "reference": "Sonic",
+      "EM": 0.0,
+      "F1": 0.6666666666666666,
+      "unknown": false
+    },
+    {
+      "qid": "5adddccd5542997dc7907069",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "keyboard function keys",
+      "reference": "keyboard function keys",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5adddccd5542997dc7907069",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "unknown",
+      "reference": "keyboard function keys",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5adddccd5542997dc7907069",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "keyboard function keys",
+      "reference": "keyboard function keys",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae2070a5542994d89d5b313",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Badly Drawn Boy",
+      "reference": "Badly Drawn Boy",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae2070a5542994d89d5b313",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "unknown",
+      "reference": "Badly Drawn Boy",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5ae2070a5542994d89d5b313",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "unknown",
+      "reference": "Badly Drawn Boy",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5ae22b8d554299234fd0440f",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "World's Best Goalkeeper",
+      "reference": "World's Best Goalkeeper",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae22b8d554299234fd0440f",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "World's Best Goalkeeper",
+      "reference": "World's Best Goalkeeper",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae22b8d554299234fd0440f",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "World's Best Goalkeeper",
+      "reference": "World's Best Goalkeeper",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a722b8655429971e9dc9329",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Lee Hazlewood",
+      "reference": "Barton Lee Hazlewood",
+      "EM": 0.0,
+      "F1": 0.8,
+      "unknown": false
+    },
+    {
+      "qid": "5a722b8655429971e9dc9329",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Lee Hazlewood",
+      "reference": "Barton Lee Hazlewood",
+      "EM": 0.0,
+      "F1": 0.8,
+      "unknown": false
+    },
+    {
+      "qid": "5a722b8655429971e9dc9329",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Lee Hazlewood",
+      "reference": "Barton Lee Hazlewood",
+      "EM": 0.0,
+      "F1": 0.8,
+      "unknown": false
+    },
+    {
+      "qid": "5adf37a95542995ec70e8f97",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "1838",
+      "reference": "1838",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5adf37a95542995ec70e8f97",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "1838",
+      "reference": "1838",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5adf37a95542995ec70e8f97",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "1838",
+      "reference": "1838",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a828c8355429966c78a6a50",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Henry J. Kaiser",
+      "reference": "Henry J. Kaiser",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a828c8355429966c78a6a50",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Henry J. Kaiser",
+      "reference": "Henry J. Kaiser",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a828c8355429966c78a6a50",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Henry J. Kaiser",
+      "reference": "Henry J. Kaiser",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8a3e745542996c9b8d5e70",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Arena of Khazan",
+      "reference": "Arena of Khazan",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8a3e745542996c9b8d5e70",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "unknown",
+      "reference": "Arena of Khazan",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5a8a3e745542996c9b8d5e70",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Arena of Khazan",
+      "reference": "Arena of Khazan",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ac23ff0554299636651994d",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "March 14, 2000",
+      "reference": "2000",
+      "EM": 0.0,
+      "F1": 0.5,
+      "unknown": false
+    },
+    {
+      "qid": "5ac23ff0554299636651994d",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "March 14, 2000",
+      "reference": "2000",
+      "EM": 0.0,
+      "F1": 0.5,
+      "unknown": false
+    },
+    {
+      "qid": "5ac23ff0554299636651994d",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "March 14, 2000",
+      "reference": "2000",
+      "EM": 0.0,
+      "F1": 0.5,
+      "unknown": false
+    },
+    {
+      "qid": "5ae4a3265542995ad6573de5",
+      "group": "base",
+      "arm": "PEG",
+      "answer": "Fujioka, Gunma",
+      "reference": "Fujioka, Gunma",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae4a3265542995ad6573de5",
+      "group": "base",
+      "arm": "HOST",
+      "answer": "Fujioka, Gunma",
+      "reference": "Fujioka, Gunma",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae4a3265542995ad6573de5",
+      "group": "base",
+      "arm": "FUSION",
+      "answer": "Fujioka, Gunma",
+      "reference": "Fujioka, Gunma",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ae0361155429925eb1afc2c",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "Charles Nungesser",
+      "reference": "Charles Eugène",
+      "EM": 0.0,
+      "F1": 0.4,
+      "unknown": false
+    },
+    {
+      "qid": "5ae0361155429925eb1afc2c",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "Charles Nungesser",
+      "reference": "Charles Eugène",
+      "EM": 0.0,
+      "F1": 0.4,
+      "unknown": false
+    },
+    {
+      "qid": "5ae0361155429925eb1afc2c",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "Charles Nungesser",
+      "reference": "Charles Eugène",
+      "EM": 0.0,
+      "F1": 0.4,
+      "unknown": false
+    },
+    {
+      "qid": "5abc0a5d5542993f40c73c64",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "unknown",
+      "reference": "no",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5abc0a5d5542993f40c73c64",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "unknown",
+      "reference": "no",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5abc0a5d5542993f40c73c64",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "unknown",
+      "reference": "no",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5a7cc50e554299452d57ba3e",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "Screaming Trees",
+      "reference": "Letters to Cleo",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7cc50e554299452d57ba3e",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "Screaming Trees",
+      "reference": "Letters to Cleo",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7cc50e554299452d57ba3e",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "Screaming Trees",
+      "reference": "Letters to Cleo",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5abf63f15542997ec76fd3ea",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "1923",
+      "reference": "October 1922",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5abf63f15542997ec76fd3ea",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "1923",
+      "reference": "October 1922",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5abf63f15542997ec76fd3ea",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "1923",
+      "reference": "October 1922",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8ef2a75542995a26add583",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "2000",
+      "reference": "2000",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8ef2a75542995a26add583",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "2000",
+      "reference": "2000",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a8ef2a75542995a26add583",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "2000",
+      "reference": "2000",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a80721b554299485f5985ef",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "World War II",
+      "reference": "World War II",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a80721b554299485f5985ef",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "World War II",
+      "reference": "World War II",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a80721b554299485f5985ef",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "World War II",
+      "reference": "World War II",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5ab51dae5542991779162d82",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "unknown",
+      "reference": "no",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5ab51dae5542991779162d82",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "unknown",
+      "reference": "no",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5ab51dae5542991779162d82",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "unknown",
+      "reference": "no",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5a7571135542992d0ec05f98",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "New York City",
+      "reference": "New York City",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7571135542992d0ec05f98",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "New York City",
+      "reference": "New York City",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7571135542992d0ec05f98",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "New York City",
+      "reference": "New York City",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7a0e1e5542990783324e1a",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "Scotch Collie",
+      "reference": "Scotch Collie",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7a0e1e5542990783324e1a",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "Scotch Collie",
+      "reference": "Scotch Collie",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a7a0e1e5542990783324e1a",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "Scotch Collie",
+      "reference": "Scotch Collie",
+      "EM": 1.0,
+      "F1": 1.0,
+      "unknown": false
+    },
+    {
+      "qid": "5a74106b55429979e288289e",
+      "group": "delta",
+      "arm": "PEG",
+      "answer": "Mumbai, Maharashtra",
+      "reference": "Mumbai",
+      "EM": 0.0,
+      "F1": 0.6666666666666666,
+      "unknown": false
+    },
+    {
+      "qid": "5a74106b55429979e288289e",
+      "group": "delta",
+      "arm": "HOST",
+      "answer": "unknown",
+      "reference": "Mumbai",
+      "EM": 0.0,
+      "F1": 0.0,
+      "unknown": true
+    },
+    {
+      "qid": "5a74106b55429979e288289e",
+      "group": "delta",
+      "arm": "FUSION",
+      "answer": "Mumbai, Maharashtra",
+      "reference": "Mumbai",
+      "EM": 0.0,
+      "F1": 0.6666666666666666,
+      "unknown": false
+    }
+  ]
+}

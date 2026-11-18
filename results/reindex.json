@@ -1,0 +1,266 @@
+{
+  "config": {
+    "run_root": "E:\\Trae Project\\Research\\PEG\\peg\\artifacts\\runs\\rename",
+    "previous_root": "E:\\Trae Project\\Research\\PEG\\peg\\artifacts\\runs\\update",
+    "top_k": 10
+  },
+  "cost": {
+    "generation_calls": 170,
+    "documents_added": 10,
+    "before": {
+      "documents": 400,
+      "text_units": 401,
+      "entities": 2858,
+      "communities": 621,
+      "text_unit_vectors": 100,
+      "total_runtime_s": 241.1
+    },
+    "after": {
+      "documents": 410,
+      "text_units": 411,
+      "entities": 2865,
+      "communities": 637,
+      "text_unit_vectors": 411,
+      "total_runtime_s": 241.1
+    }
+  },
+  "behavior": {
+    "n": 10,
+    "code_visible": 10,
+    "new_title_retrieved": 10,
+    "old_title_still_retrieved": 10,
+    "duplicate_slot": 10,
+    "old_title_in_index": 10,
+    "new_title_in_index": 10,
+    "median_latency_ms": 231.2,
+    "detail": [
+      {
+        "title": "Ed Wood (film)",
+        "new_title": "Ed Wood (film) (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Ed Wood (film) (2026 revision)",
+          "Conrad Brooks (2026 revision)",
+          "Conrad Brooks",
+          "Ed Wood (film)",
+          "Ed Wood",
+          "Ed Wood (2026 revision)",
+          "Heidi Ewing",
+          "Woodson, Arkansas",
+          "Woodson, Arkansas (2026 revision)"
+        ],
+        "latency_ms": 265.7
+      },
+      {
+        "title": "Scott Derrickson",
+        "new_title": "Scott Derrickson (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Deliver Us from Evil (2014 film)",
+          "Scott Derrickson",
+          "Doctor Strange (2016 film)",
+          "Adam Collis",
+          "Sinister (film)",
+          "Scott Derrickson (2026 revision)",
+          "Tyler Bates",
+          "Sinister (film) (2026 revision)",
+          "Tyler Bates (2026 revision)",
+          "Deliver Us from Evil (2014 film) (2026 revision)"
+        ],
+        "latency_ms": 223.7
+      },
+      {
+        "title": "Woodson, Arkansas",
+        "new_title": "Woodson, Arkansas (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Woodson, Arkansas",
+          "Woodson, Arkansas (2026 revision)",
+          "Peter W. Smith",
+          "Loan modification in the United States",
+          "Wilford H. Fawcett House",
+          "Mendocino County GMO Ban",
+          "Richard Nixon",
+          "Robert Hormats",
+          "Death of Abdul Wali",
+          "Edgar Kaiser Jr."
+        ],
+        "latency_ms": 263.7
+      },
+      {
+        "title": "Tyler Bates",
+        "new_title": "Tyler Bates (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Tyler Bates",
+          "Tyler Bates (2026 revision)",
+          "Steven Adler",
+          "True Lies",
+          "Last Action Hero",
+          "Arnold Schwarzenegger filmography",
+          "End of Days (film)",
+          "Snoecks",
+          "2010–11 VCU Rams men's basketball team"
+        ],
+        "latency_ms": 233.4
+      },
+      {
+        "title": "Ed Wood",
+        "new_title": "Ed Wood (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Ed Wood (film) (2026 revision)",
+          "Conrad Brooks (2026 revision)",
+          "Conrad Brooks",
+          "Ed Wood (film)",
+          "Woodson, Arkansas",
+          "Woodson, Arkansas (2026 revision)",
+          "Ed Wood",
+          "Ed Wood (2026 revision)",
+          "Annie Morton"
+        ],
+        "latency_ms": 265.1
+      },
+      {
+        "title": "Deliver Us from Evil (2014 film)",
+        "new_title": "Deliver Us from Evil (2014 film) (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Deliver Us from Evil (2014 film)",
+          "Deliver Us from Evil (2014 film) (2026 revision)",
+          "Scott Derrickson",
+          "Scott Derrickson (2026 revision)",
+          "Gone in 60 Seconds (2000 film)",
+          "Doctor Strange (2016 film)",
+          "Adam Collis",
+          "Sinister (film)",
+          "Tyler Bates",
+          "Sinister (film) (2026 revision)"
+        ],
+        "latency_ms": 226.0
+      },
+      {
+        "title": "Adam Collis",
+        "new_title": "Adam Collis (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Adam Collis",
+          "Adam Collis (2026 revision)",
+          "Roger O. Egeberg",
+          "Conrad Brooks",
+          "Conrad Brooks (2026 revision)",
+          "Annie Morton",
+          "Sergio Ferrara",
+          "Steven Adler",
+          "Collie",
+          "Method Man"
+        ],
+        "latency_ms": 229.0
+      },
+      {
+        "title": "Sinister (film)",
+        "new_title": "Sinister (film) (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Sinister (film) (2026 revision)",
+          "Scott Derrickson (2026 revision)",
+          "Sinister (film)",
+          "True Lies",
+          "Last Action Hero",
+          "Arnold Schwarzenegger filmography",
+          "End of Days (film)",
+          "Hackers (film)",
+          "Doctor Strange (2016 film)",
+          "Doctor Strange (2016 film) (2026 revision)"
+        ],
+        "latency_ms": 252.9
+      },
+      {
+        "title": "Conrad Brooks",
+        "new_title": "Conrad Brooks (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Conrad Brooks (2026 revision)",
+          "Conrad Brooks",
+          "Shirley Temple",
+          "Charles Craft",
+          "Hammerjack's",
+          "Robert Hormats",
+          "Ed Wood (film) (2026 revision)",
+          "Terry Richardson",
+          "Hackers (film)",
+          "In the Realm of the Hackers"
+        ],
+        "latency_ms": 226.9
+      },
+      {
+        "title": "Doctor Strange (2016 film)",
+        "new_title": "Doctor Strange (2016 film) (2026 revision)",
+        "code_visible": true,
+        "new_title_retrieved": true,
+        "old_title_still_retrieved": true,
+        "duplicate_slot": true,
+        "old_title_in_index": true,
+        "new_title_in_index": true,
+        "ranking": [
+          "Doctor Strange (2016 film)",
+          "Doctor Strange (2016 film) (2026 revision)",
+          "Scott Derrickson",
+          "Scott Derrickson (2026 revision)",
+          "Deliver Us from Evil (2014 film)",
+          "Adam Collis",
+          "Sinister (film)",
+          "Tyler Bates",
+          "Sinister (film) (2026 revision)",
+          "Tyler Bates (2026 revision)"
+        ],
+        "latency_ms": 212.1
+      }
+    ]
+  }
+}

@@ -1,0 +1,1522 @@
+{
+  "config": {
+    "edited": 10,
+    "deleted": 5,
+    "top_k": 10
+  },
+  "neighbourhood": {
+    "mean_overlap": 0.8447552447552449,
+    "detail": [
+      {
+        "title": "Ed Wood (film)",
+        "overlap": 1.0,
+        "kept": [
+          "About a Boy (film)",
+          "Conrad Brooks",
+          "Deadfall (1993 film)",
+          "Doctor Strange (2016 film)",
+          "Ed Wood",
+          "End of Days (film)",
+          "It Could Happen to You (1994 film)",
+          "The Family Man",
+          "True Lies",
+          "Verdi, the King of Melody"
+        ],
+        "added": [],
+        "removed": []
+      },
+      {
+        "title": "Scott Derrickson",
+        "overlap": 0.8181818181818182,
+        "kept": [
+          "Conrad Brooks",
+          "Deliver Us from Evil (2014 film)",
+          "Doctor Strange (2016 film)",
+          "End of Days (film)",
+          "Heidi Ewing",
+          "Last Action Hero",
+          "Sinister (film)",
+          "Steven K. Galson",
+          "Tyler Bates"
+        ],
+        "added": [
+          "Adam Collis"
+        ],
+        "removed": [
+          "David Weissman"
+        ]
+      },
+      {
+        "title": "Woodson, Arkansas",
+        "overlap": 0.8181818181818182,
+        "kept": [
+          "Brown County, Kansas",
+          "Clinton, Minnesota",
+          "Gerald R. Ford International Airport",
+          "Higgins Lake, Michigan",
+          "Neosho State Fishing Lake",
+          "North Kansas City, Missouri",
+          "Office of Population Affairs",
+          "Osage State Fishing Lake",
+          "Poison (American band)"
+        ],
+        "added": [
+          "Ed Wood"
+        ],
+        "removed": [
+          "University of Kansas"
+        ]
+      },
+      {
+        "title": "Tyler Bates",
+        "overlap": 0.8181818181818182,
+        "kept": [
+          "Arnold Schwarzenegger filmography",
+          "Guns N' Roses discography",
+          "Jim Cummings",
+          "Lee Hazlewood",
+          "Scott Derrickson",
+          "Steven Adler",
+          "Tom Rothrock",
+          "Truly",
+          "Van Conner"
+        ],
+        "added": [
+          "Sinister (film)"
+        ],
+        "removed": [
+          "Mick (DJ)"
+        ]
+      },
+      {
+        "title": "Ed Wood",
+        "overlap": 0.5384615384615384,
+        "kept": [
+          "Arnold Schwarzenegger filmography",
+          "Charles Craft",
+          "Conrad Brooks",
+          "David Weissman",
+          "Ed Wood (film)",
+          "Edgar Kaiser Sr.",
+          "Lee Hazlewood"
+        ],
+        "added": [
+          "Edgar Kaiser Jr.",
+          "W. E. Johns",
+          "Woodson, Arkansas"
+        ],
+        "removed": [
+          "End of Days (film)",
+          "Heidi Ewing",
+          "Henry Roth"
+        ]
+      },
+      {
+        "title": "Deliver Us from Evil (2014 film)",
+        "overlap": 0.8181818181818182,
+        "kept": [
+          "Doctor Strange (2016 film)",
+          "Drive Angry",
+          "End of Days (film)",
+          "Hackers (film)",
+          "Heidi Ewing",
+          "Scott Derrickson",
+          "Season of the Witch (2011 film)",
+          "Sinister (film)",
+          "True Lies"
+        ],
+        "added": [
+          "About a Boy (film)"
+        ],
+        "removed": [
+          "City of Angels (film)"
+        ]
+      },
+      {
+        "title": "Adam Collis",
+        "overlap": 0.8181818181818182,
+        "kept": [
+          "A Kiss for Corliss",
+          "Arnold Schwarzenegger filmography",
+          "Charles Craft",
+          "City of Angels (film)",
+          "Conrad Brooks",
+          "Deadfall (1993 film)",
+          "Ed Wood (film)",
+          "Gone in 60 Seconds (2000 film)",
+          "True Lies"
+        ],
+        "added": [
+          "Scott Derrickson"
+        ],
+        "removed": [
+          "Freakonomics (film)"
+        ]
+      },
+      {
+        "title": "Sinister (film)",
+        "overlap": 1.0,
+        "kept": [
+          "Deliver Us from Evil (2014 film)",
+          "Doctor Strange (2016 film)",
+          "Drive Angry",
+          "End of Days (film)",
+          "Hackers (film)",
+          "Last Action Hero",
+          "Scott Derrickson",
+          "Season of the Witch (2011 film)",
+          "True Lies",
+          "Tyler Bates"
+        ],
+        "added": [],
+        "removed": []
+      },
+      {
+        "title": "Conrad Brooks",
+        "overlap": 0.8181818181818182,
+        "kept": [
+          "Adam Collis",
+          "Arnold Schwarzenegger filmography",
+          "Charles Craft",
+          "City of Angels (film)",
+          "Doctor Strange (2016 film)",
+          "Ed Wood",
+          "Ed Wood (film)",
+          "End of Days (film)",
+          "Scott Derrickson"
+        ],
+        "added": [
+          "Method Man"
+        ],
+        "removed": [
+          "Guns N' Roses discography"
+        ]
+      },
+      {
+        "title": "Doctor Strange (2016 film)",
+        "overlap": 1.0,
+        "kept": [
+          "Deadfall (1993 film)",
+          "Deliver Us from Evil (2014 film)",
+          "Drive Angry",
+          "Ed Wood (film)",
+          "End of Days (film)",
+          "Jim Cummings",
+          "Last Action Hero",
+          "Scott Derrickson",
+          "Season of the Witch (2011 film)",
+          "Sinister (film)"
+        ],
+        "added": [],
+        "removed": []
+      }
+    ]
+  },
+  "delete_side_effects": {
+    "queries": 40,
+    "mean_overlap_on_common": 0.9693181818181819,
+    "queries_with_freed_slots": 2,
+    "detail": [
+      {
+        "qid": "5a8b57f25542995d1e6f1371",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Scott Derrickson",
+          "Ed Wood (film)",
+          "Ed Wood",
+          "Conrad Brooks",
+          "Woodson, Arkansas",
+          "Edgar Kaiser Jr.",
+          "Deliver Us from Evil (2014 film)",
+          "Sinister (film)",
+          "Doctor Strange (2016 film)",
+          "Robert Erskine Childers"
+        ],
+        "after": [
+          "Scott Derrickson",
+          "Ed Wood (film)",
+          "Ed Wood",
+          "Conrad Brooks",
+          "Woodson, Arkansas",
+          "Edgar Kaiser Jr.",
+          "Deliver Us from Evil (2014 film)",
+          "Sinister (film)",
+          "Doctor Strange (2016 film)",
+          "Robert Erskine Childers"
+        ],
+        "latency_before_ms": 4980.7,
+        "latency_after_ms": 157.8
+      },
+      {
+        "qid": "5a8c7595554299585d9e36b6",
+        "group": "base",
+        "slots_freed": 4,
+        "overlap_on_common": 0.6,
+        "before": [
+          "Kiss and Tell (1945 film)",
+          "A Kiss for Corliss",
+          "Shirley Temple",
+          "Meet Corliss Archer",
+          "Meet Corliss Archer (TV series)",
+          "Janet Waldo",
+          "Get Christie Love!",
+          "City of Angels (film)",
+          "True Lies",
+          "Kate Higgins"
+        ],
+        "after": [
+          "Kiss and Tell (1945 film)",
+          "A Kiss for Corliss",
+          "Get Christie Love!",
+          "City of Angels (film)",
+          "True Lies",
+          "Kate Higgins",
+          "Gretchen Osgood Warren",
+          "Erskine Barton Childers",
+          "Robert Hormats",
+          "Adam Collis"
+        ],
+        "latency_before_ms": 153.8,
+        "latency_after_ms": 162.5
+      },
+      {
+        "qid": "5a85ea095542994775f606a8",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Animorphs",
+          "The Divide trilogy",
+          "Etiquette &amp; Espionage",
+          "Victoria Hanley",
+          "Left Behind: The Kids",
+          "Shadowshaper",
+          "The Hork-Bajir Chronicles",
+          "List of Square Enix companion books",
+          "Andre Norton Award",
+          "Science Fantasy (magazine)"
+        ],
+        "after": [
+          "Animorphs",
+          "The Divide trilogy",
+          "Etiquette &amp; Espionage",
+          "Victoria Hanley",
+          "Left Behind: The Kids",
+          "Shadowshaper",
+          "The Hork-Bajir Chronicles",
+          "List of Square Enix companion books",
+          "Andre Norton Award",
+          "Science Fantasy (magazine)"
+        ],
+        "latency_before_ms": 167.5,
+        "latency_after_ms": 146.3
+      },
+      {
+        "qid": "5adbf0a255429947ff17385a",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Esma Sultan Mansion",
+          "Laleli Mosque",
+          "Esma Sultan (daughter of Abdülaziz)",
+          "Esma Sultan (daughter of Abdul Hamid I)",
+          "Esma Sultan (daughter of Ahmed III)",
+          "Sultan Ahmed Mosque",
+          "Esma Sultan",
+          "Küçük Hüseyin Pasha",
+          "Gevheri Kadın",
+          "ELDee"
+        ],
+        "after": [
+          "Esma Sultan Mansion",
+          "Laleli Mosque",
+          "Esma Sultan (daughter of Abdülaziz)",
+          "Esma Sultan (daughter of Abdul Hamid I)",
+          "Esma Sultan (daughter of Ahmed III)",
+          "Sultan Ahmed Mosque",
+          "Esma Sultan",
+          "Küçük Hüseyin Pasha",
+          "Gevheri Kadın",
+          "ELDee"
+        ],
+        "latency_before_ms": 146.0,
+        "latency_after_ms": 151.0
+      },
+      {
+        "qid": "5a8e3ea95542995a26add48d",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Big Stone Gap (film)",
+          "I Love NY (2015 film)",
+          "Clinton, Minnesota",
+          "Kingston Morning",
+          "City of Angels (film)",
+          "Conrad Brooks",
+          "It Could Happen to You (1994 film)",
+          "Nola (film)",
+          "The Family Man",
+          "Great Eastern Conventions"
+        ],
+        "after": [
+          "Big Stone Gap (film)",
+          "I Love NY (2015 film)",
+          "Clinton, Minnesota",
+          "Kingston Morning",
+          "City of Angels (film)",
+          "It Could Happen to You (1994 film)",
+          "Conrad Brooks",
+          "Nola (film)",
+          "The Family Man",
+          "Great Eastern Conventions"
+        ],
+        "latency_before_ms": 160.5,
+        "latency_after_ms": 141.7
+      },
+      {
+        "qid": "5abd94525542992ac4f382d2",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "2014 S/S",
+          "List of awards and nominations received by Shinee",
+          "Seventeen discography",
+          "BTS discography",
+          "SF9 (band)",
+          "Winner (band)",
+          "History (band)",
+          "Madtown",
+          "Cho Kyuhyun",
+          "List of songs written by Ravi"
+        ],
+        "after": [
+          "2014 S/S",
+          "List of awards and nominations received by Shinee",
+          "Seventeen discography",
+          "BTS discography",
+          "SF9 (band)",
+          "Winner (band)",
+          "History (band)",
+          "Madtown",
+          "Cho Kyuhyun",
+          "List of songs written by Ravi"
+        ],
+        "latency_before_ms": 146.4,
+        "latency_after_ms": 143.1
+      },
+      {
+        "qid": "5a85b2d95542997b5ce40028",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Eenasul Fateh",
+          "Management consulting",
+          "ELDee",
+          "Indriati Iskak",
+          "Sachin Warrier",
+          "Mick (DJ)",
+          "Village accountant",
+          "Wes McKinney",
+          "Edward D. Martin",
+          "Abraham Maslow"
+        ],
+        "after": [
+          "Eenasul Fateh",
+          "Management consulting",
+          "ELDee",
+          "Indriati Iskak",
+          "Sachin Warrier",
+          "Mick (DJ)",
+          "Village accountant",
+          "Wes McKinney",
+          "Edward D. Martin",
+          "Abraham Maslow"
+        ],
+        "latency_before_ms": 140.0,
+        "latency_after_ms": 139.3
+      },
+      {
+        "qid": "5a87ab905542996e4f3088c1",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Lewiston Maineiacs",
+          "Androscoggin Bank Colisée",
+          "Dwyer Arena",
+          "Case Gym",
+          "Robins Center",
+          "Billings Bulls",
+          "2007 Memorial Cup",
+          "2006–07 QMJHL season",
+          "Kansas City metropolitan area",
+          "Criss Angel"
+        ],
+        "after": [
+          "Lewiston Maineiacs",
+          "Androscoggin Bank Colisée",
+          "Dwyer Arena",
+          "Case Gym",
+          "Robins Center",
+          "Billings Bulls",
+          "2007 Memorial Cup",
+          "2006–07 QMJHL season",
+          "Kansas City metropolitan area",
+          "Criss Angel"
+        ],
+        "latency_before_ms": 145.9,
+        "latency_after_ms": 142.6
+      },
+      {
+        "qid": "5a7bbb64554299042af8f7cc",
+        "group": "base",
+        "slots_freed": 1,
+        "overlap_on_common": 0.9,
+        "before": [
+          "Annie Morton",
+          "Terry Richardson",
+          "Kenton Richardson",
+          "Lady Gaga x Terry Richardson",
+          "Scott Derrickson",
+          "Madonna (book)",
+          "Doctor Strange (2016 film)",
+          "Janet Waldo",
+          "Nancy Sinatra",
+          "Richard Nixon"
+        ],
+        "after": [
+          "Annie Morton",
+          "Terry Richardson",
+          "Kenton Richardson",
+          "Lady Gaga x Terry Richardson",
+          "Madonna (book)",
+          "Scott Derrickson",
+          "Doctor Strange (2016 film)",
+          "Nancy Sinatra",
+          "Richard Nixon",
+          "Kiss and Tell (1945 film)"
+        ],
+        "latency_before_ms": 162.5,
+        "latency_after_ms": 135.1
+      },
+      {
+        "qid": "5a8db19d5542994ba4e3dd00",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "For Against",
+          "Local H",
+          "Hallelujah! I'm a Bum (album)",
+          "Mendocino County GMO Ban",
+          "Letters to Cleo",
+          "Ophur",
+          "Jay Leiderman",
+          "Suffrajett",
+          "Ken St. Andre",
+          "Lil Ru"
+        ],
+        "after": [
+          "For Against",
+          "Local H",
+          "Hallelujah! I'm a Bum (album)",
+          "Mendocino County GMO Ban",
+          "Letters to Cleo",
+          "Ophur",
+          "Jay Leiderman",
+          "Suffrajett",
+          "Ken St. Andre",
+          "Lil Ru"
+        ],
+        "latency_before_ms": 146.4,
+        "latency_after_ms": 137.1
+      },
+      {
+        "qid": "5a7166395542994082a3e814",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Kansas Song",
+          "University of Kansas",
+          "University of Missouri–Kansas City",
+          "Kansas City metropolitan area",
+          "History of the Kansas City metropolitan area",
+          "Kansas City jazz",
+          "Downtown Kansas City",
+          "University of the Incarnate Word",
+          "North Kansas City, Missouri",
+          "ELDee"
+        ],
+        "after": [
+          "Kansas Song",
+          "University of Kansas",
+          "University of Missouri–Kansas City",
+          "Kansas City metropolitan area",
+          "History of the Kansas City metropolitan area",
+          "Kansas City jazz",
+          "Downtown Kansas City",
+          "University of the Incarnate Word",
+          "North Kansas City, Missouri",
+          "ELDee"
+        ],
+        "latency_before_ms": 154.9,
+        "latency_after_ms": 146.5
+      },
+      {
+        "qid": "5a877e5d5542993e715abf7d",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 0.8181818181818182,
+        "before": [
+          "The Family Man",
+          "Deadfall (1993 film)",
+          "David Weissman",
+          "Season of the Witch (2011 film)",
+          "Heidi Ewing",
+          "Drive Angry",
+          "Time to Kill (1989 film)",
+          "Gone in 60 Seconds (2000 film)",
+          "City of Angels (film)",
+          "It Could Happen to You (1994 film)"
+        ],
+        "after": [
+          "The Family Man",
+          "Deadfall (1993 film)",
+          "David Weissman",
+          "Season of the Witch (2011 film)",
+          "Heidi Ewing",
+          "Drive Angry",
+          "Time to Kill (1989 film)",
+          "Gone in 60 Seconds (2000 film)",
+          "City of Angels (film)",
+          "Ed Wood (film)"
+        ],
+        "latency_before_ms": 138.9,
+        "latency_after_ms": 139.3
+      },
+      {
+        "qid": "5ab3b0bf5542992ade7c6e39",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Arnold Schwarzenegger filmography",
+          "Last Action Hero",
+          "End of Days (film)",
+          "Guns N' Roses discography",
+          "Steven Adler",
+          "True Lies",
+          "Tyler Bates",
+          "Deadfall (1993 film)",
+          "Oh My God (Guns N' Roses song)",
+          "Van Conner"
+        ],
+        "after": [
+          "Arnold Schwarzenegger filmography",
+          "Last Action Hero",
+          "End of Days (film)",
+          "Guns N' Roses discography",
+          "Steven Adler",
+          "True Lies",
+          "Tyler Bates",
+          "Deadfall (1993 film)",
+          "Oh My God (Guns N' Roses song)",
+          "Van Conner"
+        ],
+        "latency_before_ms": 130.2,
+        "latency_after_ms": 140.2
+      },
+      {
+        "qid": "5ab6d09255429954757d337d",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Matt Busby",
+          "Alex Ferguson",
+          "Ernest Mangnall",
+          "David Beckham Academy",
+          "1995–96 Manchester United F.C. season",
+          "David Beckham's Soccer USA",
+          "The Class of '92",
+          "Peter Schmeichel",
+          "Sir Matt Busby Sports Complex",
+          "Joshua Parlby"
+        ],
+        "after": [
+          "Matt Busby",
+          "Alex Ferguson",
+          "Ernest Mangnall",
+          "David Beckham Academy",
+          "1995–96 Manchester United F.C. season",
+          "David Beckham's Soccer USA",
+          "The Class of '92",
+          "Peter Schmeichel",
+          "Sir Matt Busby Sports Complex",
+          "Joshua Parlby"
+        ],
+        "latency_before_ms": 145.3,
+        "latency_after_ms": 141.2
+      },
+      {
+        "qid": "5a75e05c55429976ec32bc5f",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Brown State Fishing Lake",
+          "Brown County, Kansas",
+          "Fishing Lake",
+          "Neosho State Fishing Lake",
+          "Osage State Fishing Lake",
+          "Shawnee State Fishing Lake",
+          "Higgins Lake, Michigan",
+          "Higgins Lake",
+          "Kansas City metropolitan area",
+          "Clinton, Minnesota"
+        ],
+        "after": [
+          "Brown State Fishing Lake",
+          "Brown County, Kansas",
+          "Fishing Lake",
+          "Neosho State Fishing Lake",
+          "Osage State Fishing Lake",
+          "Shawnee State Fishing Lake",
+          "Higgins Lake, Michigan",
+          "Higgins Lake",
+          "Kansas City metropolitan area",
+          "Clinton, Minnesota"
+        ],
+        "latency_before_ms": 150.9,
+        "latency_after_ms": 142.9
+      },
+      {
+        "qid": "5ab3e45655429976abd1bcd4",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Vermont Catamounts men's soccer",
+          "Vermont Catamounts men's ice hockey",
+          "Vermont Catamounts men's basketball",
+          "2016–17 Vermont Catamounts men's basketball team",
+          "2011–12 Vermont Catamounts men's basketball team",
+          "2015–16 Vermont Catamounts men's basketball team",
+          "2012–13 Vermont Catamounts men's basketball team",
+          "America East Conference",
+          "2013–14 Vermont Catamounts men's basketball team",
+          "2010–11 Vermont Catamounts men's basketball team"
+        ],
+        "after": [
+          "Vermont Catamounts men's soccer",
+          "Vermont Catamounts men's ice hockey",
+          "Vermont Catamounts men's basketball",
+          "2016–17 Vermont Catamounts men's basketball team",
+          "2011–12 Vermont Catamounts men's basketball team",
+          "2015–16 Vermont Catamounts men's basketball team",
+          "2012–13 Vermont Catamounts men's basketball team",
+          "America East Conference",
+          "2013–14 Vermont Catamounts men's basketball team",
+          "2010–11 Vermont Catamounts men's basketball team"
+        ],
+        "latency_before_ms": 135.8,
+        "latency_after_ms": 144.1
+      },
+      {
+        "qid": "5ab29c24554299449642c932",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Ambroise Thomas",
+          "Giuseppe Verdi",
+          "Verdi, the King of Melody",
+          "Teatro Giuseppe Verdi",
+          "Ferdinando Provesi",
+          "Giuseppe Verdi (film)",
+          "Armand Castelmary",
+          "List of major opera composers",
+          "Bernhard Bötel",
+          "Aldo Pontremoli"
+        ],
+        "after": [
+          "Ambroise Thomas",
+          "Giuseppe Verdi",
+          "Verdi, the King of Melody",
+          "Teatro Giuseppe Verdi",
+          "Ferdinando Provesi",
+          "Giuseppe Verdi (film)",
+          "Armand Castelmary",
+          "List of major opera composers",
+          "Bernhard Bötel",
+          "Aldo Pontremoli"
+        ],
+        "latency_before_ms": 135.4,
+        "latency_after_ms": 137.0
+      },
+      {
+        "qid": "5ae0d4c9554299603e418468",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Roger O. Egeberg",
+          "Richard Nixon",
+          "Douglas J. Bennet",
+          "Edward D. Martin",
+          "Gerald R. Ford Presidential Library",
+          "Bradford P. Campbell",
+          "Edgar Kaiser Jr.",
+          "Robert Hormats",
+          "Edgar Kaiser Sr.",
+          "Robert R. Hood"
+        ],
+        "after": [
+          "Roger O. Egeberg",
+          "Richard Nixon",
+          "Douglas J. Bennet",
+          "Edward D. Martin",
+          "Gerald R. Ford Presidential Library",
+          "Bradford P. Campbell",
+          "Edgar Kaiser Jr.",
+          "Robert Hormats",
+          "Edgar Kaiser Sr.",
+          "Robert R. Hood"
+        ],
+        "latency_before_ms": 141.2,
+        "latency_after_ms": 136.5
+      },
+      {
+        "qid": "5a8133725542995ce29dcbdb",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Henry Roth",
+          "Robert Erskine Childers",
+          "Erskine Barton Childers",
+          "Robert Caesar Childers",
+          "Molly Childers",
+          "Robert Barton",
+          "Asgard (yacht)",
+          "Gretchen Osgood Warren",
+          "Scott Derrickson",
+          "R509 road (Ireland)"
+        ],
+        "after": [
+          "Henry Roth",
+          "Robert Erskine Childers",
+          "Erskine Barton Childers",
+          "Robert Caesar Childers",
+          "Molly Childers",
+          "Robert Barton",
+          "Asgard (yacht)",
+          "Gretchen Osgood Warren",
+          "R509 road (Ireland)",
+          "Scott Derrickson"
+        ],
+        "latency_before_ms": 134.0,
+        "latency_after_ms": 136.5
+      },
+      {
+        "qid": "5ae7a8175542993210983ed8",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Formula One drivers from Mexico",
+          "Sergio Pérez",
+          "Eduardo Troconis",
+          "Michael James Lewis",
+          "Force India VJM04",
+          "2009 Singapore Grand Prix",
+          "Amaruk Kayshapanta",
+          "Mike Shank",
+          "2014 Bahrain Grand Prix",
+          "Tony Ave"
+        ],
+        "after": [
+          "Formula One drivers from Mexico",
+          "Sergio Pérez",
+          "Eduardo Troconis",
+          "Michael James Lewis",
+          "Force India VJM04",
+          "2009 Singapore Grand Prix",
+          "Amaruk Kayshapanta",
+          "Mike Shank",
+          "2014 Bahrain Grand Prix",
+          "Tony Ave"
+        ],
+        "latency_before_ms": 141.3,
+        "latency_after_ms": 142.4
+      },
+      {
+        "qid": "5ae6050f55429929b0807a5e",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "A Rather Blustery Day",
+          "Jim Cummings",
+          "Hip Hip Pooh-Ray!",
+          "The Wonderful Thing About Tiggers",
+          "Jamboree (Beat Happening album)",
+          "Kate Higgins",
+          "Little Black Rain Cloud",
+          "The Hour of Bewilderbeast",
+          "Heffalumps and Woozles",
+          "The Rain Rain Rain Came Down Down Down"
+        ],
+        "after": [
+          "A Rather Blustery Day",
+          "Jim Cummings",
+          "Hip Hip Pooh-Ray!",
+          "The Wonderful Thing About Tiggers",
+          "Jamboree (Beat Happening album)",
+          "Kate Higgins",
+          "Little Black Rain Cloud",
+          "The Hour of Bewilderbeast",
+          "Heffalumps and Woozles",
+          "The Rain Rain Rain Came Down Down Down"
+        ],
+        "latency_before_ms": 145.8,
+        "latency_after_ms": 136.1
+      },
+      {
+        "qid": "5adddccd5542997dc7907069",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Apple Remote",
+          "Siri Remote",
+          "Apple Remote Desktop",
+          "Universal remote",
+          "Remote control",
+          "Front Row (software)",
+          "Apple Watch",
+          "MacScan",
+          "NetSupport Manager",
+          "Trainmaster Command Control"
+        ],
+        "after": [
+          "Apple Remote",
+          "Siri Remote",
+          "Apple Remote Desktop",
+          "Universal remote",
+          "Remote control",
+          "Front Row (software)",
+          "Apple Watch",
+          "MacScan",
+          "NetSupport Manager",
+          "Trainmaster Command Control"
+        ],
+        "latency_before_ms": 140.4,
+        "latency_after_ms": 139.5
+      },
+      {
+        "qid": "5ae2070a5542994d89d5b313",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Wolf Alice",
+          "The Hour of Bewilderbeast",
+          "Badly Drawn Boy",
+          "Badly Drawn Boy discography",
+          "About a Boy (soundtrack)",
+          "About a Boy (film)",
+          "Silent Sigh",
+          "Tom Rothrock",
+          "Viol",
+          "Ungod"
+        ],
+        "after": [
+          "Wolf Alice",
+          "The Hour of Bewilderbeast",
+          "Badly Drawn Boy",
+          "Badly Drawn Boy discography",
+          "About a Boy (soundtrack)",
+          "About a Boy (film)",
+          "Silent Sigh",
+          "Tom Rothrock",
+          "Viol",
+          "Ungod"
+        ],
+        "latency_before_ms": 139.0,
+        "latency_after_ms": 146.9
+      },
+      {
+        "qid": "5ae22b8d554299234fd0440f",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Peter Schmeichel",
+          "Kasper Schmeichel",
+          "Sommeren '92",
+          "IFFHS World's Best Club Coach",
+          "IFFHS World's Best Goalkeeper",
+          "The Class of '92",
+          "Isaak Hassler",
+          "Kasper Hvidt",
+          "Pelé",
+          "Roger O. Egeberg"
+        ],
+        "after": [
+          "Peter Schmeichel",
+          "Kasper Schmeichel",
+          "Sommeren '92",
+          "IFFHS World's Best Club Coach",
+          "IFFHS World's Best Goalkeeper",
+          "The Class of '92",
+          "Isaak Hassler",
+          "Kasper Hvidt",
+          "Pelé",
+          "Roger O. Egeberg"
+        ],
+        "latency_before_ms": 143.2,
+        "latency_after_ms": 152.8
+      },
+      {
+        "qid": "5a722b8655429971e9dc9329",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "These Boots Are Made for Walkin'",
+          "Nancy Sinatra",
+          "Boots (album)",
+          "Puss N' Boots/These Boots Are Made for Walkin'",
+          "Boots (EP)",
+          "The Twenty-fifth Anniversary Anthology",
+          "Jamboree (Beat Happening album)",
+          "Tyler Bates",
+          "Shayne Workman",
+          "Robert Erskine Childers"
+        ],
+        "after": [
+          "These Boots Are Made for Walkin'",
+          "Nancy Sinatra",
+          "Boots (album)",
+          "Puss N' Boots/These Boots Are Made for Walkin'",
+          "Boots (EP)",
+          "The Twenty-fifth Anniversary Anthology",
+          "Jamboree (Beat Happening album)",
+          "Tyler Bates",
+          "Shayne Workman",
+          "Robert Erskine Childers"
+        ],
+        "latency_before_ms": 133.0,
+        "latency_after_ms": 139.2
+      },
+      {
+        "qid": "5adf37a95542995ec70e8f97",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "2011–12 VCU Rams men's basketball team",
+          "2012–13 VCU Rams men's basketball team",
+          "2010–11 VCU Rams men's basketball team",
+          "2009–10 VCU Rams men's basketball team",
+          "2013–14 VCU Rams men's basketball team",
+          "Virginia Commonwealth University",
+          "2014–15 VCU Rams men's basketball team",
+          "2015–16 VCU Rams men's basketball team",
+          "1995–96 VCU Rams men's basketball team",
+          "2004–05 VCU Rams men's basketball team"
+        ],
+        "after": [
+          "2011–12 VCU Rams men's basketball team",
+          "2012–13 VCU Rams men's basketball team",
+          "2010–11 VCU Rams men's basketball team",
+          "2009–10 VCU Rams men's basketball team",
+          "2013–14 VCU Rams men's basketball team",
+          "Virginia Commonwealth University",
+          "2014–15 VCU Rams men's basketball team",
+          "2015–16 VCU Rams men's basketball team",
+          "1995–96 VCU Rams men's basketball team",
+          "2004–05 VCU Rams men's basketball team"
+        ],
+        "latency_before_ms": 155.5,
+        "latency_after_ms": 136.5
+      },
+      {
+        "qid": "5a828c8355429966c78a6a50",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Henry J. Kaiser",
+          "Kaiser Ventures",
+          "Kaiser Shipyards",
+          "Edgar Kaiser Sr.",
+          "John Roach &amp; Sons",
+          "Edgar Kaiser Jr.",
+          "Eagle Mountain Railroad",
+          "New York Shipbuilding Corporation",
+          "Enrico Fermi",
+          "Neafie &amp; Levy"
+        ],
+        "after": [
+          "Henry J. Kaiser",
+          "Kaiser Ventures",
+          "Kaiser Shipyards",
+          "Edgar Kaiser Sr.",
+          "John Roach &amp; Sons",
+          "Edgar Kaiser Jr.",
+          "Eagle Mountain Railroad",
+          "New York Shipbuilding Corporation",
+          "Enrico Fermi",
+          "Neafie &amp; Levy"
+        ],
+        "latency_before_ms": 146.7,
+        "latency_after_ms": 144.2
+      },
+      {
+        "qid": "5a8a3e745542996c9b8d5e70",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Tunnels &amp; Trolls",
+          "Ken St. Andre",
+          "Arena of Khazan",
+          "Mercenaries, Spies and Private Eyes",
+          "Tunnels &amp; Trolls: Crusaders of Khazan",
+          "Starfaring",
+          "Crank Caverns",
+          "Criss Angel",
+          "Jim Cummings",
+          "Etiquette &amp; Espionage"
+        ],
+        "after": [
+          "Tunnels &amp; Trolls",
+          "Ken St. Andre",
+          "Arena of Khazan",
+          "Mercenaries, Spies and Private Eyes",
+          "Tunnels &amp; Trolls: Crusaders of Khazan",
+          "Starfaring",
+          "Crank Caverns",
+          "Criss Angel",
+          "Jim Cummings",
+          "Etiquette &amp; Espionage"
+        ],
+        "latency_before_ms": 138.1,
+        "latency_after_ms": 144.4
+      },
+      {
+        "qid": "5ac23ff0554299636651994d",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 0.8181818181818182,
+        "before": [
+          "Shut Up, Make Love",
+          "Poison (American band)",
+          "Be the One (Poison song)",
+          "Gumbo (PJ Morton album)",
+          "Make Love",
+          "Mad Season (band)",
+          "Guns N' Roses discography",
+          "Jamboree (Beat Happening album)",
+          "Ungod",
+          "The Longer We Make Love"
+        ],
+        "after": [
+          "Shut Up, Make Love",
+          "Poison (American band)",
+          "Be the One (Poison song)",
+          "Gumbo (PJ Morton album)",
+          "Make Love",
+          "Mad Season (band)",
+          "Guns N' Roses discography",
+          "Jamboree (Beat Happening album)",
+          "Ungod",
+          "Tyler Bates"
+        ],
+        "latency_before_ms": 140.6,
+        "latency_after_ms": 147.1
+      },
+      {
+        "qid": "5ae4a3265542995ad6573de5",
+        "group": "base",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Buck-Tick",
+          "Hayden (musician)",
+          "Skyscraper National Park",
+          "Atsushi Sakurai",
+          "Mild and Hazy",
+          "Psycho Realm",
+          "Kyo (musician)",
+          "Mick (DJ)",
+          "Truly",
+          "Masami Tsuchiya"
+        ],
+        "after": [
+          "Buck-Tick",
+          "Hayden (musician)",
+          "Skyscraper National Park",
+          "Atsushi Sakurai",
+          "Mild and Hazy",
+          "Psycho Realm",
+          "Kyo (musician)",
+          "Mick (DJ)",
+          "Truly",
+          "Masami Tsuchiya"
+        ],
+        "latency_before_ms": 141.5,
+        "latency_after_ms": 139.2
+      },
+      {
+        "qid": "5ae0361155429925eb1afc2c",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "L'Oiseau Blanc",
+          "François Coli",
+          "Gervais Raoul Lufbery",
+          "Charles Nungesser",
+          "Georges Madon",
+          "Levasseur PL.8",
+          "Paul Sauvage (aviator)",
+          "Wooster and Davis",
+          "W. E. Johns",
+          "L'Oiseau bleu (Metzinger)"
+        ],
+        "after": [
+          "L'Oiseau Blanc",
+          "François Coli",
+          "Gervais Raoul Lufbery",
+          "Charles Nungesser",
+          "Georges Madon",
+          "Levasseur PL.8",
+          "Paul Sauvage (aviator)",
+          "Wooster and Davis",
+          "W. E. Johns",
+          "L'Oiseau bleu (Metzinger)"
+        ],
+        "latency_before_ms": 141.1,
+        "latency_after_ms": 138.7
+      },
+      {
+        "qid": "5abc0a5d5542993f40c73c64",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 0.8181818181818182,
+        "before": [
+          "In the Realm of the Hackers",
+          "Freakonomics (film)",
+          "Freakonomics Radio",
+          "Hackers (film)",
+          "Heidi Ewing",
+          "Robin Goldstein",
+          "Jay Leiderman",
+          "True Lies",
+          "Index Magazine",
+          "Jim Cummings"
+        ],
+        "after": [
+          "In the Realm of the Hackers",
+          "Freakonomics (film)",
+          "Freakonomics Radio",
+          "Hackers (film)",
+          "Heidi Ewing",
+          "Robin Goldstein",
+          "Jay Leiderman",
+          "True Lies",
+          "Index Magazine",
+          "Scott Derrickson"
+        ],
+        "latency_before_ms": 138.3,
+        "latency_after_ms": 159.8
+      },
+      {
+        "qid": "5a7cc50e554299452d57ba3e",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Screaming Trees",
+          "Letters to Cleo",
+          "Screaming Trees discography",
+          "Beat Happening/Screaming Trees",
+          "Change Has Come",
+          "Jamboree (Beat Happening album)",
+          "Van Conner",
+          "Gary Lee Conner",
+          "Truly",
+          "Kyo (musician)"
+        ],
+        "after": [
+          "Screaming Trees",
+          "Letters to Cleo",
+          "Screaming Trees discography",
+          "Beat Happening/Screaming Trees",
+          "Change Has Come",
+          "Jamboree (Beat Happening album)",
+          "Van Conner",
+          "Gary Lee Conner",
+          "Truly",
+          "Kyo (musician)"
+        ],
+        "latency_before_ms": 145.6,
+        "latency_after_ms": 133.6
+      },
+      {
+        "qid": "5abf63f15542997ec76fd3ea",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Alexander Kerensky",
+          "Russian Civil War",
+          "Lavr Kornilov",
+          "Kerensky–Krasnov uprising",
+          "Socialist Revolutionary Party",
+          "Left-wing uprisings against the Bolsheviks",
+          "Communism in Russia",
+          "Battle of Romanovka",
+          "Louise Bryant",
+          "Timofey Samsonov"
+        ],
+        "after": [
+          "Alexander Kerensky",
+          "Russian Civil War",
+          "Lavr Kornilov",
+          "Kerensky–Krasnov uprising",
+          "Socialist Revolutionary Party",
+          "Left-wing uprisings against the Bolsheviks",
+          "Communism in Russia",
+          "Battle of Romanovka",
+          "Louise Bryant",
+          "Timofey Samsonov"
+        ],
+        "latency_before_ms": 137.3,
+        "latency_after_ms": 148.3
+      },
+      {
+        "qid": "5a8ef2a75542995a26add583",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Seven Brief Lessons on Physics",
+          "Carlo Rovelli",
+          "Guido Caldarelli",
+          "Aldo Pontremoli",
+          "Claudio Pellegrini",
+          "Chiara Nappi",
+          "Enrico Fermi",
+          "Sergio Ferrara",
+          "Antonino Lo Surdo",
+          "Micropædia"
+        ],
+        "after": [
+          "Seven Brief Lessons on Physics",
+          "Carlo Rovelli",
+          "Guido Caldarelli",
+          "Aldo Pontremoli",
+          "Claudio Pellegrini",
+          "Chiara Nappi",
+          "Enrico Fermi",
+          "Sergio Ferrara",
+          "Antonino Lo Surdo",
+          "Micropædia"
+        ],
+        "latency_before_ms": 136.8,
+        "latency_after_ms": 144.1
+      },
+      {
+        "qid": "5a80721b554299485f5985ef",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Livesey Hall War Memorial",
+          "Portsmouth Naval Memorial",
+          "Alamein Memorial",
+          "World War II casualties",
+          "Tower Hill Memorial",
+          "Rainham War Memorial",
+          "Arras Flying Services Memorial",
+          "Freetown Memorial",
+          "Vietnam War Memorial, Hanoi",
+          "Masnières Newfoundland Memorial"
+        ],
+        "after": [
+          "Livesey Hall War Memorial",
+          "Portsmouth Naval Memorial",
+          "Alamein Memorial",
+          "World War II casualties",
+          "Tower Hill Memorial",
+          "Rainham War Memorial",
+          "Arras Flying Services Memorial",
+          "Freetown Memorial",
+          "Vietnam War Memorial, Hanoi",
+          "Masnières Newfoundland Memorial"
+        ],
+        "latency_before_ms": 147.9,
+        "latency_after_ms": 144.4
+      },
+      {
+        "qid": "5ab51dae5542991779162d82",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Gerald R. Ford International Airport",
+          "Elko Regional Airport",
+          "Gerald R. Ford Freeway",
+          "Gerald R. Ford Presidential Library",
+          "John Glenn Columbus International Airport",
+          "Bishop International Airport",
+          "Raleigh Executive Jetport",
+          "Pensacola International Airport",
+          "Parma Airport",
+          "Edgar Kaiser Jr."
+        ],
+        "after": [
+          "Gerald R. Ford International Airport",
+          "Elko Regional Airport",
+          "Gerald R. Ford Freeway",
+          "Gerald R. Ford Presidential Library",
+          "John Glenn Columbus International Airport",
+          "Bishop International Airport",
+          "Raleigh Executive Jetport",
+          "Pensacola International Airport",
+          "Parma Airport",
+          "Edgar Kaiser Jr."
+        ],
+        "latency_before_ms": 141.6,
+        "latency_after_ms": 141.8
+      },
+      {
+        "qid": "5a7571135542992d0ec05f98",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Ralph Hefferline",
+          "University of Kansas",
+          "Columbia University",
+          "E. Mavis Hetherington",
+          "Abraham Maslow",
+          "Amherst, Massachusetts",
+          "University of Missouri–Kansas City",
+          "Virginia Commonwealth University",
+          "University of the Incarnate Word",
+          "Kimberly Young"
+        ],
+        "after": [
+          "Ralph Hefferline",
+          "University of Kansas",
+          "Columbia University",
+          "E. Mavis Hetherington",
+          "Abraham Maslow",
+          "Amherst, Massachusetts",
+          "University of Missouri–Kansas City",
+          "Virginia Commonwealth University",
+          "University of the Incarnate Word",
+          "Kimberly Young"
+        ],
+        "latency_before_ms": 138.2,
+        "latency_after_ms": 144.2
+      },
+      {
+        "qid": "5a7a0e1e5542990783324e1a",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 1.0,
+        "before": [
+          "Scotch Collie",
+          "Manchester Terrier",
+          "English Setter",
+          "Toy Manchester Terrier",
+          "Collie",
+          "Teddy Roosevelt Terrier",
+          "Russkiy Toy",
+          "Feist (dog)",
+          "Stanley Coren",
+          "Florence Nagle"
+        ],
+        "after": [
+          "Scotch Collie",
+          "Manchester Terrier",
+          "English Setter",
+          "Toy Manchester Terrier",
+          "Collie",
+          "Teddy Roosevelt Terrier",
+          "Russkiy Toy",
+          "Feist (dog)",
+          "Stanley Coren",
+          "Florence Nagle"
+        ],
+        "latency_before_ms": 136.7,
+        "latency_after_ms": 147.2
+      },
+      {
+        "qid": "5a74106b55429979e288289e",
+        "group": "delta",
+        "slots_freed": 0,
+        "overlap_on_common": 0.8181818181818182,
+        "before": [
+          "Sachin Warrier",
+          "Sachin Bansal",
+          "Tata Consultancy Services",
+          "Wes McKinney",
+          "Shayne Workman",
+          "Kaiser Ventures",
+          "Alec Muffett",
+          "Kanave Kalayathe",
+          "Jay Leiderman",
+          "Kansas City Scout"
+        ],
+        "after": [
+          "Sachin Warrier",
+          "Sachin Bansal",
+          "Tata Consultancy Services",
+          "Wes McKinney",
+          "Shayne Workman",
+          "Kaiser Ventures",
+          "Alec Muffett",
+          "Kanave Kalayathe",
+          "Jay Leiderman",
+          "Tyler Bates"
+        ],
+        "latency_before_ms": 147.4,
+        "latency_after_ms": 150.8
+      }
+    ]
+  },
+  "latency": [
+    {
+      "state": "peg_base",
+      "paragraphs": 300,
+      "embed_plus_search_p50_ms": 141.2,
+      "embed_plus_search_p95_ms": 147.0
+    },
+    {
+      "state": "peg_base_delta",
+      "paragraphs": 400,
+      "embed_plus_search_p50_ms": 141.1,
+      "embed_plus_search_p95_ms": 150.5
+    },
+    {
+      "state": "peg_stab_base_delta",
+      "paragraphs": 1200,
+      "embed_plus_search_p50_ms": 141.0,
+      "embed_plus_search_p95_ms": 151.7
+    }
+  ]
+}

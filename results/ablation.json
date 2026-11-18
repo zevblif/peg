@@ -1,0 +1,2483 @@
+{
+  "config": {
+    "community_level": 2,
+    "rrf_k": 60,
+    "top_k": 10,
+    "chat_model": "deepseek-ai/DeepSeek-V4.1-Flash",
+    "embed_model": "bge-m3-8k",
+    "host_rankings_from": "peg_gr_001.json"
+  },
+  "variants": [
+    {
+      "label": "version_aware",
+      "retrieval": {
+        "base": {
+          "n": 30,
+          "Hit@1": 0.6333333333333333,
+          "Hit@5": 0.9666666666666667,
+          "MRR": 0.7555555555555556
+        },
+        "delta": {
+          "n": 10,
+          "Hit@1": 0.8,
+          "Hit@5": 0.9,
+          "MRR": 0.8666666666666666
+        }
+      },
+      "edit_visible": 10,
+      "edit_n": 10,
+      "delete_stale": 0,
+      "delete_n": 5,
+      "duplicate_slot_rate": 0.0,
+      "per_query": [
+        {
+          "qid": "5a8b57f25542995d1e6f1371",
+          "group": "base",
+          "ranking": [
+            "Ed Wood (film)",
+            "Conrad Brooks",
+            "Ed Wood",
+            "Scott Derrickson",
+            "Woodson, Arkansas",
+            "Edgar Kaiser Jr.",
+            "Deliver Us from Evil (2014 film)",
+            "Narrow Hills Provincial Park",
+            "Sinister (film)",
+            "Alberta Hail Project"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.3333333333333333
+        },
+        {
+          "qid": "5a8c7595554299585d9e36b6",
+          "group": "base",
+          "ranking": [
+            "Kiss and Tell (1945 film)",
+            "A Kiss for Corliss",
+            "Erskine Barton Childers",
+            "Gretchen Osgood Warren",
+            "Janet Waldo",
+            "Get Christie Love!",
+            "City of Angels (film)",
+            "Robert Erskine Childers",
+            "True Lies",
+            "Molly Childers"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a85ea095542994775f606a8",
+          "group": "base",
+          "ranking": [
+            "Shadowshaper",
+            "Victoria Hanley",
+            "Andre Norton Award",
+            "Animorphs",
+            "The Divide trilogy",
+            "Last Action Hero",
+            "Etiquette &amp; Espionage",
+            "Ken St. Andre",
+            "Left Behind: The Kids",
+            "Sinister (film)"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5adbf0a255429947ff17385a",
+          "group": "base",
+          "ranking": [
+            "Laleli Mosque",
+            "Esma Sultan Mansion",
+            "Esma Sultan (daughter of Abdul Hamid I)",
+            "Sultan Ahmed Mosque",
+            "Esma Sultan (daughter of Abdülaziz)",
+            "Esma Sultan (daughter of Ahmed III)",
+            "Küçük Hüseyin Pasha",
+            "Esma Sultan",
+            "Gevheri Kadın",
+            "ELDee"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8e3ea95542995a26add48d",
+          "group": "base",
+          "ranking": [
+            "Big Stone Gap (film)",
+            "Kingston Morning",
+            "I Love NY (2015 film)",
+            "Adriana Trigiani",
+            "Clinton, Minnesota",
+            "Kaiser Ventures",
+            "City of Angels (film)",
+            "David Beckham Academy",
+            "It Could Happen to You (1994 film)",
+            "Steven K. Galson"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5abd94525542992ac4f382d2",
+          "group": "base",
+          "ranking": [
+            "BTS discography",
+            "History (band)",
+            "Cho Kyuhyun",
+            "SF9 (band)",
+            "Madtown",
+            "2014 S/S",
+            "List of awards and nominations received by Shinee",
+            "Seventeen discography",
+            "Atsushi Sakurai",
+            "Buck-Tick"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 0.0,
+          "Hit@10": 1.0,
+          "MRR": 0.16666666666666666
+        },
+        {
+          "qid": "5a85b2d95542997b5ce40028",
+          "group": "base",
+          "ranking": [
+            "Eenasul Fateh",
+            "ELDee",
+            "Abraham Maslow",
+            "Management consulting",
+            "1995–96 Manchester United F.C. season",
+            "Matt Busby",
+            "Indriati Iskak",
+            "Sachin Warrier",
+            "True Lies",
+            "Mick (DJ)"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a87ab905542996e4f3088c1",
+          "group": "base",
+          "ranking": [
+            "Androscoggin Bank Colisée",
+            "Lewiston Maineiacs",
+            "Dwyer Arena",
+            "Case Gym",
+            "Robins Center",
+            "2006–07 QMJHL season",
+            "2007 Memorial Cup",
+            "2011–12 QMJHL season",
+            "Vermont Catamounts men's ice hockey",
+            "Billings Bulls"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7bbb64554299042af8f7cc",
+          "group": "base",
+          "ranking": [
+            "Annie Morton",
+            "Kenton Richardson",
+            "Terry Richardson",
+            "Madonna (book)",
+            "Lady Gaga x Terry Richardson",
+            "Index Magazine",
+            "Janet Waldo",
+            "Scott Derrickson",
+            "Doctor Strange (2016 film)",
+            "Nancy Sinatra"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8db19d5542994ba4e3dd00",
+          "group": "base",
+          "ranking": [
+            "For Against",
+            "Hallelujah! I'm a Bum (album)",
+            "Local H",
+            "Mendocino County GMO Ban",
+            "Suffrajett",
+            "United States Senate election in Illinois, 1978",
+            "Letters to Cleo",
+            "Ophur",
+            "About a Boy (soundtrack)",
+            "Jay Leiderman"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7166395542994082a3e814",
+          "group": "base",
+          "ranking": [
+            "Kansas City metropolitan area",
+            "History of the Kansas City metropolitan area",
+            "University of Kansas",
+            "Kansas City jazz",
+            "Neosho State Fishing Lake",
+            "Kansas Song",
+            "Brown County, Kansas",
+            "University of Missouri–Kansas City",
+            "Osage State Fishing Lake",
+            "Brown State Fishing Lake"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.3333333333333333
+        },
+        {
+          "qid": "5a877e5d5542993e715abf7d",
+          "group": "base",
+          "ranking": [
+            "David Weissman",
+            "The Family Man",
+            "Deadfall (1993 film)",
+            "Season of the Witch (2011 film)",
+            "Gone in 60 Seconds (2000 film)",
+            "Drive Angry",
+            "Heidi Ewing",
+            "Big Stone Gap (film)",
+            "Adriana Trigiani",
+            "Time to Kill (1989 film)"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ab3b0bf5542992ade7c6e39",
+          "group": "base",
+          "ranking": [
+            "Arnold Schwarzenegger filmography",
+            "Last Action Hero",
+            "True Lies",
+            "End of Days (film)",
+            "Guns N' Roses discography",
+            "Steven Adler",
+            "Oh My God (Guns N' Roses song)",
+            "Deadfall (1993 film)",
+            "Hammerjack's",
+            "Tyler Bates"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5ab6d09255429954757d337d",
+          "group": "base",
+          "ranking": [
+            "1995–96 Manchester United F.C. season",
+            "Matt Busby",
+            "David Beckham Academy",
+            "The Class of '92",
+            "Ernest Mangnall",
+            "Alex Ferguson",
+            "David Beckham's Soccer USA",
+            "Joshua Parlby",
+            "Peter Schmeichel",
+            "1996 FA Charity Shield"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a75e05c55429976ec32bc5f",
+          "group": "base",
+          "ranking": [
+            "Brown State Fishing Lake",
+            "Brown County, Kansas",
+            "Neosho State Fishing Lake",
+            "Osage State Fishing Lake",
+            "Kansas City metropolitan area",
+            "Shawnee State Fishing Lake",
+            "Fishing Lake",
+            "History of the Kansas City metropolitan area",
+            "Kansas City Scout",
+            "Higgins Lake, Michigan"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ab3e45655429976abd1bcd4",
+          "group": "base",
+          "ranking": [
+            "2016–17 Vermont Catamounts men's basketball team",
+            "2015–16 Vermont Catamounts men's basketball team",
+            "America East Conference",
+            "Vermont Catamounts men's soccer",
+            "2012–13 Vermont Catamounts men's basketball team",
+            "Vermont Catamounts men's basketball",
+            "2011–12 Vermont Catamounts men's basketball team",
+            "2013–14 Vermont Catamounts men's basketball team",
+            "2010–11 Vermont Catamounts men's basketball team",
+            "Vermont Catamounts men's ice hockey"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.3333333333333333
+        },
+        {
+          "qid": "5ab29c24554299449642c932",
+          "group": "base",
+          "ranking": [
+            "Ambroise Thomas",
+            "Armand Castelmary",
+            "Ferdinando Provesi",
+            "Verdi, the King of Melody",
+            "Teatro Giuseppe Verdi",
+            "Bernhard Bötel",
+            "Giuseppe Verdi (film)",
+            "Giuseppe Verdi",
+            "Parma Airport",
+            "List of major opera composers"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ae0d4c9554299603e418468",
+          "group": "base",
+          "ranking": [
+            "Roger O. Egeberg",
+            "Bradford P. Campbell",
+            "Gerald R. Ford Presidential Library",
+            "Edward D. Martin",
+            "Robert Hormats",
+            "Edgar Kaiser Jr.",
+            "Richard Nixon",
+            "Douglas J. Bennet",
+            "Steven K. Galson",
+            "Gretchen Osgood Warren"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8133725542995ce29dcbdb",
+          "group": "base",
+          "ranking": [
+            "Erskine Barton Childers",
+            "Robert Erskine Childers",
+            "Asgard (yacht)",
+            "Robert Caesar Childers",
+            "Molly Childers",
+            "R509 road (Ireland)",
+            "Gretchen Osgood Warren",
+            "Robert Barton",
+            "Henry Roth",
+            "L'Oiseau Blanc"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        },
+        {
+          "qid": "5ae7a8175542993210983ed8",
+          "group": "base",
+          "ranking": [
+            "Sergio Pérez",
+            "Force India VJM04",
+            "Formula One drivers from Mexico",
+            "Eduardo Troconis",
+            "Michael James Lewis",
+            "2014 Bahrain Grand Prix",
+            "2009 Singapore Grand Prix",
+            "Amaruk Kayshapanta",
+            "Catharina Felser",
+            "Mike Shank"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ae6050f55429929b0807a5e",
+          "group": "base",
+          "ranking": [
+            "A Rather Blustery Day",
+            "Jim Cummings",
+            "The Hour of Bewilderbeast",
+            "Badly Drawn Boy discography",
+            "Hip Hip Pooh-Ray!",
+            "The Wonderful Thing About Tiggers",
+            "About a Boy (soundtrack)",
+            "Jamboree (Beat Happening album)",
+            "Something to Talk About (Badly Drawn Boy song)",
+            "Kate Higgins"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5adddccd5542997dc7907069",
+          "group": "base",
+          "ranking": [
+            "Meet Corliss Archer",
+            "Apple Remote",
+            "Meet Corliss Archer (TV series)",
+            "Siri Remote",
+            "Apple Remote Desktop",
+            "Universal remote",
+            "Remote control",
+            "Front Row (software)",
+            "Apple Watch",
+            "MacScan"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        },
+        {
+          "qid": "5ae2070a5542994d89d5b313",
+          "group": "base",
+          "ranking": [
+            "The Hour of Bewilderbeast",
+            "Badly Drawn Boy discography",
+            "About a Boy (soundtrack)",
+            "Badly Drawn Boy",
+            "Silent Sigh",
+            "About a Boy (film)",
+            "Tom Rothrock",
+            "Wolf Alice",
+            "Something to Talk About (Badly Drawn Boy song)",
+            "Under an Hour"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5ae22b8d554299234fd0440f",
+          "group": "base",
+          "ranking": [
+            "Peter Schmeichel",
+            "Kasper Schmeichel",
+            "IFFHS World's Best Goalkeeper",
+            "Sommeren '92",
+            "Pelé",
+            "Isaak Hassler",
+            "The Class of '92",
+            "IFFHS World's Best Club Coach",
+            "1995–96 Manchester United F.C. season",
+            "Kasper Hvidt"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a722b8655429971e9dc9329",
+          "group": "base",
+          "ranking": [
+            "These Boots Are Made for Walkin'",
+            "Boots (album)",
+            "Puss N' Boots/These Boots Are Made for Walkin'",
+            "Jamboree (Beat Happening album)",
+            "Nancy Sinatra",
+            "Kon Kan",
+            "Jim Shoulders",
+            "Boots (EP)",
+            "The Twenty-fifth Anniversary Anthology",
+            "Ken St. Andre"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5adf37a95542995ec70e8f97",
+          "group": "base",
+          "ranking": [
+            "2011–12 VCU Rams men's basketball team",
+            "2013–14 VCU Rams men's basketball team",
+            "2010–11 VCU Rams men's basketball team",
+            "2012–13 VCU Rams men's basketball team",
+            "2014–15 VCU Rams men's basketball team",
+            "2009–10 VCU Rams men's basketball team",
+            "1995–96 VCU Rams men's basketball team",
+            "Virginia Commonwealth University",
+            "2004–05 VCU Rams men's basketball team",
+            "Robins Center"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a828c8355429966c78a6a50",
+          "group": "base",
+          "ranking": [
+            "Henry J. Kaiser",
+            "Kaiser Shipyards",
+            "Kaiser Ventures",
+            "Edgar Kaiser Sr.",
+            "Edgar Kaiser Jr.",
+            "John Roach &amp; Sons",
+            "Eagle Mountain Railroad",
+            "David Beckham Academy",
+            "New York Shipbuilding Corporation",
+            "Steven K. Galson"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8a3e745542996c9b8d5e70",
+          "group": "base",
+          "ranking": [
+            "Ken St. Andre",
+            "Criss Angel",
+            "Jim Cummings",
+            "Tunnels &amp; Trolls",
+            "Arena of Khazan",
+            "Tyler Bates",
+            "Mercenaries, Spies and Private Eyes",
+            "Tom Rothrock",
+            "Tunnels &amp; Trolls: Crusaders of Khazan",
+            "Jon St. Andre"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5ac23ff0554299636651994d",
+          "group": "base",
+          "ranking": [
+            "Shut Up, Make Love",
+            "Be the One (Poison song)",
+            "Poison (American band)",
+            "Guns N' Roses discography",
+            "Mad Season (band)",
+            "Lil Ru",
+            "Gumbo (PJ Morton album)",
+            "These Boots Are Made for Walkin'",
+            "Make Love",
+            "Puss N' Boots/These Boots Are Made for Walkin'"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ae4a3265542995ad6573de5",
+          "group": "base",
+          "ranking": [
+            "Skyscraper National Park",
+            "Hayden (musician)",
+            "Narrow Hills Provincial Park",
+            "Buck-Tick",
+            "Alberta Hail Project",
+            "Hailstorm Alley",
+            "Atsushi Sakurai",
+            "Commanda Lake",
+            "Mild and Hazy",
+            "Edgar Kaiser Jr."
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        },
+        {
+          "qid": "5ae0361155429925eb1afc2c",
+          "group": "delta",
+          "ranking": [
+            "L'Oiseau Blanc",
+            "François Coli",
+            "Levasseur PL.8",
+            "Charles Nungesser",
+            "Gervais Raoul Lufbery",
+            "Georges Madon",
+            "Wooster and Davis",
+            "Paul Sauvage (aviator)",
+            "Robert Hormats",
+            "W. E. Johns"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5abc0a5d5542993f40c73c64",
+          "group": "delta",
+          "ranking": [
+            "In the Realm of the Hackers",
+            "Freakonomics (film)",
+            "Freakonomics Radio",
+            "Hackers (film)",
+            "Robin Goldstein",
+            "Heidi Ewing",
+            "True Lies",
+            "Jay Leiderman",
+            "Last Action Hero",
+            "Arnold Schwarzenegger filmography"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7cc50e554299452d57ba3e",
+          "group": "delta",
+          "ranking": [
+            "Screaming Trees",
+            "Screaming Trees discography",
+            "Change Has Come",
+            "Beat Happening/Screaming Trees",
+            "Letters to Cleo",
+            "Gary Lee Conner",
+            "Molly Childers",
+            "Gretchen Osgood Warren",
+            "Jamboree (Beat Happening album)",
+            "Case Gym"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5abf63f15542997ec76fd3ea",
+          "group": "delta",
+          "ranking": [
+            "Socialist Revolutionary Party",
+            "Russian Civil War",
+            "Alexander Kerensky",
+            "Left-wing uprisings against the Bolsheviks",
+            "Kerensky–Krasnov uprising",
+            "Battle of Romanovka",
+            "Lavr Kornilov",
+            "Communism in Russia",
+            "Louise Bryant",
+            "Robert Erskine Childers"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8ef2a75542995a26add583",
+          "group": "delta",
+          "ranking": [
+            "Carlo Rovelli",
+            "Seven Brief Lessons on Physics",
+            "Claudio Pellegrini",
+            "Chiara Nappi",
+            "Antonino Lo Surdo",
+            "Guido Caldarelli",
+            "Aldo Pontremoli",
+            "Time to Kill (1989 film)",
+            "Parma Airport",
+            "Enrico Fermi"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a80721b554299485f5985ef",
+          "group": "delta",
+          "ranking": [
+            "Alamein Memorial",
+            "Portsmouth Naval Memorial",
+            "Freetown Memorial",
+            "Tower Hill Memorial",
+            "Arras Flying Services Memorial",
+            "Livesey Hall War Memorial",
+            "Georges Madon",
+            "World War II casualties",
+            "Rainham War Memorial",
+            "Russian Civil War"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 0.0,
+          "Hit@10": 1.0,
+          "MRR": 0.16666666666666666
+        },
+        {
+          "qid": "5ab51dae5542991779162d82",
+          "group": "delta",
+          "ranking": [
+            "Gerald R. Ford International Airport",
+            "Gerald R. Ford Freeway",
+            "Gerald R. Ford Presidential Library",
+            "Raleigh Executive Jetport",
+            "Bishop International Airport",
+            "Elko Regional Airport",
+            "John Glenn Columbus International Airport",
+            "Pre-Commissioning Unit",
+            "Ophur",
+            "Suffrajett"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7571135542992d0ec05f98",
+          "group": "delta",
+          "ranking": [
+            "Ralph Hefferline",
+            "Columbia University",
+            "University of Kansas",
+            "Abraham Maslow",
+            "E. Mavis Hetherington",
+            "James P. Comer",
+            "Gerald R. Ford Presidential Library",
+            "Amherst, Massachusetts",
+            "Ophur",
+            "University of Missouri–Kansas City"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7a0e1e5542990783324e1a",
+          "group": "delta",
+          "ranking": [
+            "Scotch Collie",
+            "English Setter",
+            "Collie",
+            "Russkiy Toy",
+            "Toy Manchester Terrier",
+            "Teddy Roosevelt Terrier",
+            "Feist (dog)",
+            "Manchester Terrier",
+            "Stanley Coren",
+            "Florence Nagle"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a74106b55429979e288289e",
+          "group": "delta",
+          "ranking": [
+            "Kaiser Ventures",
+            "Sachin Warrier",
+            "Robert R. Hood",
+            "Sachin Bansal",
+            "Eagle Mountain Railroad",
+            "Tata Consultancy Services",
+            "David Beckham Academy",
+            "Wes McKinney",
+            "Steven K. Galson",
+            "Shayne Workman"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        }
+      ]
+    },
+    {
+      "label": "append_only",
+      "retrieval": {
+        "base": {
+          "n": 30,
+          "Hit@1": 0.6333333333333333,
+          "Hit@5": 0.9666666666666667,
+          "MRR": 0.7555555555555556
+        },
+        "delta": {
+          "n": 10,
+          "Hit@1": 0.8,
+          "Hit@5": 0.9,
+          "MRR": 0.8666666666666666
+        }
+      },
+      "edit_visible": 10,
+      "edit_n": 10,
+      "delete_stale": 0,
+      "delete_n": 5,
+      "duplicate_slot_rate": 0.025,
+      "per_query": [
+        {
+          "qid": "5a8b57f25542995d1e6f1371",
+          "group": "base",
+          "ranking": [
+            "Ed Wood (film)",
+            "Conrad Brooks",
+            "Ed Wood",
+            "Scott Derrickson",
+            "Woodson, Arkansas",
+            "Edgar Kaiser Jr.",
+            "Deliver Us from Evil (2014 film)",
+            "Narrow Hills Provincial Park",
+            "Alberta Hail Project",
+            "Hailstorm Alley"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.3333333333333333
+        },
+        {
+          "qid": "5a8c7595554299585d9e36b6",
+          "group": "base",
+          "ranking": [
+            "Kiss and Tell (1945 film)",
+            "A Kiss for Corliss",
+            "Erskine Barton Childers",
+            "Gretchen Osgood Warren",
+            "Janet Waldo",
+            "Get Christie Love!",
+            "City of Angels (film)",
+            "Robert Erskine Childers",
+            "True Lies",
+            "Molly Childers"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a85ea095542994775f606a8",
+          "group": "base",
+          "ranking": [
+            "Shadowshaper",
+            "Victoria Hanley",
+            "Andre Norton Award",
+            "Animorphs",
+            "The Divide trilogy",
+            "Last Action Hero",
+            "Etiquette &amp; Espionage",
+            "Ken St. Andre",
+            "Left Behind: The Kids",
+            "Sinister (film)"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5adbf0a255429947ff17385a",
+          "group": "base",
+          "ranking": [
+            "Laleli Mosque",
+            "Esma Sultan Mansion",
+            "Esma Sultan (daughter of Abdul Hamid I)",
+            "Sultan Ahmed Mosque",
+            "Esma Sultan (daughter of Abdülaziz)",
+            "Esma Sultan (daughter of Ahmed III)",
+            "Küçük Hüseyin Pasha",
+            "Esma Sultan",
+            "Gevheri Kadın",
+            "ELDee"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8e3ea95542995a26add48d",
+          "group": "base",
+          "ranking": [
+            "Big Stone Gap (film)",
+            "Kingston Morning",
+            "I Love NY (2015 film)",
+            "Adriana Trigiani",
+            "Clinton, Minnesota",
+            "Kaiser Ventures",
+            "City of Angels (film)",
+            "David Beckham Academy",
+            "Conrad Brooks",
+            "Steven K. Galson"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5abd94525542992ac4f382d2",
+          "group": "base",
+          "ranking": [
+            "BTS discography",
+            "History (band)",
+            "Cho Kyuhyun",
+            "SF9 (band)",
+            "Madtown",
+            "2014 S/S",
+            "List of awards and nominations received by Shinee",
+            "Seventeen discography",
+            "Atsushi Sakurai",
+            "Buck-Tick"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 0.0,
+          "Hit@10": 1.0,
+          "MRR": 0.16666666666666666
+        },
+        {
+          "qid": "5a85b2d95542997b5ce40028",
+          "group": "base",
+          "ranking": [
+            "Eenasul Fateh",
+            "ELDee",
+            "Abraham Maslow",
+            "Management consulting",
+            "1995–96 Manchester United F.C. season",
+            "Matt Busby",
+            "Indriati Iskak",
+            "Sachin Warrier",
+            "True Lies",
+            "Mick (DJ)"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a87ab905542996e4f3088c1",
+          "group": "base",
+          "ranking": [
+            "Androscoggin Bank Colisée",
+            "Lewiston Maineiacs",
+            "Dwyer Arena",
+            "Case Gym",
+            "Robins Center",
+            "2006–07 QMJHL season",
+            "2007 Memorial Cup",
+            "2011–12 QMJHL season",
+            "Vermont Catamounts men's ice hockey",
+            "Billings Bulls"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7bbb64554299042af8f7cc",
+          "group": "base",
+          "ranking": [
+            "Annie Morton",
+            "Kenton Richardson",
+            "Terry Richardson",
+            "Lady Gaga x Terry Richardson",
+            "Madonna (book)",
+            "Index Magazine",
+            "Scott Derrickson",
+            "Janet Waldo",
+            "Doctor Strange (2016 film)",
+            "Nancy Sinatra"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8db19d5542994ba4e3dd00",
+          "group": "base",
+          "ranking": [
+            "For Against",
+            "Hallelujah! I'm a Bum (album)",
+            "Local H",
+            "Mendocino County GMO Ban",
+            "Suffrajett",
+            "United States Senate election in Illinois, 1978",
+            "Letters to Cleo",
+            "Ophur",
+            "About a Boy (soundtrack)",
+            "Jay Leiderman"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7166395542994082a3e814",
+          "group": "base",
+          "ranking": [
+            "Kansas City metropolitan area",
+            "History of the Kansas City metropolitan area",
+            "University of Kansas",
+            "Kansas City jazz",
+            "Neosho State Fishing Lake",
+            "Kansas Song",
+            "Brown County, Kansas",
+            "University of Missouri–Kansas City",
+            "Osage State Fishing Lake",
+            "Brown State Fishing Lake"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.3333333333333333
+        },
+        {
+          "qid": "5a877e5d5542993e715abf7d",
+          "group": "base",
+          "ranking": [
+            "David Weissman",
+            "The Family Man",
+            "Deadfall (1993 film)",
+            "Season of the Witch (2011 film)",
+            "Gone in 60 Seconds (2000 film)",
+            "Drive Angry",
+            "Heidi Ewing",
+            "Big Stone Gap (film)",
+            "Adriana Trigiani",
+            "Time to Kill (1989 film)"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ab3b0bf5542992ade7c6e39",
+          "group": "base",
+          "ranking": [
+            "Arnold Schwarzenegger filmography",
+            "Last Action Hero",
+            "True Lies",
+            "End of Days (film)",
+            "Guns N' Roses discography",
+            "Steven Adler",
+            "Oh My God (Guns N' Roses song)",
+            "Deadfall (1993 film)",
+            "Hammerjack's",
+            "Tyler Bates"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5ab6d09255429954757d337d",
+          "group": "base",
+          "ranking": [
+            "1995–96 Manchester United F.C. season",
+            "Matt Busby",
+            "David Beckham Academy",
+            "The Class of '92",
+            "Ernest Mangnall",
+            "Alex Ferguson",
+            "David Beckham's Soccer USA",
+            "Joshua Parlby",
+            "Peter Schmeichel",
+            "1996 FA Charity Shield"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a75e05c55429976ec32bc5f",
+          "group": "base",
+          "ranking": [
+            "Brown State Fishing Lake",
+            "Brown County, Kansas",
+            "Neosho State Fishing Lake",
+            "Osage State Fishing Lake",
+            "Kansas City metropolitan area",
+            "Shawnee State Fishing Lake",
+            "Fishing Lake",
+            "History of the Kansas City metropolitan area",
+            "Kansas City Scout",
+            "Higgins Lake, Michigan"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ab3e45655429976abd1bcd4",
+          "group": "base",
+          "ranking": [
+            "2016–17 Vermont Catamounts men's basketball team",
+            "2015–16 Vermont Catamounts men's basketball team",
+            "America East Conference",
+            "Vermont Catamounts men's soccer",
+            "2012–13 Vermont Catamounts men's basketball team",
+            "Vermont Catamounts men's basketball",
+            "2011–12 Vermont Catamounts men's basketball team",
+            "2013–14 Vermont Catamounts men's basketball team",
+            "2010–11 Vermont Catamounts men's basketball team",
+            "Vermont Catamounts men's ice hockey"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.3333333333333333
+        },
+        {
+          "qid": "5ab29c24554299449642c932",
+          "group": "base",
+          "ranking": [
+            "Ambroise Thomas",
+            "Armand Castelmary",
+            "Ferdinando Provesi",
+            "Verdi, the King of Melody",
+            "Teatro Giuseppe Verdi",
+            "Bernhard Bötel",
+            "Giuseppe Verdi (film)",
+            "Giuseppe Verdi",
+            "Parma Airport",
+            "List of major opera composers"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ae0d4c9554299603e418468",
+          "group": "base",
+          "ranking": [
+            "Roger O. Egeberg",
+            "Bradford P. Campbell",
+            "Gerald R. Ford Presidential Library",
+            "Edward D. Martin",
+            "Robert Hormats",
+            "Edgar Kaiser Jr.",
+            "Richard Nixon",
+            "Douglas J. Bennet",
+            "Steven K. Galson",
+            "Gretchen Osgood Warren"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8133725542995ce29dcbdb",
+          "group": "base",
+          "ranking": [
+            "Erskine Barton Childers",
+            "Robert Erskine Childers",
+            "Asgard (yacht)",
+            "Robert Caesar Childers",
+            "Molly Childers",
+            "Gretchen Osgood Warren",
+            "R509 road (Ireland)",
+            "Robert Barton",
+            "Henry Roth",
+            "L'Oiseau Blanc"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        },
+        {
+          "qid": "5ae7a8175542993210983ed8",
+          "group": "base",
+          "ranking": [
+            "Sergio Pérez",
+            "Force India VJM04",
+            "Formula One drivers from Mexico",
+            "Eduardo Troconis",
+            "Michael James Lewis",
+            "2014 Bahrain Grand Prix",
+            "2009 Singapore Grand Prix",
+            "Amaruk Kayshapanta",
+            "Catharina Felser",
+            "Mike Shank"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ae6050f55429929b0807a5e",
+          "group": "base",
+          "ranking": [
+            "A Rather Blustery Day",
+            "Jim Cummings",
+            "The Hour of Bewilderbeast",
+            "Badly Drawn Boy discography",
+            "Hip Hip Pooh-Ray!",
+            "The Wonderful Thing About Tiggers",
+            "About a Boy (soundtrack)",
+            "Jamboree (Beat Happening album)",
+            "Something to Talk About (Badly Drawn Boy song)",
+            "Kate Higgins"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5adddccd5542997dc7907069",
+          "group": "base",
+          "ranking": [
+            "Meet Corliss Archer",
+            "Apple Remote",
+            "Meet Corliss Archer (TV series)",
+            "Siri Remote",
+            "Apple Remote Desktop",
+            "Universal remote",
+            "Remote control",
+            "Front Row (software)",
+            "Apple Watch",
+            "MacScan"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        },
+        {
+          "qid": "5ae2070a5542994d89d5b313",
+          "group": "base",
+          "ranking": [
+            "The Hour of Bewilderbeast",
+            "Badly Drawn Boy discography",
+            "About a Boy (soundtrack)",
+            "Badly Drawn Boy",
+            "Silent Sigh",
+            "About a Boy (film)",
+            "Tom Rothrock",
+            "Wolf Alice",
+            "Something to Talk About (Badly Drawn Boy song)",
+            "Under an Hour"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5ae22b8d554299234fd0440f",
+          "group": "base",
+          "ranking": [
+            "Peter Schmeichel",
+            "Kasper Schmeichel",
+            "IFFHS World's Best Goalkeeper",
+            "Sommeren '92",
+            "Pelé",
+            "Isaak Hassler",
+            "The Class of '92",
+            "IFFHS World's Best Club Coach",
+            "1995–96 Manchester United F.C. season",
+            "Kasper Hvidt"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a722b8655429971e9dc9329",
+          "group": "base",
+          "ranking": [
+            "These Boots Are Made for Walkin'",
+            "Boots (album)",
+            "Puss N' Boots/These Boots Are Made for Walkin'",
+            "Jamboree (Beat Happening album)",
+            "Nancy Sinatra",
+            "Kon Kan",
+            "Jim Shoulders",
+            "Boots (EP)",
+            "The Twenty-fifth Anniversary Anthology",
+            "Ken St. Andre"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5adf37a95542995ec70e8f97",
+          "group": "base",
+          "ranking": [
+            "2011–12 VCU Rams men's basketball team",
+            "2013–14 VCU Rams men's basketball team",
+            "2010–11 VCU Rams men's basketball team",
+            "2012–13 VCU Rams men's basketball team",
+            "2014–15 VCU Rams men's basketball team",
+            "2009–10 VCU Rams men's basketball team",
+            "1995–96 VCU Rams men's basketball team",
+            "Virginia Commonwealth University",
+            "2004–05 VCU Rams men's basketball team",
+            "Robins Center"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a828c8355429966c78a6a50",
+          "group": "base",
+          "ranking": [
+            "Henry J. Kaiser",
+            "Kaiser Shipyards",
+            "Kaiser Ventures",
+            "Edgar Kaiser Sr.",
+            "Edgar Kaiser Jr.",
+            "John Roach &amp; Sons",
+            "Eagle Mountain Railroad",
+            "David Beckham Academy",
+            "New York Shipbuilding Corporation",
+            "Steven K. Galson"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8a3e745542996c9b8d5e70",
+          "group": "base",
+          "ranking": [
+            "Ken St. Andre",
+            "Criss Angel",
+            "Jim Cummings",
+            "Tunnels &amp; Trolls",
+            "Arena of Khazan",
+            "Tyler Bates",
+            "Mercenaries, Spies and Private Eyes",
+            "Tom Rothrock",
+            "Tunnels &amp; Trolls: Crusaders of Khazan",
+            "Jon St. Andre"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5ac23ff0554299636651994d",
+          "group": "base",
+          "ranking": [
+            "Shut Up, Make Love",
+            "Be the One (Poison song)",
+            "Poison (American band)",
+            "Guns N' Roses discography",
+            "Mad Season (band)",
+            "Lil Ru",
+            "Gumbo (PJ Morton album)",
+            "These Boots Are Made for Walkin'",
+            "Make Love",
+            "Puss N' Boots/These Boots Are Made for Walkin'"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ae4a3265542995ad6573de5",
+          "group": "base",
+          "ranking": [
+            "Skyscraper National Park",
+            "Hayden (musician)",
+            "Narrow Hills Provincial Park",
+            "Buck-Tick",
+            "Alberta Hail Project",
+            "Hailstorm Alley",
+            "Atsushi Sakurai",
+            "Commanda Lake",
+            "Mild and Hazy",
+            "Edgar Kaiser Jr."
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        },
+        {
+          "qid": "5ae0361155429925eb1afc2c",
+          "group": "delta",
+          "ranking": [
+            "L'Oiseau Blanc",
+            "François Coli",
+            "Levasseur PL.8",
+            "Charles Nungesser",
+            "Gervais Raoul Lufbery",
+            "Georges Madon",
+            "Wooster and Davis",
+            "Paul Sauvage (aviator)",
+            "Robert Hormats",
+            "W. E. Johns"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5abc0a5d5542993f40c73c64",
+          "group": "delta",
+          "ranking": [
+            "In the Realm of the Hackers",
+            "Freakonomics (film)",
+            "Freakonomics Radio",
+            "Hackers (film)",
+            "Robin Goldstein",
+            "Heidi Ewing",
+            "True Lies",
+            "Jay Leiderman",
+            "Last Action Hero",
+            "Arnold Schwarzenegger filmography"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7cc50e554299452d57ba3e",
+          "group": "delta",
+          "ranking": [
+            "Screaming Trees",
+            "Screaming Trees discography",
+            "Change Has Come",
+            "Beat Happening/Screaming Trees",
+            "Letters to Cleo",
+            "Gary Lee Conner",
+            "Molly Childers",
+            "Gretchen Osgood Warren",
+            "Jamboree (Beat Happening album)",
+            "Case Gym"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5abf63f15542997ec76fd3ea",
+          "group": "delta",
+          "ranking": [
+            "Socialist Revolutionary Party",
+            "Russian Civil War",
+            "Alexander Kerensky",
+            "Left-wing uprisings against the Bolsheviks",
+            "Kerensky–Krasnov uprising",
+            "Battle of Romanovka",
+            "Lavr Kornilov",
+            "Communism in Russia",
+            "Louise Bryant",
+            "Robert Erskine Childers"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8ef2a75542995a26add583",
+          "group": "delta",
+          "ranking": [
+            "Carlo Rovelli",
+            "Seven Brief Lessons on Physics",
+            "Claudio Pellegrini",
+            "Chiara Nappi",
+            "Antonino Lo Surdo",
+            "Guido Caldarelli",
+            "Aldo Pontremoli",
+            "Time to Kill (1989 film)",
+            "Parma Airport",
+            "Enrico Fermi"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a80721b554299485f5985ef",
+          "group": "delta",
+          "ranking": [
+            "Alamein Memorial",
+            "Portsmouth Naval Memorial",
+            "Freetown Memorial",
+            "Tower Hill Memorial",
+            "Arras Flying Services Memorial",
+            "Livesey Hall War Memorial",
+            "Georges Madon",
+            "World War II casualties",
+            "Rainham War Memorial",
+            "Russian Civil War"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 0.0,
+          "Hit@10": 1.0,
+          "MRR": 0.16666666666666666
+        },
+        {
+          "qid": "5ab51dae5542991779162d82",
+          "group": "delta",
+          "ranking": [
+            "Gerald R. Ford International Airport",
+            "Gerald R. Ford Freeway",
+            "Gerald R. Ford Presidential Library",
+            "Raleigh Executive Jetport",
+            "Bishop International Airport",
+            "Elko Regional Airport",
+            "John Glenn Columbus International Airport",
+            "Pre-Commissioning Unit",
+            "Ophur",
+            "Suffrajett"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7571135542992d0ec05f98",
+          "group": "delta",
+          "ranking": [
+            "Ralph Hefferline",
+            "Columbia University",
+            "University of Kansas",
+            "Abraham Maslow",
+            "E. Mavis Hetherington",
+            "James P. Comer",
+            "Gerald R. Ford Presidential Library",
+            "Amherst, Massachusetts",
+            "Ophur",
+            "University of Missouri–Kansas City"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7a0e1e5542990783324e1a",
+          "group": "delta",
+          "ranking": [
+            "Scotch Collie",
+            "English Setter",
+            "Collie",
+            "Russkiy Toy",
+            "Toy Manchester Terrier",
+            "Teddy Roosevelt Terrier",
+            "Feist (dog)",
+            "Manchester Terrier",
+            "Stanley Coren",
+            "Florence Nagle"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a74106b55429979e288289e",
+          "group": "delta",
+          "ranking": [
+            "Kaiser Ventures",
+            "Sachin Warrier",
+            "Robert R. Hood",
+            "Sachin Bansal",
+            "Eagle Mountain Railroad",
+            "Tata Consultancy Services",
+            "David Beckham Academy",
+            "Wes McKinney",
+            "Steven K. Galson",
+            "Shayne Workman"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        }
+      ]
+    },
+    {
+      "label": "append_no_tombstone",
+      "retrieval": {
+        "base": {
+          "n": 30,
+          "Hit@1": 0.6333333333333333,
+          "Hit@5": 0.9666666666666667,
+          "MRR": 0.7555555555555556
+        },
+        "delta": {
+          "n": 10,
+          "Hit@1": 0.8,
+          "Hit@5": 0.9,
+          "MRR": 0.8666666666666666
+        }
+      },
+      "edit_visible": 10,
+      "edit_n": 10,
+      "delete_stale": 5,
+      "delete_n": 5,
+      "duplicate_slot_rate": 0.025,
+      "per_query": [
+        {
+          "qid": "5a8b57f25542995d1e6f1371",
+          "group": "base",
+          "ranking": [
+            "Ed Wood (film)",
+            "Conrad Brooks",
+            "Ed Wood",
+            "Scott Derrickson",
+            "Woodson, Arkansas",
+            "Edgar Kaiser Jr.",
+            "Deliver Us from Evil (2014 film)",
+            "Narrow Hills Provincial Park",
+            "Alberta Hail Project",
+            "Hailstorm Alley"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.3333333333333333
+        },
+        {
+          "qid": "5a8c7595554299585d9e36b6",
+          "group": "base",
+          "ranking": [
+            "Kiss and Tell (1945 film)",
+            "A Kiss for Corliss",
+            "Janet Waldo",
+            "Shirley Temple",
+            "Erskine Barton Childers",
+            "Meet Corliss Archer",
+            "Robert Erskine Childers",
+            "Meet Corliss Archer (TV series)",
+            "Molly Childers",
+            "Robert Caesar Childers"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a85ea095542994775f606a8",
+          "group": "base",
+          "ranking": [
+            "Shadowshaper",
+            "Victoria Hanley",
+            "Andre Norton Award",
+            "Animorphs",
+            "The Divide trilogy",
+            "Last Action Hero",
+            "Etiquette &amp; Espionage",
+            "Ken St. Andre",
+            "Left Behind: The Kids",
+            "Sinister (film)"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5adbf0a255429947ff17385a",
+          "group": "base",
+          "ranking": [
+            "Laleli Mosque",
+            "Esma Sultan Mansion",
+            "Esma Sultan (daughter of Abdul Hamid I)",
+            "Sultan Ahmed Mosque",
+            "Esma Sultan (daughter of Abdülaziz)",
+            "Esma Sultan (daughter of Ahmed III)",
+            "Küçük Hüseyin Pasha",
+            "Esma Sultan",
+            "Gevheri Kadın",
+            "ELDee"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8e3ea95542995a26add48d",
+          "group": "base",
+          "ranking": [
+            "Big Stone Gap (film)",
+            "Kingston Morning",
+            "I Love NY (2015 film)",
+            "Adriana Trigiani",
+            "Clinton, Minnesota",
+            "Kaiser Ventures",
+            "City of Angels (film)",
+            "David Beckham Academy",
+            "Conrad Brooks",
+            "Steven K. Galson"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5abd94525542992ac4f382d2",
+          "group": "base",
+          "ranking": [
+            "BTS discography",
+            "History (band)",
+            "Cho Kyuhyun",
+            "SF9 (band)",
+            "Madtown",
+            "2014 S/S",
+            "List of awards and nominations received by Shinee",
+            "Seventeen discography",
+            "Atsushi Sakurai",
+            "Buck-Tick"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 0.0,
+          "Hit@10": 1.0,
+          "MRR": 0.16666666666666666
+        },
+        {
+          "qid": "5a85b2d95542997b5ce40028",
+          "group": "base",
+          "ranking": [
+            "Eenasul Fateh",
+            "ELDee",
+            "Abraham Maslow",
+            "Management consulting",
+            "1995–96 Manchester United F.C. season",
+            "Matt Busby",
+            "Indriati Iskak",
+            "Sachin Warrier",
+            "True Lies",
+            "Mick (DJ)"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a87ab905542996e4f3088c1",
+          "group": "base",
+          "ranking": [
+            "Androscoggin Bank Colisée",
+            "Lewiston Maineiacs",
+            "Dwyer Arena",
+            "Case Gym",
+            "Robins Center",
+            "2006–07 QMJHL season",
+            "2007 Memorial Cup",
+            "2011–12 QMJHL season",
+            "Vermont Catamounts men's ice hockey",
+            "Billings Bulls"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7bbb64554299042af8f7cc",
+          "group": "base",
+          "ranking": [
+            "Annie Morton",
+            "Kenton Richardson",
+            "Terry Richardson",
+            "Lady Gaga x Terry Richardson",
+            "Madonna (book)",
+            "Janet Waldo",
+            "Index Magazine",
+            "Scott Derrickson",
+            "Doctor Strange (2016 film)"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8db19d5542994ba4e3dd00",
+          "group": "base",
+          "ranking": [
+            "For Against",
+            "Hallelujah! I'm a Bum (album)",
+            "Local H",
+            "Mendocino County GMO Ban",
+            "Suffrajett",
+            "United States Senate election in Illinois, 1978",
+            "Letters to Cleo",
+            "Ophur",
+            "About a Boy (soundtrack)",
+            "Jay Leiderman"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7166395542994082a3e814",
+          "group": "base",
+          "ranking": [
+            "Kansas City metropolitan area",
+            "History of the Kansas City metropolitan area",
+            "University of Kansas",
+            "Kansas City jazz",
+            "Neosho State Fishing Lake",
+            "Kansas Song",
+            "Brown County, Kansas",
+            "University of Missouri–Kansas City",
+            "Osage State Fishing Lake",
+            "Brown State Fishing Lake"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.3333333333333333
+        },
+        {
+          "qid": "5a877e5d5542993e715abf7d",
+          "group": "base",
+          "ranking": [
+            "David Weissman",
+            "The Family Man",
+            "Deadfall (1993 film)",
+            "Season of the Witch (2011 film)",
+            "Gone in 60 Seconds (2000 film)",
+            "Drive Angry",
+            "Heidi Ewing",
+            "Big Stone Gap (film)",
+            "Adriana Trigiani",
+            "Time to Kill (1989 film)"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ab3b0bf5542992ade7c6e39",
+          "group": "base",
+          "ranking": [
+            "Arnold Schwarzenegger filmography",
+            "Last Action Hero",
+            "True Lies",
+            "End of Days (film)",
+            "Guns N' Roses discography",
+            "Steven Adler",
+            "Oh My God (Guns N' Roses song)",
+            "Deadfall (1993 film)",
+            "Hammerjack's",
+            "Tyler Bates"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5ab6d09255429954757d337d",
+          "group": "base",
+          "ranking": [
+            "1995–96 Manchester United F.C. season",
+            "Matt Busby",
+            "David Beckham Academy",
+            "The Class of '92",
+            "Ernest Mangnall",
+            "Alex Ferguson",
+            "David Beckham's Soccer USA",
+            "Joshua Parlby",
+            "Peter Schmeichel",
+            "1996 FA Charity Shield"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a75e05c55429976ec32bc5f",
+          "group": "base",
+          "ranking": [
+            "Brown State Fishing Lake",
+            "Brown County, Kansas",
+            "Neosho State Fishing Lake",
+            "Osage State Fishing Lake",
+            "Kansas City metropolitan area",
+            "Shawnee State Fishing Lake",
+            "Fishing Lake",
+            "History of the Kansas City metropolitan area",
+            "Kansas City Scout",
+            "Higgins Lake, Michigan"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ab3e45655429976abd1bcd4",
+          "group": "base",
+          "ranking": [
+            "2016–17 Vermont Catamounts men's basketball team",
+            "2015–16 Vermont Catamounts men's basketball team",
+            "America East Conference",
+            "Vermont Catamounts men's soccer",
+            "2012–13 Vermont Catamounts men's basketball team",
+            "Vermont Catamounts men's basketball",
+            "2011–12 Vermont Catamounts men's basketball team",
+            "2013–14 Vermont Catamounts men's basketball team",
+            "2010–11 Vermont Catamounts men's basketball team",
+            "Vermont Catamounts men's ice hockey"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.3333333333333333
+        },
+        {
+          "qid": "5ab29c24554299449642c932",
+          "group": "base",
+          "ranking": [
+            "Ambroise Thomas",
+            "Armand Castelmary",
+            "Ferdinando Provesi",
+            "Verdi, the King of Melody",
+            "Teatro Giuseppe Verdi",
+            "Bernhard Bötel",
+            "Giuseppe Verdi (film)",
+            "Giuseppe Verdi",
+            "Parma Airport",
+            "List of major opera composers"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ae0d4c9554299603e418468",
+          "group": "base",
+          "ranking": [
+            "Roger O. Egeberg",
+            "Bradford P. Campbell",
+            "Gerald R. Ford Presidential Library",
+            "Edward D. Martin",
+            "Robert Hormats",
+            "Edgar Kaiser Jr.",
+            "Richard Nixon",
+            "Douglas J. Bennet",
+            "Steven K. Galson",
+            "Gretchen Osgood Warren"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8133725542995ce29dcbdb",
+          "group": "base",
+          "ranking": [
+            "Erskine Barton Childers",
+            "Robert Erskine Childers",
+            "Asgard (yacht)",
+            "Robert Caesar Childers",
+            "Molly Childers",
+            "Gretchen Osgood Warren",
+            "R509 road (Ireland)",
+            "Robert Barton",
+            "Henry Roth",
+            "L'Oiseau Blanc"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        },
+        {
+          "qid": "5ae7a8175542993210983ed8",
+          "group": "base",
+          "ranking": [
+            "Sergio Pérez",
+            "Force India VJM04",
+            "Formula One drivers from Mexico",
+            "Eduardo Troconis",
+            "Michael James Lewis",
+            "2014 Bahrain Grand Prix",
+            "2009 Singapore Grand Prix",
+            "Amaruk Kayshapanta",
+            "Catharina Felser",
+            "Mike Shank"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ae6050f55429929b0807a5e",
+          "group": "base",
+          "ranking": [
+            "A Rather Blustery Day",
+            "Jim Cummings",
+            "The Hour of Bewilderbeast",
+            "Badly Drawn Boy discography",
+            "Hip Hip Pooh-Ray!",
+            "The Wonderful Thing About Tiggers",
+            "About a Boy (soundtrack)",
+            "Jamboree (Beat Happening album)",
+            "Something to Talk About (Badly Drawn Boy song)",
+            "Kate Higgins"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5adddccd5542997dc7907069",
+          "group": "base",
+          "ranking": [
+            "Meet Corliss Archer",
+            "Apple Remote",
+            "Meet Corliss Archer (TV series)",
+            "Siri Remote",
+            "Apple Remote Desktop",
+            "Universal remote",
+            "Remote control",
+            "Front Row (software)",
+            "Apple Watch",
+            "MacScan"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        },
+        {
+          "qid": "5ae2070a5542994d89d5b313",
+          "group": "base",
+          "ranking": [
+            "The Hour of Bewilderbeast",
+            "Badly Drawn Boy discography",
+            "About a Boy (soundtrack)",
+            "Badly Drawn Boy",
+            "Silent Sigh",
+            "About a Boy (film)",
+            "Tom Rothrock",
+            "Wolf Alice",
+            "Something to Talk About (Badly Drawn Boy song)",
+            "Under an Hour"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5ae22b8d554299234fd0440f",
+          "group": "base",
+          "ranking": [
+            "Peter Schmeichel",
+            "Kasper Schmeichel",
+            "IFFHS World's Best Goalkeeper",
+            "Sommeren '92",
+            "Pelé",
+            "Isaak Hassler",
+            "The Class of '92",
+            "IFFHS World's Best Club Coach",
+            "1995–96 Manchester United F.C. season",
+            "Kasper Hvidt"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a722b8655429971e9dc9329",
+          "group": "base",
+          "ranking": [
+            "These Boots Are Made for Walkin'",
+            "Boots (album)",
+            "Puss N' Boots/These Boots Are Made for Walkin'",
+            "Jamboree (Beat Happening album)",
+            "Nancy Sinatra",
+            "Kon Kan",
+            "Jim Shoulders",
+            "Boots (EP)",
+            "The Twenty-fifth Anniversary Anthology",
+            "Ken St. Andre"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5adf37a95542995ec70e8f97",
+          "group": "base",
+          "ranking": [
+            "2011–12 VCU Rams men's basketball team",
+            "2013–14 VCU Rams men's basketball team",
+            "2010–11 VCU Rams men's basketball team",
+            "2012–13 VCU Rams men's basketball team",
+            "2014–15 VCU Rams men's basketball team",
+            "2009–10 VCU Rams men's basketball team",
+            "1995–96 VCU Rams men's basketball team",
+            "Virginia Commonwealth University",
+            "2004–05 VCU Rams men's basketball team",
+            "Robins Center"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a828c8355429966c78a6a50",
+          "group": "base",
+          "ranking": [
+            "Henry J. Kaiser",
+            "Kaiser Shipyards",
+            "Kaiser Ventures",
+            "Edgar Kaiser Sr.",
+            "Edgar Kaiser Jr.",
+            "John Roach &amp; Sons",
+            "Eagle Mountain Railroad",
+            "David Beckham Academy",
+            "New York Shipbuilding Corporation",
+            "Steven K. Galson"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8a3e745542996c9b8d5e70",
+          "group": "base",
+          "ranking": [
+            "Ken St. Andre",
+            "Criss Angel",
+            "Jim Cummings",
+            "Tunnels &amp; Trolls",
+            "Arena of Khazan",
+            "Tyler Bates",
+            "Mercenaries, Spies and Private Eyes",
+            "Tom Rothrock",
+            "Tunnels &amp; Trolls: Crusaders of Khazan",
+            "Jon St. Andre"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.25
+        },
+        {
+          "qid": "5ac23ff0554299636651994d",
+          "group": "base",
+          "ranking": [
+            "Shut Up, Make Love",
+            "Be the One (Poison song)",
+            "Poison (American band)",
+            "Guns N' Roses discography",
+            "Mad Season (band)",
+            "Lil Ru",
+            "Gumbo (PJ Morton album)",
+            "These Boots Are Made for Walkin'",
+            "Make Love",
+            "Puss N' Boots/These Boots Are Made for Walkin'"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5ae4a3265542995ad6573de5",
+          "group": "base",
+          "ranking": [
+            "Skyscraper National Park",
+            "Hayden (musician)",
+            "Narrow Hills Provincial Park",
+            "Buck-Tick",
+            "Alberta Hail Project",
+            "Hailstorm Alley",
+            "Atsushi Sakurai",
+            "Commanda Lake",
+            "Mild and Hazy",
+            "Edgar Kaiser Jr."
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        },
+        {
+          "qid": "5ae0361155429925eb1afc2c",
+          "group": "delta",
+          "ranking": [
+            "L'Oiseau Blanc",
+            "François Coli",
+            "Levasseur PL.8",
+            "Charles Nungesser",
+            "Gervais Raoul Lufbery",
+            "Georges Madon",
+            "Wooster and Davis",
+            "Paul Sauvage (aviator)",
+            "Robert Hormats",
+            "W. E. Johns"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5abc0a5d5542993f40c73c64",
+          "group": "delta",
+          "ranking": [
+            "In the Realm of the Hackers",
+            "Freakonomics (film)",
+            "Freakonomics Radio",
+            "Hackers (film)",
+            "Robin Goldstein",
+            "Heidi Ewing",
+            "True Lies",
+            "Jay Leiderman",
+            "Last Action Hero",
+            "Arnold Schwarzenegger filmography"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7cc50e554299452d57ba3e",
+          "group": "delta",
+          "ranking": [
+            "Screaming Trees",
+            "Screaming Trees discography",
+            "Change Has Come",
+            "Beat Happening/Screaming Trees",
+            "Letters to Cleo",
+            "Gary Lee Conner",
+            "Molly Childers",
+            "Gretchen Osgood Warren",
+            "Jamboree (Beat Happening album)",
+            "Case Gym"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5abf63f15542997ec76fd3ea",
+          "group": "delta",
+          "ranking": [
+            "Socialist Revolutionary Party",
+            "Russian Civil War",
+            "Alexander Kerensky",
+            "Left-wing uprisings against the Bolsheviks",
+            "Kerensky–Krasnov uprising",
+            "Battle of Romanovka",
+            "Lavr Kornilov",
+            "Communism in Russia",
+            "Louise Bryant",
+            "Robert Erskine Childers"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a8ef2a75542995a26add583",
+          "group": "delta",
+          "ranking": [
+            "Carlo Rovelli",
+            "Seven Brief Lessons on Physics",
+            "Claudio Pellegrini",
+            "Chiara Nappi",
+            "Antonino Lo Surdo",
+            "Guido Caldarelli",
+            "Aldo Pontremoli",
+            "Time to Kill (1989 film)",
+            "Parma Airport",
+            "Enrico Fermi"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a80721b554299485f5985ef",
+          "group": "delta",
+          "ranking": [
+            "Alamein Memorial",
+            "Portsmouth Naval Memorial",
+            "Freetown Memorial",
+            "Tower Hill Memorial",
+            "Arras Flying Services Memorial",
+            "Livesey Hall War Memorial",
+            "Georges Madon",
+            "World War II casualties",
+            "Rainham War Memorial",
+            "Russian Civil War"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 0.0,
+          "Hit@10": 1.0,
+          "MRR": 0.16666666666666666
+        },
+        {
+          "qid": "5ab51dae5542991779162d82",
+          "group": "delta",
+          "ranking": [
+            "Gerald R. Ford International Airport",
+            "Gerald R. Ford Freeway",
+            "Gerald R. Ford Presidential Library",
+            "Raleigh Executive Jetport",
+            "Bishop International Airport",
+            "Elko Regional Airport",
+            "John Glenn Columbus International Airport",
+            "Pre-Commissioning Unit",
+            "Ophur",
+            "Suffrajett"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7571135542992d0ec05f98",
+          "group": "delta",
+          "ranking": [
+            "Ralph Hefferline",
+            "Columbia University",
+            "University of Kansas",
+            "Abraham Maslow",
+            "E. Mavis Hetherington",
+            "James P. Comer",
+            "Gerald R. Ford Presidential Library",
+            "Amherst, Massachusetts",
+            "Ophur",
+            "University of Missouri–Kansas City"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a7a0e1e5542990783324e1a",
+          "group": "delta",
+          "ranking": [
+            "Scotch Collie",
+            "English Setter",
+            "Collie",
+            "Russkiy Toy",
+            "Toy Manchester Terrier",
+            "Teddy Roosevelt Terrier",
+            "Feist (dog)",
+            "Manchester Terrier",
+            "Stanley Coren",
+            "Florence Nagle"
+          ],
+          "Hit@1": 1.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 1.0
+        },
+        {
+          "qid": "5a74106b55429979e288289e",
+          "group": "delta",
+          "ranking": [
+            "Kaiser Ventures",
+            "Sachin Warrier",
+            "Robert R. Hood",
+            "Sachin Bansal",
+            "Eagle Mountain Railroad",
+            "Tata Consultancy Services",
+            "David Beckham Academy",
+            "Wes McKinney",
+            "Steven K. Galson",
+            "Shayne Workman"
+          ],
+          "Hit@1": 0.0,
+          "Hit@5": 1.0,
+          "Hit@10": 1.0,
+          "MRR": 0.5
+        }
+      ]
+    }
+  ]
+}

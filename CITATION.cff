@@ -1,0 +1,32 @@
+# Author list is a placeholder; replace it before publishing.
+cff-version: 1.2.0
+message: "If you use this repository, cite it as below."
+title: "PEG: a non-invasive incremental visibility channel for graph RAG"
+abstract: >-
+  Retrieval- and generation-level study of Microsoft GraphRAG v3.3.0 incremental
+  indexing on a fixed HotpotQA subset: what the host does on new documents,
+  same-title rewrites and deletions, what a paragraph-level visibility channel
+  adds, and the operation algebra with its proven properties and cost bound.
+type: software
+authors:
+  - name: "PEG contributors"
+version: 0.1.0
+date-released: 2026-11-17
+license: MIT
+keywords:
+  - graphrag
+  - incremental indexing
+  - retrieval evaluation
+  - visibility
+  - hotpotqa
+references:
+  - type: software
+    title: "GraphRAG"
+    version: 3.3.0
+    repository: "https://github.com/microsoft/graphrag"
+    license: MIT
+  - type: dataset
+    title: "HotpotQA"
+    authors:
+      - name: "CMU"
+    url: "https://hotpotqa.github.io/"

@@ -1,0 +1,16 @@
+# derived artifacts and local environment
+.venv/
+artifacts/
+__pycache__/
+*.pyc
+*.log
+.env
+
+# upstream dataset, not redistributed (see data/README.md)
+data/hotpot/
+
+# editor / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

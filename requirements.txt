@@ -1,0 +1,8 @@
+# Runtime dependencies for the benchmark drivers.
+# GraphRAG is installed from the v3.3.0 source checkout (see README); the
+# benchmark code itself only needs the libraries below.
+numpy==2.5.3
+pandas==3.0.5
+httpx==0.28.1
+PyYAML==6.0.3
+pyarrow==25.0.1
