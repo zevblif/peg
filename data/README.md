@@ -1,3 +1,5 @@
+English | [简体中文](README-zh.md)
+
 # data
 
 Fixed, deterministic subsets of the HotpotQA distractor dev split. Every file except

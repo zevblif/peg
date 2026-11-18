@@ -1,8 +1,10 @@
-"""Render the paper for GitHub: convert LaTeX-style delimiters to GitHub math.
+"""Render the Chinese paper snapshot for GitHub.
 
 GitHub only renders `$...$` (inline) and `$$...$$` (display); `\\( ... \\)` is shown
 literally. The working copy keeps the LaTeX-style delimiters, and this script
-produces the published snapshot under docs/.
+produces `docs/PEG-visibility-zh.md`. The English paper at
+`docs/PEG-visibility.md` is maintained separately and must not be overwritten by
+this script.
 """
 import argparse
 import re

@@ -1,28 +1,30 @@
-# PEG：面向图 RAG 的非侵入增量可见性通道
+English | [简体中文](README-zh.md)
 
-本仓库在真实 Microsoft GraphRAG v3.3.0 宿主上，测量同标题改写与删除在索引中的实际行为，并给出一个不修改宿主的段落级可见性通道（PEG）。
+# PEG: A Non-Invasive Incremental Visibility Channel for Graph RAG
 
-结论先说：**PEG 不提升宿主的图归纳能力，也不提升常规检索精度。** 它保证的是"索引重建之前，改过的正文与删除状态在检索层可见"，并把这一保证写成可证明的操作代数。
+This repository measures how same-title rewrites and deletions actually behave in the index of a real Microsoft GraphRAG v3.3.0 host, and provides a paragraph-level visibility channel (PEG) that does not modify the host.
 
-- 论文：[docs/PEG-visibility.md](docs/PEG-visibility.md)
+Conclusion first: **PEG does not improve the host's graph induction capability, nor does it improve conventional retrieval accuracy.** What it guarantees is that "before the index is rebuilt, modified text and deletion state are visible at the retrieval layer," and it states this guarantee as an operation contract with a non-invasiveness theorem.
 
-## 1. 研究定位
+- Paper: [docs/PEG-visibility.md](docs/PEG-visibility.md)
 
-| 项 | 内容 |
+## 1. Research Positioning
+
+| Item | Content |
 |---|---|
-| 类型 | 系统 / 契约型实证研究 |
-| 主张 | 段落级独立通道可在宿主重建前维持当前版本；操作满足五条行为性质；写入不触碰宿主 |
-| 不主张 | 检索精度提升、图归纳增强、端到端答案质量普遍更优 |
-| 宿主 | GraphRAG v3.3.0（源码安装，不重分发） |
-| 模型 | DeepSeek-V4.1-Flash（关闭思考）+ `bge-m3-8k`（同权重，8k 上下文） |
-| 数据 | HotpotQA 固定子集：30 + 10 问（300 + 100 段）；90 + 30 问（900 + 300 段） |
+| Type | Systems / contract-style empirical study |
+| Claims | A paragraph-level independent channel can maintain the current version before the host rebuild; the operations satisfy five behavioral properties; writes do not touch the host |
+| Non-claims | Retrieval accuracy improvement, graph induction enhancement, generally better end-to-end answer quality |
+| Host | GraphRAG v3.3.0 (installed from source, not redistributed) |
+| Models | DeepSeek-V4.1-Flash (thinking disabled) + `bge-m3-8k` (same weights, 8k context) |
+| Data | Fixed HotpotQA subsets: 30 + 10 questions (300 + 100 paragraphs); 90 + 30 questions (900 + 300 paragraphs) |
 
-## 2. 快速开始
+## 2. Quick Start
 
-依赖 Python 3.12、一个 OpenAI 兼容 chat 端点、一个本地 Ollama 嵌入端点、GraphRAG v3.3.0 源码。
+Requires Python 3.12, an OpenAI-compatible chat endpoint, a local Ollama embedding endpoint, and the GraphRAG v3.3.0 source.
 
 ```powershell
-# 0. 环境变量（只设一次；密钥不落盘）
+# 0. Environment variables (set once; keys never touch disk)
 $env:PEG_CHAT_PROVIDER = "openai"
 $env:PEG_CHAT_MODEL    = "deepseek-ai/DeepSeek-V4.1-Flash"
 $env:PEG_CHAT_API_BASE = "<https://.../v1>"
@@ -35,12 +37,12 @@ $env:PYTHONPATH = "src"
 ```
 
 ```powershell
-# 1. 数据（确定性，无网络）
+# 1. Data (deterministic, no network)
 python -m peg_bench.build_hotpot
 python -m peg_bench.build_stability
 python -m peg_bench.make_inputs
 
-# 2. 索引：基础 -> 增量 -> 修改/删除
+# 2. Indexing: base -> incremental -> edit/delete
 python -m peg_bench.patch_settings --root artifacts/runs/base   --csv data/main/base.csv
 python -m peg_bench.run_graphrag index  --root artifacts/runs/base
 python -m peg_bench.patch_settings --root artifacts/runs/update --csv data/main/input_base_delta.csv
@@ -48,20 +50,20 @@ python -m peg_bench.run_graphrag update --root artifacts/runs/update
 python -m peg_bench.patch_settings --root artifacts/runs/edit   --csv data/main/input_after_edit.csv
 python -m peg_bench.run_graphrag update --root artifacts/runs/edit
 
-# 2b. 稳定性索引（900 + 300 段；约 5,400 + 3,300 次生成调用，可跳过）
+# 2b. Stability index (900 + 300 paragraphs; about 5,400 + 3,300 generation calls, can be skipped)
 python -m peg_bench.patch_settings --root artifacts/runs/stab_base   --csv data/stability/base.csv
 python -m peg_bench.run_graphrag index  --root artifacts/runs/stab_base
 python -m peg_bench.patch_settings --root artifacts/runs/stab_update --csv data/stability/input_base_delta.csv
 python -m peg_bench.run_graphrag update --root artifacts/runs/stab_update
 
-# 3. PEG 状态与主评测
+# 3. PEG state and main evaluation
 python -m peg_bench.build_peg_state
 python -m peg_bench.evaluate `
   --base-root artifacts/runs/base --update-root artifacts/runs/update --edit-root artifacts/runs/edit `
   --peg-state artifacts/states/peg_base_delta --peg-behavior-state artifacts/states/peg_edit_delete `
   --output results/peg_gr_001.json
 
-# 4. 补充实验（generation 与 index_variance 之外的步骤为零生成调用）
+# 4. Supplementary experiments (all steps except generation and index_variance make zero generation calls)
 python -m peg_bench.ablation
 python -m peg_bench.evaluate_stability --base-root artifacts/runs/stab_base --update-root artifacts/runs/stab_update `
   --peg-state artifacts/states/peg_stab_base_delta --data-dir data/stability
@@ -72,101 +74,101 @@ python -m peg_bench.index_variance --roots artifacts/runs/rebuild_1 artifacts/ru
 python -m peg_bench.generation --concurrency 8
 ```
 
-一键入口：`scripts/reproduce.ps1`（主实验）、`scripts/smoke.ps1`（冒烟）。`artifacts/` 是被 `.gitignore` 排除的派生目录。
+One-command entry points: `scripts/reproduce.ps1` (main experiments) and `scripts/smoke.ps1` (smoke). `artifacts/` is a derived directory excluded by `.gitignore`.
 
-## 3. 主要结果
+## 3. Main Results
 
-### 3.1 改写与删除的可见性（最硬的一条）
+### 3.1 Visibility of Rewrites and Deletions (the strongest result)
 
-| 行为 | GraphRAG v3.3.0 | PEG |
+| Behavior | GraphRAG v3.3.0 | PEG |
 |---|---|---|
-| 改写标识串出现在返回正文 | 0 / 10 | **10 / 10** |
-| 删除后陈旧标题仍被返回 | 5 / 5 | **0 / 5** |
+| Rewrite identifier string appears in returned text | 0 / 10 | **10 / 10** |
+| Stale title still returned after deletion | 5 / 5 | **0 / 5** |
 
-宿主增量按标题判定：同标题改写不进新增集合，标题消失只记录不执行。PEG 用原地替换与墓碑补齐这两点，对应论文的 P1 与 P3。
+The host's incremental update decides by title: a same-title rewrite does not enter the added set, and a disappeared title is only recorded, not executed. PEG closes these two gaps with in-place replacement and tombstones, corresponding to P1 and P3 in the paper.
 
-### 3.2 检索与覆盖
+### 3.2 Retrieval and Coverage
 
-| 通道 | 基础 | 增量 |
+| Channel | Base | Incremental |
 |---|---|---|
-| 段落层 | 0.933 / 1.000 / 0.961 | 0.900 / 1.000 / 0.950 |
+| Paragraph level | 0.933 / 1.000 / 0.961 | 0.900 / 1.000 / 0.950 |
 
-注：生成答案的指标在重跑时有 ±1 题波动，比较须在同一次运行内完成（论文局限 11）。
+Note: metrics for generated answers fluctuate by ±1 question across reruns; comparisons must be completed within the same run (paper limitation 11).
 
-多跳覆盖：全部支撑段落同时进入 top-5 的比例 0.80、top-10 0.95（宿主图检索 0.40 / 0.575）。置信区间（2,000 轮）：段落层 Hit@1 0.925 [0.825, 1.000]，MRR 0.958 [0.904, 1.000]。
+Multi-hop coverage: the proportion of queries where all supporting paragraphs enter top-5 is 0.80, top-10 0.95 (host graph retrieval 0.40 / 0.575). Confidence intervals (2,000 rounds): paragraph-level Hit@1 0.925 [0.825, 1.000], MRR 0.958 [0.904, 1.000].
 
-### 3.3 对照与基线
+### 3.3 Controls and Baselines
 
-| 方法 | 基础 Hit@1/5/MRR | 增量 Hit@1/5/MRR |
+| Method | Base Hit@1/5/MRR | Incremental Hit@1/5/MRR |
 |---|---|---|
 | BM25 | 0.633 / 0.967 / 0.762 | 0.800 / 1.000 / 0.900 |
-| 段落向量（无版本语义） | 0.933 / 1.000 / 0.961 | 0.900 / 1.000 / 0.950 |
-| 宿主 local search | 0.567 / 0.833 / 0.678 | 0.600 / 0.900 / 0.708 |
+| Paragraph vector (no version semantics) | 0.933 / 1.000 / 0.961 | 0.900 / 1.000 / 0.950 |
+| Host local search | 0.567 / 0.833 / 0.678 | 0.600 / 0.900 / 0.708 |
 
-三种更简单的旁路（外部删除集合、外部修订表、修订表 + 重嵌入）都能复现可见性；把改写文档换标题重入库需 170 次生成调用 / 303 s，且旧标题仍返回 10/10。因此 PEG 的差别在代数、性质与代价，不在"只有它能看见改动"。
+All three simpler bypasses (external deletion set, external revision table, revision table + re-embedding) can reproduce visibility; re-ingesting rewritten documents under new titles takes 170 generation calls / 303 s, and the old titles are still returned 10/10. PEG's difference therefore lies in the algebra, properties, and cost, not in being "the only approach that can see changes."
 
-### 3.4 生成答案
+### 3.4 Generated Answers
 
-同一提示、同一模型、每题一次生成：PEG 上下文 EM 0.600 / F1 0.704，宿主 0.525 / 0.625；10 个改写探针中，PEG 答案包含标识串 10/10，宿主 0/10。
+Same prompt, same model, one generation per question: PEG context EM 0.600 / F1 0.704, host 0.525 / 0.625; among the 10 rewrite probes, PEG answers contain the identifier string 10/10, the host 0/10.
 
-### 3.5 局部性、延迟与重建方差
+### 3.5 Locality, Latency, and Rebuild Variance
 
-- 改写后 top-10 邻居平均 Jaccard 0.845；删除后 38/40 查询返回完全不变。
-- 检索 p50 在 300 / 400 / 1,200 段均为约 141 ms，延迟由查询嵌入主导。
-- 同一 300 段语料重建三次：实体 2,192–2,218、社区 417–426、生成调用 1,410–1,430；宿主基础 Hit@1 0.700–0.767。PEG 指标在三次重建之间不变（0.933 / 1.000 / 0.961）。
+- After rewrites, top-10 neighbors have an average Jaccard of 0.845; after deletions, 38/40 queries return completely unchanged results.
+- Retrieval p50 is about 141 ms at 300 / 400 / 1,200 paragraphs; latency is dominated by query embedding.
+- Rebuilding the same 300-paragraph corpus three times: entities 2,192–2,218, communities 417–426, generation calls 1,410–1,430; host base Hit@1 0.700–0.767. PEG metrics are unchanged across the three rebuilds (0.933 / 1.000 / 0.961).
 
-### 3.6 成本
+### 3.6 Cost
 
-| 操作 | 生成调用 | 耗时 |
+| Operation | Generation calls | Time |
 |---|---:|---:|
-| PEG 编码 300 段 | 0（仅嵌入） | 6.7 s |
-| PEG 追加 100 段 | 0（仅嵌入） | 2.4 s |
-| 宿主基础索引 300 段 | 1,710 | 241 s |
-| 宿主增量 100 段 | 647 | — |
+| PEG encoding 300 paragraphs | 0 (embedding only) | 6.7 s |
+| PEG appending 100 paragraphs | 0 (embedding only) | 2.4 s |
+| Host base indexing 300 paragraphs | 1,710 | 241 s |
+| Host incremental 100 paragraphs | 647 | — |
 
-## 4. 能说什么、不能说什么
+## 4. What Can and Cannot Be Said
 
-**可以说**
+**Can say**
 
-- 宿主 `update` 只吸收新增标题；同标题改写与删除在索引中不可见（0/10 与 5/5）。
-- 段落级独立通道（重新嵌入 + 墓碑）能补齐这两个缺口（10/10 与 0/5）。
-- 五条行为性质、非侵入定理与操作代价上界成立，写入不改变宿主状态（论文第 4 节）。
-- 可见性可以由更简单的旁路实现；PEG 的差别在代数、性质与代价。
+- The host `update` only absorbs newly added titles; same-title rewrites and deletions are invisible in the index (0/10 and 5/5).
+- A paragraph-level independent channel (re-embedding + tombstones) closes these two gaps (10/10 and 0/5).
+- The five behavioral properties, the non-invasiveness theorem, and the operation cost upper bound hold; writes do not change host state (paper Section 4).
+- Visibility can be implemented by simpler bypasses; PEG's difference lies in the algebra, properties, and cost.
 
-**不能说**
+**Cannot say**
 
-- PEG 提升常规检索精度：段落向量基线与其同分（0.925 / 1.000 / 0.958）。
-- 融合优于 PEG 单独：多跳覆盖与答案质量都不支持。
-- 端到端生产质量：只做单提示、单次生成与检索级评测。
-- 大规模稳定性：最大 1,200 段、三次重建。
+- PEG improves conventional retrieval accuracy: the paragraph vector baseline scores the same (0.925 / 1.000 / 0.958).
+- Fusion outperforms PEG alone: neither multi-hop coverage nor answer quality supports it.
+- End-to-end production quality: only single-prompt, single-generation, and retrieval-level evaluations were performed.
+- Large-scale stability: at most 1,200 paragraphs and three rebuilds.
 
-## 5. 局限（与数字一起读）
+## 5. Limitations (Read Alongside the Numbers)
 
-1. 粒度固定为段落；跨段落多跳需要宿主图结构。
-2. 标题唯一；误用追加会静默忽略改写。
-3. 每次替换各触发一次嵌入，未做窗口内合并（见 S2）。
-4. 只覆盖单提示、单次生成；答案指标随采样波动（EM 0.600–0.650）。
-5. 单一嵌入模型；更换模型需重测。
-6. 宿主索引有重建方差；单实例数字不应视为常数。
-7. 宿主增量实例的文本单元向量表可能只含新增文档；宿主指标改在向量表完整的实例上报告。
+1. Granularity is fixed at the paragraph level; cross-paragraph multi-hop requires the host graph structure.
+2. Titles are unique; misuse with append silently ignores rewrites.
+3. Each replacement triggers one embedding; no in-window batching (see S2).
+4. Covers only a single prompt and a single generation; answer metrics fluctuate with sampling (EM 0.600–0.650).
+5. A single embedding model; changing models requires re-measurement.
+6. The host index has rebuild variance; single-instance numbers should not be treated as constants.
+7. The text-unit vector table of the host incremental instance may contain only newly added documents; host metrics are instead reported on an instance with a complete vector table.
 
-## 6. 仓库结构
+## 6. Repository Structure
 
 ```
 peg/
-├── configs/            GraphRAG 配置模板与 prompts
-├── data/               固定子集、探针、输入 CSV
-├── docs/               论文
-├── results/            11 个聚合结果 JSON
+├── configs/            GraphRAG configuration templates and prompts
+├── data/               Fixed subsets, probes, input CSVs
+├── docs/               Paper
+├── results/            11 aggregated result JSONs
 ├── scripts/            reproduce.ps1 / smoke.ps1
-├── src/peg_bench/      数据构建、索引包装、PEG 通道、评测与补充实验
-└── tests/              通道、一致性、数据、配置与端点测试
+├── src/peg_bench/      Data construction, index wrapper, PEG channel, evaluation, and supplementary experiments
+└── tests/              Channel, consistency, data, configuration, and endpoint tests
 ```
 
-关键模块：`peg_channel.py`（四元组状态与三种操作）、`evaluate.py`（五臂 + 行为探针）、`controls.py`（旁路对照）、`generation.py`（答案级）、`local_effects.py`（局部性/延迟）、`index_variance.py`（重建方差）。
+Key modules: `peg_channel.py` (quadruple state and three operations), `evaluate.py` (five arms + behavior probes), `controls.py` (bypass controls), `generation.py` (answer level), `local_effects.py` (locality/latency), `index_variance.py` (rebuild variance).
 
-## 7. 许可
+## 7. License
 
-- 代码 MIT，见 `LICENSE`。
-- GraphRAG v3.3.0 为 MIT，本仓库不重分发其源码。
-- HotpotQA 条款见 <https://hotpotqa.github.io/>；原始 dump 不随仓库分发，按 `data/README.md` 下载并校验 SHA-256，`data/` 下的子集仅用于基准测试。
+- Code is MIT, see `LICENSE`.
+- GraphRAG v3.3.0 is MIT; this repository does not redistribute its source.
+- HotpotQA terms at <https://hotpotqa.github.io/>; the original dump is not distributed with the repository, download and verify SHA-256 per `data/README.md`, and the subsets under `data/` are used only for benchmarking.

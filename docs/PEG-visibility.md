@@ -1,399 +1,401 @@
-# PEG：面向图 RAG 的非侵入增量可见性通道
+English | [简体中文](PEG-visibility-zh.md)
 
-## 摘要
+# PEG: A Non-Invasive Incremental Visibility Channel for Graph RAG
 
-图检索增强生成系统的索引由实体抽取、描述合并与社区摘要构成，重建成本远高于单文档写入，因此系统在两次重建之间存在一个间隙期：知识已被修改，但索引仍是旧的。本文不提出新的增量机制，而是把工程中分散的失效处理做法——标题主键、原地替换、墓碑、跳过未变——整理成一套封闭的段落级操作，在 GraphRAG v3.3.0 宿主之上给出其行为契约、代价上界与非侵入定理。
+## Abstract
 
-PEG 的段落层是标题对齐的四元组：标题、正文、单位向量与可见状态；它通过追加、替换与墓碑三种操作吸收增量，检索为查询向量与可见段落向量的内积排序。操作本身是定义性的，本文不把它们包装成新定理；实质主张只有两条：任意操作序列不改变宿主状态，以及一次增量序列的模型调用数为追加与替换之和。这两条把 PEG 限定为可见性层，而不是索引层。
+The index of a graph retrieval-augmented generation system consists of entity extraction, description merging, and community summarization; its rebuild cost is far higher than a single-document write, so the system has a gap period between two rebuilds: knowledge has been changed, but the index is still old. This paper does not propose a new incremental mechanism; instead, it consolidates the scattered failure-handling practices found in engineering—title primary keys, in-place replacement, tombstones, skipping unchanged content—into a closed set of paragraph-level operations, and gives their behavioral contract, cost upper bound, and non-invasive theorem on top of the GraphRAG v3.3.0 host.
 
-在真实宿主与真实模型、同一套 HotpotQA 固定子集上，宿主对 10 次同标题改写可见 0 次、在 5 次删除后仍返回陈旧段落 5 次；PEG 分别为 10/10 与 0/5。段落层检索的基础问题 $\mathrm{Hit@1}=0.933$、$\mathrm{Hit@5}=1.000$、MRR $=0.961$，与普通段落向量检索同分；多跳问题中两段支撑同时进入 top-5 的比例为 0.80。写入不产生生成调用。对照实验表明，外部修订表同样能让改写可见，因此 PEG 的差别不在"能否看见"，而在操作封闭性、性质与代价。
+PEG's paragraph layer is a title-aligned quadruple: title, body text, unit vector, and visibility state; it absorbs increments through three operations—append, replace, and tombstone—and retrieval is the inner-product ranking of the query vector against visible paragraph vectors. The operations themselves are definitional, and this paper does not package them as new theorems; there are only two substantive claims: any operation sequence does not change host state, and the number of model calls for one incremental sequence is the sum of appends and replaces. These two confine PEG to a visibility layer, not an index layer.
 
-PEG 不提供精确删除，不修复宿主的社区报告与合并实体描述，也不提升常规检索精度。它与要求重建索引以保证删除等价的方案（Lightfoot）和把图、摘要放在单一数据库中的方案（post-graph-rag）解决的是不同问题：PEG 的唯一独占条件是"不修改宿主"。
+On a real host with real models, on the same fixed HotpotQA subset, the host sees 0 of 10 same-title rewrites, and still returns stale paragraphs 5 times after 5 deletions; PEG gives 10/10 and 0/5 respectively. Paragraph-layer retrieval obtains $\mathrm{Hit@1}=0.933$, $\mathrm{Hit@5}=1.000$, and MRR $=0.961$, tied with ordinary paragraph vector retrieval; the proportion of multi-hop questions whose two supporting paragraphs both enter the top-5 is 0.80. Writes produce no generation calls. A controlled experiment shows that an external revision table can likewise make rewrites visible, so PEG's difference is not in "whether changes can be seen" but in operational closure, properties, and cost.
 
-**关键词**：检索增强生成；图 RAG；增量更新；非侵入；段落向量；可见性
+PEG does not provide exact deletion, does not repair the host's community reports or merged entity descriptions, and does not improve ordinary retrieval accuracy. It addresses different problems from approaches that require index rebuilding to guarantee deletion equivalence (Lightfoot) and approaches that place the graph and summaries in a single database (post-graph-rag): PEG's only exclusive condition is "does not modify the host."
 
-## 1. 引言
+**Keywords**: retrieval-augmented generation; graph RAG; incremental update; non-invasive; paragraph vector; visibility
 
-### 1.1 间隙期与前提不成立
+## 1. Introduction
 
-图 RAG 的索引成本集中在生成侧。以 GraphRAG 为例，索引需要为每个文本单元抽取实体与关系、合并同名实体的多段描述、构建层次社区，并为每个社区生成摘要。我们在一份 300 段、共 38,763 token 的语料上实测：索引产生 2,171 个实体与 502 个社区，触发 1,710 次生成调用。
+### 1.1 The Gap Period and the Failure of Premises
 
-这决定了索引无法随写入即时更新。于是在"知识已改"与"索引已改"之间必然存在一段时间，系统对外呈现旧内容；更严重的是，这种陈旧无法从检索结果本身识别。
+The index cost of graph RAG concentrates on the generation side. Taking GraphRAG as an example, indexing requires extracting entities and relations for each text unit, merging multiple descriptions of same-named entities, building hierarchical communities, and generating a summary for each community. We measured on a corpus of 300 paragraphs totaling 38,763 tokens: indexing produced 2,171 entities and 502 communities, and triggered 1,710 generation calls.
 
-宿主的增量能力决定了间隙期的性质。GraphRAG v3.3.0 的增量索引以文档标题为判据：同标题改写不进入新增集合，标题消失只被记录为删除集合。第 5.3 节给出对应的行为实验：10 次改写可见 0 次，5 次删除后陈旧段落仍被返回 5 次。
+This determines that the index cannot be updated immediately with writes. Thus there necessarily exists a period between "knowledge has changed" and "the index has changed" during which the system presents old content; more seriously, this staleness cannot be identified from the retrieval results themselves.
 
-换一个说法：这类宿主并不缺少"更新"这个动作，而是"更新"所依赖的前提不成立——它假定标题变化对应内容变化，且删除可以被下游消费。前提一旦不成立，再讨论增量算法没有意义。
+The host's incremental capability determines the nature of the gap period. GraphRAG v3.3.0's incremental indexing uses document title as the criterion: same-title rewrites do not enter the added set, and disappearing titles are only recorded as a deletion set. Section 5.3 gives the corresponding behavioral experiment: 0 of 10 rewrites are visible, and stale paragraphs are still returned 5 times after 5 deletions.
 
-### 1.2 本文的定位
+Put another way: this kind of host does not lack the action of "update"; rather, the premises that "update" relies on do not hold—it assumes that a title change corresponds to a content change, and that deletions can be consumed downstream. Once the premises fail, it is meaningless to discuss incremental algorithms further.
 
-本文把一组在工程中已经分散存在的做法整理成一个封闭的操作集合，并给出它成立的条件。
+### 1.2 Positioning of This Paper
 
-这些做法不是新的：由源派生的段落主键、原地替换、软删除标记、按哈希跳过未变内容，都已在检索系统中反复出现。近期的删除研究也直言其命题"在同义反复的边缘"（[3]）。因此本文不主张发明增量机制，而主张三件事：
+This paper consolidates a set of practices that already exist in scattered engineering form into a closed operation set, and states the conditions under which it holds.
 
-1. 把"追加、替换、墓碑"写成对同一状态的四元组操作，使任意合法交错得到唯一终态；
-2. 明确这些操作成立的前提，并指出宿主与常见工程做法分别违反了哪一条；
-3. 证明该层不写宿主状态，并给出操作代价的上界。
+These practices are not new: paragraph primary keys derived from the source, in-place replacement, soft-delete markers, and skipping unchanged content by hash have all appeared repeatedly in retrieval systems. Recent deletion research also states plainly that its proposition is "on the edge of tautology" ([3]). Therefore this paper does not claim to invent an incremental mechanism, but claims three things:
 
-这一定位带来两个直接结论：PEG 可以在宿主重建之前让修改与删除在检索层生效；PEG 的写入不触发宿主任何状态变化；PEG 的能力边界由"可见性"而非"图结构归纳"决定。
+1. Write "append, replace, tombstone" as quadruple operations on the same state, so that any legal interleaving yields a unique final state;
+2. Make explicit the premises under which these operations hold, and point out which one the host and common engineering practices respectively violate;
+3. Prove that this layer does not write host state, and give an upper bound on operation cost.
 
-### 1.3 本文的工作与边界
+This positioning yields two direct conclusions: PEG can make modifications and deletions take effect at the retrieval layer before the host rebuilds; PEG's writes trigger no state change in the host; PEG's capability boundary is determined by "visibility" rather than "graph-structure induction."
 
-本文定义 PEG 的段落层状态与三种增量操作；给出五条由定义直接得出的行为性质，以及一条非侵入定理与一条代价命题；在真实宿主与真实模型上完成检索、可见性、稳定性、机制核对、成本、基线与生成答案实验；报告多跳覆盖、自助法置信区间、重建方差，并用四种更简单的旁路检验"可见性是否只能由 PEG 提供"。
+### 1.3 Work and Boundaries of This Paper
 
-本文不主张：检索精度提升；精确删除（宿主存储中的向量仍在）；对宿主社区报告与实体描述的修复；端到端生产质量。第 7 节逐条列出边界。
+This paper defines PEG's paragraph-layer state and three incremental operations; gives five behavioral properties that follow directly from the definitions, plus one non-invasive theorem and one cost proposition; completes retrieval, visibility, stability, mechanism verification, cost, baseline, and generated-answer experiments on a real host with real models; reports multi-hop coverage, bootstrap confidence intervals, and rebuild variance; and uses four simpler bypasses to test "whether visibility can only be provided by PEG."
 
-## 2. 相关工作
+This paper does not claim: retrieval accuracy improvement; exact deletion (vectors in host storage remain); repair of host community reports and entity descriptions; end-to-end production quality. Section 7 lists the boundaries one by one.
 
-### 2.1 图 RAG 的增量与删除
+## 2. Related Work
 
-**GraphRAG** 以 Leiden 算法构建层次社区并为每个社区生成摘要，全局归纳能力强，但索引期生成长度高，增量路径窄；其社区报告混合多个文档的内容，删除时无法归因到来源（[3] 对此有直接讨论）。**LightRAG** 以双层关键词替代社区摘要，索引更轻，但同样以模型合并实体描述。
+### 2.1 Incremental Update and Deletion in Graph RAG
 
-**Lightfoot**（[3]）要求每个派生记录都是"存活段落抽取结果"的确定性函数：描述保持在段落级、不使用模型 judge、同义边用阈值而非 top-k 邻居。删除因此是一次事务，且删除后的存储与"从未包含该文档"的重建逐表相等；在 11,402 段语料上删除 10% 用时 14 秒、无模型调用。代价是它必须自建存储，并明确不评估社区摘要类问题（其局限第 6 条）。
+**GraphRAG** builds hierarchical communities with the Leiden algorithm and generates a summary for each community; its global induction capability is strong, but the generation volume during indexing is high and the incremental path is narrow; its community reports mix content from multiple documents, and deletions cannot be attributed to a source ([3] discusses this directly). **LightRAG** replaces community summaries with dual-level keywords, making indexing lighter, but it likewise merges entity descriptions with a model.
 
-**post-graph-rag**（[4]）把段落、规范实体图与社区摘要放在同一个 PostgreSQL 中，用双时态记录关系成立时间与系统相信时间，并以 supersede 让被替代的旧关系失效。它同时具备失效语义与社区摘要，但以单一数据库架构为前提。
+**Lightfoot** ([3]) requires that every derived record be a deterministic function of "extraction results from surviving paragraphs": descriptions stay at the paragraph level, no model judge is used, and synonym edges use thresholds rather than top-k neighbors. Deletion is therefore a transaction, and the post-deletion store equals, table by table, a rebuild that "never contained the document"; on an 11,402-paragraph corpus, deleting 10% took 14 seconds with no model calls. The cost is that it must build its own store, and it explicitly does not evaluate community-summary-type questions (its limitation 6).
 
-### 2.2 工程实践中的标准做法
+**post-graph-rag** ([4]) places paragraphs, a canonical entity graph, and community summaries in the same PostgreSQL, uses bi-temporal records for relation validity time and system-belief time, and uses supersede to invalidate replaced old relations. It has both invalidation semantics and community summaries, but presupposes a single-database architecture.
 
-在检索系统里，下列做法已经标准化：段落 ID 由源文档与位置派生，使改写不产生新 ID；用 `is_active` 一类标记做软删除，并在检索时过滤；用内容哈希跳过未变文档；先写墓碑再补索引。它们与 PEG 的操作在形式上高度重合。
+### 2.2 Standard Practices in Engineering
 
-本文的差别不在这些做法本身，而在把它们收成一个有终态、有前提、有代价界的操作集合，并把"不写宿主"作为可验证的条件，而不是实现细节。
+In retrieval systems, the following practices have already been standardized: paragraph IDs derived from the source document and position, so that rewrites do not produce new IDs; soft deletion with an `is_active`-style marker, filtered at retrieval time; skipping unchanged documents by content hash; writing a tombstone before filling in the index. They overlap heavily in form with PEG's operations.
 
-### 2.3 软删除的边界
+This paper's difference is not in these practices themselves, but in collecting them into an operation set with a final state, premises, and a cost bound, and in making "does not write the host" a verifiable condition rather than an implementation detail.
 
-软删除只保证"检索不可见"，不保证"数据不可恢复"。Ghost Vectors（[5]）在三套 HNSW 实现上验证：被标记删除的向量仍保留在磁盘索引中，可通过读取原始索引文件绕过 API 恢复；在结构化敏感数据上，属性恢复率可达 100%。这意味着墓碑不能用于满足合规级删除要求。
+### 2.3 The Boundary of Soft Deletion
 
-PEG 的墓碑属于软删除：它清空的是可见状态，不是存储。第 7 节把这一点列为硬边界。
+Soft deletion guarantees only that "retrieval cannot see it", not that "the data cannot be recovered". Ghost Vectors ([5]) verifies on three HNSW implementations: vectors marked deleted remain in the on-disk index and can be recovered by reading the raw index file to bypass the API; on structured sensitive data, the attribute recovery rate can reach 100%. This means tombstones cannot be used to satisfy compliance-level deletion requirements.
 
-### 2.4 对比
+PEG's tombstone belongs to soft deletion: it clears the visibility state, not the storage. Section 7 lists this as a hard boundary.
 
-| | 段落主键 | 墓碑 | 精确删除 | 双时态 | 社区摘要 | 不改宿主 |
+### 2.4 Comparison
+
+| | Paragraph primary key | Tombstone | Exact deletion | Bi-temporal | Community summaries | No host modification |
 |---|---|---|---|---|---|---|
-| Lightfoot [3] | 派生（段落级） | — | 是（事务，等价重建） | — | 否 | 否（自建存储） |
-| post-graph-rag [4] | 归并到规范名 | — | supersede（旧关系失效，非文档删除） | 是 | 是 | 否（单一数据库） |
-| 工程实践 | 常见 | 常见 | — | — | 视实现 | 视实现 |
-| **PEG** | 标题唯一 | 是 | 否（软删除） | 否 | 宿主提供（陈旧） | **是** |
+| Lightfoot [3] | Derived (paragraph-level) | — | Yes (transaction, rebuild-equivalent) | — | No | No (own store) |
+| post-graph-rag [4] | Merged to canonical names | — | supersede (old relations invalidated, not document deletion) | Yes | Yes | No (single database) |
+| Engineering practice | Common | Common | — | — | Implementation-dependent | Implementation-dependent |
+| **PEG** | Title-unique | Yes | No (soft deletion) | No | Host-provided (stale) | **Yes** |
 
-这张表的读法是：前三列比较能力，最后一列比较适用条件。PEG 在删除能力上弱于前两者，它唯一独占的是"作用于已有宿主、不要求重建"。因此本文不与 Lightfoot 比删除正确性，也不与 post-graph-rag 比时间建模；本文回答的是另一问题：在一个已经在运行的宿主旁，能否用零生成调用让改动可见。
+The reading of this table is: the first three columns compare capabilities, the last column compares applicable conditions. PEG is weaker than the former two in deletion capability; its only exclusive property is "acts on an existing host and does not require rebuilding." Therefore this paper does not compare deletion correctness with Lightfoot, nor temporal modeling with post-graph-rag; it answers a different question: beside an already-running host, can changes be made visible with zero generation calls.
 
-## 3. PEG 的结构与操作
+## 3. PEG's Structure and Operations
 
-### 3.1 段落层状态
+### 3.1 Paragraph-Layer State
 
-段落层状态为四元组
+The paragraph-layer state is the quadruple
 
 $S = (T, X, V, \sigma)$
 
-其中 $T = (t_1, \dots, t_N)$ 为段落标题序列，$X = (x_1, \dots, x_N)$ 为对应正文，$V \in \mathbb{R}^{N \times d}$ 的第 $i$ 行为 $x_i$ 的单位嵌入向量，$\sigma \in \{\text{active}, \text{deleted}\}^N$ 为可见状态。每个标题另有一个整数计数 $c_i$，仅记录改写次数，不参与检索。
+where $T = (t_1, \dots, t_N)$ is the paragraph title sequence, $X = (x_1, \dots, x_N)$ is the corresponding body text, the $i$-th row of $V \in \mathbb{R}^{N \times d}$ is the unit embedding vector of $x_i$, and $\sigma \in \{\text{active}, \text{deleted}\}^N$ is the visibility state. Each title also has an integer counter $c_i$, which records only the number of rewrites and does not participate in retrieval.
 
-标题在 $T$ 中唯一。这是 PEG 的核心前提：它使结果可与宿主返回的文档标题直接对齐，也使同一段落在整个生命周期内只有一个位置。
+Titles are unique in $T$. This is PEG's core premise: it allows results to be aligned directly with document titles returned by the host, and it also gives the same paragraph only one position throughout its lifetime.
 
-### 3.2 增量操作
+### 3.2 Incremental Operations
 
-| 操作 | 对应事件 | 前置条件 | 状态变化 | 模型调用 |
+| Operation | Corresponding event | Precondition | State change | Model calls |
 |---|---|---|---|---|
-| 追加 $\mathrm{append}(t,x)$ | 新段落进入语料 | $t \notin T$ | 末尾新增一项，向量由 $x$ 嵌入得到，状态 active | 1 次段落嵌入 |
-| 替换 $\mathrm{replace}(t,x)$ | 已有段落被改写 | $t \in T$ | 覆盖第 $i$ 项的正文与向量，计数加 1 | 1 次段落嵌入 |
-| 墓碑 $\mathrm{delete}(A)$ | 段落被移除 | $t \in T$ | 对应状态置为 deleted，正文与向量保留 | 0 |
+| Append $\mathrm{append}(t,x)$ | New paragraph enters the corpus | $t \notin T$ | Add one item at the end; vector obtained by embedding $x$; state active | 1 paragraph embedding |
+| Replace $\mathrm{replace}(t,x)$ | Existing paragraph is rewritten | $t \in T$ | Overwrite the body text and vector of item $i$; increment counter by 1 | 1 paragraph embedding |
+| Tombstone $\mathrm{delete}(A)$ | Paragraph is removed | $t \in T$ | Set the corresponding state to deleted; body text and vector retained | 0 |
 
-形式化地，记位置函数为 $\mathrm{pos}(t)$：
+Formally, let the position function be $\mathrm{pos}(t)$:
 
-- $\mathrm{append}(t,x)$：若 $t \notin T$，令 $x_{N+1}=x$，$V_{N+1}=\mathrm{emb}(x)/\Vert\mathrm{emb}(x)\Vert$，$\sigma_{N+1}=\text{active}$，$c_{N+1}=1$；否则不修改任何字段。
-- $\mathrm{replace}(t,x)$：令 $i=\mathrm{pos}(t)$，$x_i=x$，$V_i=\mathrm{emb}(x)/\Vert\mathrm{emb}(x)\Vert$，$c_i=c_i+1$。
-- $\mathrm{delete}(A)$：对每个 $t \in A \cap T$，令 $\sigma_{\mathrm{pos}(t)}=\text{deleted}$；对 $t \notin T$ 忽略。
+- $\mathrm{append}(t,x)$: if $t \notin T$, set $x_{N+1}=x$, $V_{N+1}=\mathrm{emb}(x)/\Vert\mathrm{emb}(x)\Vert$, $\sigma_{N+1}=\text{active}$, $c_{N+1}=1$; otherwise no field is modified.
+- $\mathrm{replace}(t,x)$: set $i=\mathrm{pos}(t)$, $x_i=x$, $V_i=\mathrm{emb}(x)/\Vert\mathrm{emb}(x)\Vert$, $c_i=c_i+1$.
+- $\mathrm{delete}(A)$: for each $t \in A \cap T$, set $\sigma_{\mathrm{pos}(t)}=\text{deleted}$; ignore $t \notin T$.
 
-三种操作的差别在于是否重新嵌入：追加与替换各需一次段落嵌入，墓碑只改一位状态。嵌入函数对整段文本计算，因此改写必须整段重嵌入；无法由旧向量与改动片段推出新向量。
+The difference among the three operations lies in whether re-embedding occurs: append and replace each require one paragraph embedding, while a tombstone changes only one state bit. The embedding function is computed over the entire paragraph text, so a rewrite must re-embed the whole paragraph; a new vector cannot be derived from the old vector and the changed fragment.
 
-### 3.3 一次完整的增量序列
+### 3.3 A Complete Incremental Sequence
 
-以实验场景为例，基础语料为 300 段，随后发生三类改动：
+Taking the experimental scenario as an example, the base corpus is 300 paragraphs, after which three kinds of changes occur:
 
-| 步骤 | 事件 | 操作 | 结果 | 查询可见性 |
+| Step | Event | Operation | Result | Query visibility |
 |---|---|---|---|---|
-| 1 | 100 段新文档入库 | 100 次追加 | 段落数 300 → 400 | 新段落立即可检索 |
-| 2 | 10 段正文追加含标识串的说明 | 10 次替换 | 对应正文与向量更新 | 返回新正文，标识串可见 |
-| 3 | 5 段被移除 | 5 次墓碑 | 5 项状态置 deleted | 对应标题不再返回 |
+| 1 | 100 new documents enter the corpus | 100 appends | Paragraph count 300 → 400 | New paragraphs immediately retrievable |
+| 2 | A note containing an identifier string is appended to the body of 10 paragraphs | 10 replaces | Corresponding body text and vectors updated | New body text returned, identifier string visible |
+| 3 | 5 paragraphs are removed | 5 tombstones | 5 items set to deleted | Corresponding titles no longer returned |
 
-操作代价为 100 次嵌入加 10 次嵌入，墓碑不产生嵌入调用。同一序列交给宿主时，步骤 2 与 3 都不会被处理（第 5.3 节）。
+Operation cost is 100 embeddings plus 10 embeddings; tombstones produce no embedding calls. When the same sequence is given to the host, steps 2 and 3 are not processed (Section 5.3).
 
-### 3.4 段落级检索
+### 3.4 Paragraph-Level Retrieval
 
-给定查询 $q$，令 $r=\mathrm{emb}(q)/\Vert\mathrm{emb}(q)\Vert$，相似度 $s_i=\langle V_i,r\rangle$。段落层返回
+Given a query $q$, let $r=\mathrm{emb}(q)/\Vert\mathrm{emb}(q)\Vert$ and similarity $s_i=\langle V_i,r\rangle$. The paragraph layer returns
 
 $\mathrm{TopK}(q,k)=\arg\max_{i:\ \sigma_i=\text{active}} s_i \quad (\lvert\cdot\rvert=k)$
 
-对应的标题序列以及这些标题的当前正文。检索只在可见段落上进行，排序只由向量与查询决定。
+together with the corresponding title sequence and the current body text of these titles. Retrieval operates only on visible paragraphs, and ranking is determined solely by the vectors and the query.
 
-## 4. 性质与前提
+## 4. Properties and Premises
 
-### 4.1 由定义直接得出的行为性质
+### 4.1 Behavioral Properties Derived Directly from Definitions
 
-下列五条不是定理，而是操作定义展开后的行为契约。把它们写出来，是为了让实现与测试有明确对象，而不是为了增加理论分量。
+The following five are not theorems, but behavioral contracts unfolded from the operation definitions. Writing them out is to give implementations and tests a clear object, not to add theoretical weight.
 
-**P1（替换可见）.** 对 $t$ 执行 $\mathrm{replace}(t,x)$ 后，任何返回 $t$ 的检索都返回正文 $x$。由检索读取 $X$ 且标题唯一直接可得。
+**P1 (Replacement is visible).** After executing $\mathrm{replace}(t,x)$ on $t$, any retrieval that returns $t$ returns the body text $x$. This follows directly from retrieval reading $X$ and from title uniqueness.
 
-**P2（连续替换以末次为准）.** 同一标题依次执行 $m$ 次替换后，返回正文为最后一次的 $x^{(m)}$。由写同一位置、后写覆盖前写直接可得。
+**P2 (Successive replacement takes the last one).** After executing $m$ replacements in sequence on the same title, the returned body text is $x^{(m)}$ from the last one. This follows directly from writing the same position and from later writes overwriting earlier ones.
 
-**P3（墓碑不可见）.** 对 $t$ 执行墓碑后，任何检索都不返回 $t$。由检索可行域为 active 集合直接可得。
+**P3 (Tombstoned is invisible).** After executing a tombstone on $t$, no retrieval returns $t$. This follows directly from the retrieval feasible region being the active set.
 
-**P4（追加不覆盖）.** 若 $t \in T$，则追加不改变任何字段。由追加的前置条件直接可得。其工程含义是追加幂等：重复导入不会产生副本。
+**P4 (Append does not overwrite).** If $t \in T$, append changes no field. This follows directly from append's precondition. Its engineering meaning is that append is idempotent: repeated imports do not produce duplicates.
 
-**P5（计数与检索无关）.** 检索输出不依赖计数 $c$。由检索函数的定义域只含 $(T,X,V,\sigma)$ 直接可得。因此 PEG 不提供"越新越靠前"的排序。
+**P5 (Counter is irrelevant to retrieval).** Retrieval output does not depend on the counter $c$. This follows directly from the retrieval function's domain containing only $(T,X,V,\sigma)$. Therefore PEG does not provide "newer ranks higher" ordering.
 
-### 4.2 非侵入定理
+### 4.2 The Non-Invasive Theorem
 
-**定理 4.1（非侵入）.** PEG 的任意操作序列不改变宿主的图结构、社区划分、社区报告、文档表、文本单元表与向量表。
+**Theorem 4.1 (Non-invasive).** Any operation sequence of PEG does not change the host's graph structure, community partition, community reports, document table, text-unit table, or vector table.
 
-**证明.** 逐一列出宿主的可写状态面与 PEG 的写入目标：
+**Proof.** Enumerate the host's writable state surfaces and PEG's write targets:
 
-| 宿主状态面 | PEG 是否写入 | 依据 |
+| Host state surface | Does PEG write? | Basis |
 |---|---|---|
-| 实体与关系表 | 否 | PEG 只维护 $(T,X,V,\sigma,c)$ |
-| 社区划分与社区报告 | 否 | PEG 不调用社区发现与摘要生成 |
-| 文档表与文本单元表 | 否 | PEG 不写宿主存储，也不调用增量索引流程 |
-| 宿主向量表与缓存 | 否 | PEG 的向量只存在于自己的状态文件中 |
-| 宿主服务进程 | 否 | PEG 以只读方式读取宿主产物 |
+| Entity and relation tables | No | PEG maintains only $(T,X,V,\sigma,c)$ |
+| Community partition and community reports | No | PEG does not call community detection or summary generation |
+| Document table and text-unit table | No | PEG does not write host storage, nor call the incremental indexing pipeline |
+| Host vector table and cache | No | PEG's vectors exist only in its own state file |
+| Host service process | No | PEG reads host artifacts in a read-only manner |
 
-PEG 的写入集合是自身的状态文件；它与上表任一状态面不相交，且不调用宿主的索引更新接口。因此任意操作序列结束后，宿主状态与操作前相同。$\square$
+PEG's write set is its own state file; it is disjoint from every state surface in the table above, and it does not call the host's index update interface. Therefore after any operation sequence ends, the host state is the same as before the operations. $\square$
 
-这一定理的价值不在证明难度，而在可检查性：上表每一行都对应一个可测试的断言，第 5.6 节用机制核对验证了其中与检索相关的部分。
+The value of this theorem is not in proof difficulty but in checkability: each row of the table above corresponds to a testable assertion, and Section 5.6 verifies the part related to retrieval through mechanism verification.
 
-### 4.3 操作代价
+### 4.3 Operation Cost
 
-**命题 4.2（操作代价）.** 一次增量序列若含 $n_a$ 次追加、$n_r$ 次替换、$n_d$ 次墓碑，则模型调用次数为 $n_a+n_r$，与段落长度及墓碑集合大小无关。
+**Proposition 4.2 (Operation cost).** If an incremental sequence contains $n_a$ appends, $n_r$ replaces, and $n_d$ tombstones, then the number of model calls is $n_a+n_r$, independent of paragraph length and of the size of the tombstone set.
 
-**证明.** 追加与替换各需一次段落嵌入，墓碑不调用模型；批量处理不改变每条操作的计数。$\square$
+**Proof.** Append and replace each require one paragraph embedding; tombstones call no model; batch processing does not change the count of each operation. $\square$
 
-### 4.4 前提与违反者
+### 4.4 Premises and Violators
 
-P1–P5 都建立在两个前提上：标题唯一，且操作按标题施加。前提不成立时，性质随之失效。指出谁破坏了前提，比重复证明性质更有信息量：
+P1–P5 all rest on two premises: titles are unique, and operations are applied by title. When the premises fail, the properties fail accordingly. Pointing out who breaks the premises is more informative than repeating the proofs of the properties:
 
-| 前提 | 违反者 | 后果 |
+| Premise | Violator | Consequence |
 |---|---|---|
-| 标题变化对应内容变化 | GraphRAG v3.3.0 的标题判据 | 同标题改写不进新增集合，旧正文继续可见 |
-| 删除可被下游消费 | 同一增量路径 | 删除只被记录，陈旧段落仍被返回 |
-| 检索只看可见集合 | 软删除实现（[5]） | 向量仍在存储中，可被绕过 API 恢复 |
-| 派生结构不依赖历史 | 合并式实体描述、模型 judge、top-k 邻居（[3]） | 删除后结构与重建不等价 |
+| Title change corresponds to content change | GraphRAG v3.3.0's title criterion | Same-title rewrites do not enter the added set; old body text remains visible |
+| Deletion can be consumed downstream | The same incremental path | Deletions are only recorded; stale paragraphs are still returned |
+| Retrieval looks only at the visible set | Soft-deletion implementation ([5]) | Vectors remain in storage and can be recovered by bypassing the API |
+| Derived structures do not depend on history | Merged entity descriptions, model judge, top-k neighbors ([3]) | After deletion, the structure is not rebuild-equivalent |
 
-PEG 的取舍是：放弃合并式描述、judge 与 top-k 邻居这些会破坏前提的结构——它本来就不构建它们，而是只读宿主的产物；代价是宿主的这些结构在删除后仍然陈旧。第 7 节把这一代价写明。
+PEG's trade-off is: it gives up merged descriptions, judge, and top-k neighbors—structures that would break the premises; it never builds them in the first place, but only reads the host's artifacts. The cost is that these host structures remain stale after deletion. Section 7 states this cost explicitly.
 
-## 5. 实验
+## 5. Experiments
 
-### 5.1 设置
+### 5.1 Setup
 
-本文全部实验使用同一套数据与同一套模型配置。
+All experiments in this paper use the same dataset and the same model configuration.
 
-| 项 | 取值 |
+| Item | Value |
 |---|---|
-| 参照宿主 | GraphRAG v3.3.0 源码 |
-| 生成模型 | DeepSeek-V4.1-Flash，关闭思考过程 |
-| 嵌入模型 | bge-m3，1024 维 |
-| 段落单位 | HotpotQA 单段正文 |
-| 语料 | 30 + 10 问（300 + 100 段）；90 + 30 问（900 + 300 段） |
-| 指标 | 检索级命中与 MRR；答案级 EM 与词级 F1 |
+| Reference host | GraphRAG v3.3.0 source code |
+| Generation model | DeepSeek-V4.1-Flash, thinking process disabled |
+| Embedding model | bge-m3, 1024 dimensions |
+| Paragraph unit | HotpotQA single-paragraph body text |
+| Corpus | 30 + 10 questions (300 + 100 paragraphs); 90 + 30 questions (900 + 300 paragraphs) |
+| Metrics | Retrieval-level hit and MRR; answer-level EM and word-level F1 |
 
-### 5.2 检索表现
+### 5.2 Retrieval Performance
 
-段落层：基础问题（$n=30$）$\mathrm{Hit@1}=0.933$、$\mathrm{Hit@5}=1.000$、MRR $=0.961$；增量问题（$n=10$）$\mathrm{Hit@1}=0.900$、$\mathrm{Hit@5}=1.000$、MRR $=0.950$。
+Paragraph layer: base questions ($n=30$) $\mathrm{Hit@1}=0.933$, $\mathrm{Hit@5}=1.000$, MRR $=0.961$; incremental questions ($n=10$) $\mathrm{Hit@1}=0.900$, $\mathrm{Hit@5}=1.000$, MRR $=0.950$.
 
-多跳覆盖：一条问题的全部支撑段落同时进入 top-5 的比例为 0.80、进入 top-10 的比例为 0.95（$n=40$）；同口径下宿主图检索分别为 0.40 与 0.575。
+Multi-hop coverage: the proportion of questions whose supporting paragraphs all enter the top-5 is 0.80, and entering the top-10 is 0.95 ($n=40$); under the same definition, host graph retrieval gives 0.40 and 0.575 respectively.
 
-置信区间：对 40 题做 2,000 轮自助法重采样（种子 17），段落层 $\mathrm{Hit@1}=0.925$[0.825, 1.000]、MRR $=0.958$[0.904, 1.000]；增量组因只有 10 题，$\mathrm{Hit@1}=0.900$[0.700, 1.000]。
+Confidence intervals: 2,000 bootstrap resampling rounds on 40 questions (seed 17), paragraph layer $\mathrm{Hit@1}=0.925$[0.825, 1.000], MRR $=0.958$[0.904, 1.000]; because the incremental group has only 10 questions, $\mathrm{Hit@1}=0.900$[0.700, 1.000].
 
-分折复核（90 + 30 问，3 折）：段落层基础 $\mathrm{Hit@1}$ 为 0.867、0.967、0.867；增量问题为 1.000、0.900、1.000。段落层只依赖段落向量，不依赖宿主索引，因此分折数字与全量一致。
+Fold-wise recheck (90 + 30 questions, 3 folds): paragraph-layer base $\mathrm{Hit@1}$ is 0.867, 0.967, 0.867; incremental questions are 1.000, 0.900, 1.000. The paragraph layer depends only on paragraph vectors and not on the host index, so the fold-wise numbers agree with the full set.
 
-### 5.3 增量操作的可见性
+### 5.3 Visibility of Incremental Operations
 
-对 10 段基础正文追加含唯一标识串的说明（替换），对另 5 段执行墓碑，再以探针问题检索：
+Append a note containing a unique identifier string to the body of 10 base paragraphs (replace), execute a tombstone on another 5 paragraphs, then retrieve with probe questions:
 
-| 行为 | 参照宿主 | PEG |
+| Behavior | Reference host | PEG |
 |---|---|---|
-| 改写后的标识串出现在返回正文中 | 0 / 10 | 10 / 10 |
-| 删除后的标题仍被返回 | 5 / 5 | 0 / 5 |
+| Identifier string after rewrite appears in returned body text | 0 / 10 | 10 / 10 |
+| Deleted title is still returned | 5 / 5 | 0 / 5 |
 
-宿主的这一表现是其增量路径以标题判定的结果；PEG 通过替换与墓碑避免这两点，对应 P1 与 P3。
+This behavior of the host is the result of its incremental path being decided by title; PEG avoids both points through replacement and tombstone, corresponding to P1 and P3.
 
-### 5.4 一次改写的分数变化
+### 5.4 Score Change of a Single Rewrite
 
-改写也改变该段与其他段落的相对位置。以查询 `What is the archive verification code for Ed Wood (film)?` 为例：
+Rewriting also changes the relative position of that paragraph with respect to other paragraphs. Taking the query `What is the archive verification code for Ed Wood (film)?` as an example:
 
-| 段落 | 改前分数 / 名次 | 改后分数 / 名次 | 正文是否含标识串 |
+| Paragraph | Score / rank before | Score / rank after | Body text contains identifier string |
 |---|---|---|---|
-| Ed Wood (film) | 0.5719 / 第 1 | 0.6104 / 第 2 | 否 → 是 |
-| Ed Wood | 0.5338 / 第 2 | 0.6283 / 第 1 | 否 → 是 |
+| Ed Wood (film) | 0.5719 / 1st | 0.6104 / 2nd | No → Yes |
+| Ed Wood | 0.5338 / 2nd | 0.6283 / 1st | No → Yes |
 
-被改写段落的分数上升，因为新正文出现与查询重合的短语；名次可能下降，因为同时被改写的另一段上升更多。因此"改写可见"不等于"名次上升"：PEG 保证正文正确，不保证排序收益。
+The score of the rewritten paragraph rises, because the new body text contains phrases overlapping with the query; the rank may drop, because another paragraph rewritten at the same time rises more. Therefore "rewrite is visible" is not equal to "rank rises": PEG guarantees correct body text, not ranking gains.
 
-删除侧同样直观：被墓碑的 5 段在改前位于第 1 或第 2 名（分数 0.5587–0.6676），改后不再出现。
+The deletion side is equally intuitive: the 5 tombstoned paragraphs ranked 1st or 2nd before the change (scores 0.5587–0.6676) and no longer appear after the change.
 
-### 5.5 成本
+### 5.5 Cost
 
-| 操作 | 模型调用 | 耗时 |
+| Operation | Model calls | Time |
 |---|---:|---:|
-| 编码 300 段 | 0（仅嵌入） | 6.7 s |
-| 追加 100 段 | 0（仅嵌入） | 2.4 s |
-| 替换 10 段 | 0（仅嵌入） | 与 10 次段落嵌入同阶 |
-| 墓碑 5 段 | 0 | 只改状态位 |
+| Encode 300 paragraphs | 0 (embedding only) | 6.7 s |
+| Append 100 paragraphs | 0 (embedding only) | 2.4 s |
+| Replace 10 paragraphs | 0 (embedding only) | Same order as 10 paragraph embeddings |
+| Tombstone 5 paragraphs | 0 | Only changes state bits |
 
-300 段编码的 6.7 s 为批量均值，折合每段约 22 ms；替换与追加的成本按段落数线性增长。对照宿主：基础索引 1,710 次生成调用、241 s；增量更新 647 次生成调用。
+The 6.7 s for encoding 300 paragraphs is a batch average, about 22 ms per paragraph; the cost of replace and append grows linearly with the number of paragraphs. Reference host: base indexing 1,710 generation calls, 241 s; incremental update 647 generation calls.
 
-### 5.6 机制核对
+### 5.6 Mechanism Verification
 
-为确认"改写可见"与"删除可见"分别由哪个环节决定，在同一 PEG 状态上做三项对照：
+To confirm which step decides "rewrite visible" and "deletion visible" respectively, three controls are run on the same PEG state:
 
-| 变体 | 改写可见 | 删除残留 | 重复槽位率 |
+| Variant | Rewrite visible | Deletion residue | Duplicate slot rate |
 |---|---|---:|---:|
-| 替换 + 墓碑 | 10/10 | 0/5 | 0.000 |
-| 追加副本 + 墓碑 | 10/10 | 0/5 | 0.025 |
-| 追加副本，无墓碑 | 10/10 | **5/5** | 0.025 |
+| Replace + tombstone | 10/10 | 0/5 | 0.000 |
+| Append duplicate + tombstone | 10/10 | 0/5 | 0.025 |
+| Append duplicate, no tombstone | 10/10 | **5/5** | 0.025 |
 
-改写可见在两种写入方式下都成立，说明它来自重新嵌入；删除可见只在有墓碑时成立，说明它来自墓碑；追加副本会让同一标题在 top-10 中重复出现，浪费 2.5% 的名额，这是 PEG 采用"标题唯一 + 原地替换"的原因；三种变体的排序不受影响，与 P5 一致。
+Rewrite visibility holds under both write methods, showing that it comes from re-embedding; deletion visibility holds only with a tombstone, showing that it comes from the tombstone; appending duplicates causes the same title to appear repeatedly in the top-10, wasting 2.5% of the slots, which is why PEG adopts "title uniqueness + in-place replacement"; the ranking of the three variants is unaffected, consistent with P5.
 
-### 5.7 基线对比
+### 5.7 Baseline Comparison
 
-为判断"段落向量检索"本身是否足够，比较三种较低成本的方法（同一批 40 题、400 段语料）：
+To judge whether "paragraph vector retrieval" itself is sufficient, three lower-cost methods are compared (the same batch of 40 questions, 400-paragraph corpus):
 
-| 方法 | 基础 Hit@1 / Hit@5 / MRR | 增量 Hit@1 / Hit@5 / MRR | 每问耗时 |
+| Method | Base Hit@1 / Hit@5 / MRR | Incremental Hit@1 / Hit@5 / MRR | Time per question |
 |---|---|---|---:|
-| BM25（词法） | 0.633 / 0.967 / 0.762 | 0.800 / 1.000 / 0.900 | 1.2 ms |
-| 段落向量（无版本语义） | 0.933 / 1.000 / 0.961 | 0.900 / 1.000 / 0.950 | 157 ms |
-| 文本单元向量 | 0.933 / 1.000 / 0.961 | 0.900 / 1.000 / 0.950 | 158 ms |
-| 宿主 local search | 0.567 / 0.833 / 0.678 | 0.600 / 0.900 / 0.708 | — |
+| BM25 (lexical) | 0.633 / 0.967 / 0.762 | 0.800 / 1.000 / 0.900 | 1.2 ms |
+| Paragraph vector (no version semantics) | 0.933 / 1.000 / 0.961 | 0.900 / 1.000 / 0.950 | 157 ms |
+| Text-unit vector | 0.933 / 1.000 / 0.961 | 0.900 / 1.000 / 0.950 | 158 ms |
+| Host local search | 0.567 / 0.833 / 0.678 | 0.600 / 0.900 / 0.708 | — |
 
-结论有三点：段落粒度的向量检索在本语料上已接近饱和（$\mathrm{Hit@5}=1.000$），PEG 的检索质量来自段落粒度与嵌入模型；BM25 明显更低（$\mathrm{Hit@1}$ 0.633 对 0.933），说明语料依赖语义匹配；宿主图检索更低（合计 0.575 对 0.933），原因是候选被实体与关系稀释。因此 PEG 的增量价值落在可见性，而非常规检索精度。
+There are three conclusions: paragraph-granularity vector retrieval is already near saturation on this corpus ($\mathrm{Hit@5}=1.000$), and PEG's retrieval quality comes from paragraph granularity and the embedding model; BM25 is markedly lower ($\mathrm{Hit@1}$ 0.633 vs. 0.933), indicating that the corpus relies on semantic matching; host graph retrieval is lower (0.575 combined vs. 0.933), because candidates are diluted by entities and relations. Therefore PEG's incremental value lies in visibility, not in ordinary retrieval accuracy.
 
-宿主侧的这一行在向量表完整的索引实例上测量。本次增量索引实例的文本单元向量表只含新增文档的 100 条向量，基础文档不在其中，若在该实例上测量会低估宿主；该实例仍用于第 5.3 节的可见性实验，因为版本语义与向量表完整性无关。
+This host-side row is measured on an index instance with a complete vector table. In this incremental index instance, the text-unit vector table contains only the 100 vectors of the newly added documents, and the base documents are not among them; measuring on that instance would underestimate the host. That instance is still used for the visibility experiment in Section 5.3, because version semantics are unrelated to the completeness of the vector table.
 
-### 5.8 更简单的旁路
+### 5.8 Simpler Bypasses
 
-可见性是否只能由 PEG 提供？在同一份 400 段语料与同一批 15 个探针上，用三种更简单的旁路复测，三者都不修改宿主、不产生生成调用：
+Can visibility be provided only by PEG? On the same 400-paragraph corpus and the same batch of 15 probes, we re-tested with three simpler bypasses, none of which modifies the host or produces generation calls:
 
-| 旁路 | 改写标识串可见 | 删除后陈旧标题残留 | 重新嵌入 |
+| Bypass | Rewrite identifier string visible | Stale title residue after deletion | Re-embedding |
 |---|---:|---:|---|
-| 仅删除过滤 | 0 / 10 | 0 / 5 | 无 |
-| 外部修订表提供最新正文，排序用旧向量 | 10 / 10 | 0 / 5 | 无 |
-| 外部修订表 + 逐篇重嵌入 | 10 / 10 | 0 / 5 | 10 段 |
+| Deletion filtering only | 0 / 10 | 0 / 5 | None |
+| External revision table provides latest body text, ranking uses old vectors | 10 / 10 | 0 / 5 | None |
+| External revision table + per-document re-embedding | 10 / 10 | 0 / 5 | 10 paragraphs |
 
-结果表明：删除可见性只需要一个外部删除集合；改写可见性只需要一个"标题 → 最新正文"的外部修订表，甚至不必重新嵌入。因此"让改动可见"本身不是 PEG 的独有能力。
+The results show: deletion visibility requires only an external deletion set; rewrite visibility requires only an external revision table of "title → latest body text", and does not even necessarily require re-embedding. Therefore "making changes visible" is itself not a PEG-exclusive capability.
 
-PEG 的差别在其余四点。第一，它把改动定义为封闭的代数：标题唯一、追加幂等、墓碑、版本计数，因而同一标题的多次操作有确定的终态，任意合法交错得到相同结果。第二，这些操作带有可检查的行为契约与代价上界（第 4 节）。第三，它不依赖宿主是否提供修订时间；宿主只记录索引时刻（第 7 节第 10 条），所以侧表本身就是一条外部通道，与 PEG 同属一类。第四，它只读宿主产物，因此不引入宿主的半更新状态。
+PEG's difference lies in the remaining four points. First, it defines changes as a closed algebra: title uniqueness, append idempotence, tombstone, version counter, so that multiple operations on the same title have a determinate final state, and any legal interleaving yields the same result. Second, these operations carry a checkable behavioral contract and cost upper bound (Section 4). Third, it does not depend on whether the host provides revision time; the host records only the indexing moment (Section 7, item 10), so the side table is itself an external channel, of the same kind as PEG. Fourth, it reads host artifacts only, and therefore introduces no half-updated state in the host.
 
-不重嵌入的旁路仍用改写前的向量排序。本组 10 次改写中只有 1 次名次变化：重嵌入后 `Ed Wood (film)` 由第 1 降到第 2。这说明在本语料上"正文可见"与"排序变化"可以分离：要让读者看到新正文，未必需要重嵌入；要改变排序，才需要。PEG 选择重嵌入，是为了让向量与正文一致，而不是为了提升排序。
+The bypass without re-embedding still ranks with the pre-rewrite vectors. Among the 10 rewrites in this group, only 1 changes rank: after re-embedding, `Ed Wood (film)` drops from 1st to 2nd. This shows that on this corpus "body text visible" and "ranking change" can be separated: to let readers see the new body text, re-embedding is not necessarily needed; to change the ranking, it is. PEG chooses re-embedding to keep the vector consistent with the body text, not to improve ranking.
 
-第四种旁路更接近工程直觉：把改写后的文档换一个新标题重新入库。在 410 段输入（400 段原语料加 10 段改名文档）上执行一次增量更新，实测 170 次生成调用、303 s；索引文档数由 400 增至 410，旧标题与新标题同时保留。10 个探针中，新正文可见 10/10，但旧标题仍被返回 10/10，且每次返回的 top-10 同时含新旧两个标题（10/10 重复槽位）；宿主不处理删除，旧标题无法通过增量路径退休。按单位文档计，这一旁路为 17 次生成调用/篇，约为基础索引（1,710 次 / 300 段，即 5.7 次/篇）的 3 倍。
+The fourth bypass is closer to engineering intuition: re-ingest the rewritten document under a new title. One incremental update on a 410-paragraph input (400 original paragraphs plus 10 renamed documents) measured 170 generation calls and 303 s; the indexed document count rises from 400 to 410, and the old and new titles are both retained. Among the 10 probes, the new body text is visible 10/10, but the old title is still returned 10/10, and each returned top-10 contains both the old and new titles (10/10 duplicate slots); the host does not process deletion, and the old title cannot be retired through the incremental path. Per document, this bypass is 17 generation calls per document, about 3 times the base index (1,710 calls / 300 paragraphs, i.e., 5.7 calls per document).
 
-因此四种旁路呈现同一条边界：越省去重新嵌入，越容易让正文可见；越依赖宿主，越要付出生成调用与陈旧副本。PEG 的选择是把可见性做成独立状态，用一次段落嵌入换掉整条索引流程。
+Thus the four bypasses present the same boundary: the more re-embedding is omitted, the easier it is to make the body text visible; the more the host is relied upon, the more generation calls and stale copies must be paid. PEG's choice is to make visibility an independent state, replacing the entire indexing pipeline with one paragraph embedding.
 
-### 5.9 生成答案
+### 5.9 Generated Answers
 
-检索指标只说明正确段落是否进入列表，不说明能否据此作答。为此在同一提示、同一模型、每题一次生成的条件下，用三个臂各自的前 10 段上下文作答；参考答案为 HotpotQA 原答案，指标为精确匹配与词级 F1。共 140 次生成调用、113 s。
+Retrieval metrics only indicate whether the correct paragraph enters the list, not whether an answer can be produced from it. For this purpose, under the same prompt, the same model, and one generation per question, each of the three arms answers using the top 10 paragraphs of its own context; the reference answers are the original HotpotQA answers, and the metrics are exact match and word-level F1. A total of 140 generation calls, 113 s.
 
-| 臂 | 基础 EM / F1 | 增量 EM / F1 | 合计 EM / F1 | 回答 unknown |
+| Arm | Base EM / F1 | Incremental EM / F1 | Combined EM / F1 | Answers `unknown` |
 |---|---|---|---|---:|
-| PEG 段落 | 0.667 / 0.770 | 0.400 / 0.507 | 0.600 / 0.704 | 0.150 |
-| 宿主检索 | 0.567 / 0.686 | 0.400 / 0.440 | 0.525 / 0.625 | 0.225 |
-| 两者融合 | 0.633 / 0.775 | 0.400 / 0.507 | 0.575 / 0.708 | 0.125 |
+| PEG paragraphs | 0.667 / 0.770 | 0.400 / 0.507 | 0.600 / 0.704 | 0.150 |
+| Host retrieval | 0.567 / 0.686 | 0.400 / 0.440 | 0.525 / 0.625 | 0.225 |
+| Fusion of both | 0.633 / 0.775 | 0.400 / 0.507 | 0.575 / 0.708 | 0.125 |
 
-改写探针的答案侧结果更直接：向模型询问 10 个标识串，PEG 上下文下答案分别为 `ZX-00` 至 `ZX-09`，10/10 正确；宿主上下文下 10 次全部回答 `unknown`。
+The answer-side result of the rewrite probes is more direct: asking the model for the 10 identifier strings, under PEG context the answers are `ZX-00` through `ZX-09`, 10/10 correct; under host context, all 10 answers are `unknown`.
 
-结论有两点。第一，检索层的可见性会传递到答案层：宿主看不到的改写，在答案中同样不可见。第二，PEG 的答案质量高于宿主（合计 EM 0.600 对 0.525），但优势幅度有限，且融合并不优于 PEG 单独（0.575 对 0.600），这与检索层的结论一致。
+There are two conclusions. First, visibility at the retrieval layer propagates to the answer layer: rewrites that the host cannot see are likewise invisible in the answers. Second, PEG's answer quality is higher than the host's (combined EM 0.600 vs. 0.525), but the margin is limited, and fusion is not better than PEG alone (0.575 vs. 0.600), consistent with the conclusion at the retrieval layer.
 
-### 5.10 改动的局部性与检索延迟
+### 5.10 Locality of Changes and Retrieval Latency
 
-改写对向量空间的影响是否局部？对 10 段改写，比较该段在改写前后的 top-10 邻居：邻居集合的平均 Jaccard 为 0.845，即约 85% 的邻居保持不变，变化集中在与新旧正文直接相关的少数段落。
+Is the effect of rewriting on the vector space local? For 10 rewrites, comparing the top-10 neighbors of the paragraph before and after the rewrite: the average Jaccard of the neighbor sets is 0.845, i.e., about 85% of neighbors remain unchanged, and the changes concentrate on the few paragraphs directly related to the old and new body text.
 
-删除的影响范围更小：对 40 个查询比较墓碑前后的 top-10，去掉被删标题后两侧的集合重合度为 0.969；只有 2 个查询的前 10 名原本含被删标题，其余 38 个查询的返回完全不变。删除只释放被删段落占用的槽位，不扰动其他段落的排序。
+The impact scope of deletion is smaller: comparing the top-10 before and after tombstones for 40 queries, after removing the deleted titles the overlap of the two sets is 0.969; only 2 queries had the deleted title in their top 10 originally, and the returns of the other 38 queries are entirely unchanged. Deletion only frees the slots occupied by the deleted paragraphs and does not perturb the ranking of other paragraphs.
 
-检索延迟与规模：查询嵌入加内积排序在 300、400、1,200 段上的中位耗时分别为 141.2、141.1、141.0 ms，p95 为 147.0、150.5、151.7 ms。延迟由查询嵌入主导，排序部分在千段量级可忽略。
+Retrieval latency and scale: the median time of query embedding plus inner-product ranking on 300, 400, and 1,200 paragraphs is 141.2, 141.1, and 141.0 ms respectively, with p95 of 147.0, 150.5, and 151.7 ms. Latency is dominated by query embedding; the ranking part is negligible at the thousand-paragraph scale.
 
-### 5.11 宿主索引的重建方差
+### 5.11 Rebuild Variance of Host Indexing
 
-同一份 300 段语料独立重建三次，抽取密度与检索指标都不是常量：
+Independently rebuilding the same 300-paragraph corpus three times, neither extraction density nor retrieval metrics is a constant:
 
-| 重建 | 实体 | 社区 | 生成调用 | 基础 Hit@1 | Hit@5 | MRR |
+| Rebuild | Entities | Communities | Generation calls | Base Hit@1 | Hit@5 | MRR |
 |---|---:|---:|---:|---:|---:|---:|
 | 1 | 2,218 | 417 | 1,430 | 0.733 | 0.867 | 0.793 |
 | 2 | 2,192 | 422 | 1,422 | 0.700 | 0.867 | 0.774 |
 | 3 | 2,216 | 426 | 1,410 | 0.767 | 0.833 | 0.800 |
 
-三次之间实体数相差 26（约 1.2%）、社区数相差 9、生成调用相差 20；基础 30 题的 $\mathrm{Hit@1}$ 极差为 0.067（0.700 至 0.767），MRR 极差 0.026。PEG 的段落层不使用宿主的抽取结果，其同题集指标在三次重建之间完全不变（$\mathrm{Hit@1}=0.933$、$\mathrm{Hit@5}=1.000$、MRR $=0.961$），因为它只依赖固定正文的嵌入。
+Across the three runs, the entity count differs by 26 (about 1.2%), the community count by 9, and the generation calls by 20; the $\mathrm{Hit@1}$ range on the 30 base questions is 0.067 (0.700 to 0.767), and the MRR range is 0.026. PEG's paragraph layer does not use the host's extraction results, and its metrics on the same question set are entirely unchanged across the three rebuilds ($\mathrm{Hit@1}=0.933$, $\mathrm{Hit@5}=1.000$, MRR $=0.961$), because it depends only on the embeddings of fixed body text.
 
-因此宿主侧的数字应带区间解读，跨实例的差值不应小于这一波动；本文所有跨臂比较都在同一次运行内完成。表中不含增量文档，故增量问题在三个基础索引上均为 0，这是语料构成决定的，不属于方差。
+Therefore host-side numbers should be read with intervals, and cross-instance differences should not be smaller than this fluctuation; all cross-arm comparisons in this paper are completed within the same run. The table contains no incremental documents, so the incremental questions are 0 on all three base indexes; this is determined by the corpus composition and is not part of the variance.
 
-### 5.12 接入成本
+### 5.12 Integration Cost
 
-前五组实验测的是效果，不测接入成本；而对已经在运行的系统，接入成本才是决策变量。
+The first five groups of experiments measure effectiveness, not integration cost; yet for a system already running, integration cost is the decision variable.
 
-本文没有做新的计时实验，只把已有成本放在一起：PEG 编码 300 段 6.7 s、追加 100 段 2.4 s，均为 0 次生成调用；同一语料在宿主上重建一次是 1,710 次生成调用、241 s。Lightfoot 的删除是 14 秒事务，但它要求索引本身由段落级确定性函数构建，因此接入意味着替换存储与重索引（[3]）。PEG 不替换任何东西，它只读宿主产物。
+This paper did not run new timing experiments, but puts existing costs together: PEG encodes 300 paragraphs in 6.7 s and appends 100 paragraphs in 2.4 s, both with 0 generation calls; rebuilding the same corpus once on the host is 1,710 generation calls and 241 s. Lightfoot's deletion is a 14-second transaction, but it requires the index itself to be built from paragraph-level deterministic functions, so integration means replacing the store and re-indexing ([3]). PEG replaces nothing; it reads host artifacts only.
 
-这条差异是定性的，本文不把它包装成测量结论；它说明的是适用边界：需要精确删除与删除后等价时，应当选择重建型方案；需要在不触动宿主的前提下让改动可见时，才轮到 PEG。
+This difference is qualitative, and this paper does not package it as a measurement conclusion; it states the applicable boundary: when exact deletion and post-deletion equivalence are needed, a rebuild-type approach should be chosen; only when changes need to be made visible without touching the host does PEG come into play.
 
-## 6. 讨论
+## 6. Discussion
 
-### 6.1 PEG 保证什么
+### 6.1 What PEG Guarantees
 
-PEG 维护段落的当前可见版本，使修改后的正文立即可被检索；维护删除状态，使已删除的标题立即不可被检索；以三种操作吸收增量，代价与改动段落数成正比；同一标题的多次操作有唯一终态，任意合法交错得到相同结果；以标题输出结果，便于与宿主对齐。
+PEG maintains the current visible version of paragraphs, making rewritten body text immediately retrievable; maintains deletion state, making deleted titles immediately unretrievable; absorbs increments with three operations, at a cost proportional to the number of changed paragraphs; multiple operations on the same title have a unique final state, and any legal interleaving yields the same result; outputs results by title, facilitating alignment with the host.
 
-### 6.2 边界
+### 6.2 Boundaries
 
-PEG 不提升宿主的图归纳能力，也不承担社区发现与摘要生成；不提供"越新越靠前"的排序（P5）；不做片段级向量合成，改写需整段重嵌入；不修改宿主，也不替宿主执行索引更新。
+PEG does not enhance the host's graph induction capability, nor does it undertake community detection and summary generation; it does not provide "newer ranks higher" ordering (P5); it does not do fragment-level vector composition—a rewrite requires re-embedding the whole paragraph; it does not modify the host, nor perform index updates on the host's behalf.
 
-三条边界需要单独写明：
+Three boundaries need to be stated separately:
 
-1. **不提供精确删除。** 墓碑只改可见状态；宿主存储中的向量、实体描述与社区报告仍在，且软删除向量可被恢复（[5]）。
-2. **不修复宿主的全局层。** 删除后，宿主的社区报告与合并实体描述仍包含被删文档的内容，直到宿主重建。PEG 保留这一层，但不修复它。
-3. **可见性可以由更简单的旁路实现**（第 5.8 节）；PEG 提供的是这套操作的封闭性、契约与代价，而不是"只有它能让改动可见"。
+1. **No exact deletion.** The tombstone changes only the visibility state; vectors, entity descriptions, and community reports in host storage remain, and soft-deleted vectors can be recovered ([5]).
+2. **No repair of the host's global layer.** After deletion, the host's community reports and merged entity descriptions still contain content from deleted documents until the host rebuilds. PEG retains this layer but does not repair it.
+3. **Visibility can be implemented by simpler bypasses** (Section 5.8); what PEG provides is the closure, contract, and cost of this operation set, not "only it can make changes visible."
 
-### 6.3 非侵入的意义
+### 6.3 The Meaning of Non-Invasiveness
 
-非侵入不是风格选择，而是可部署性条件。宿主的索引流程包含外部成本（生成调用）、运维窗口与状态一致性约束；任何改写宿主状态的方案都必须与这些约束协商。PEG 把自身限制为"只读宿主产物 + 独立状态"，因此可以在宿主重建之前独立上线、独立回滚，而不会引入宿主的半更新状态。定理 4.1 是这一条件的精确表述，第 5.6 节给出了与检索相关的核对。
+Non-invasiveness is not a stylistic choice but a deployability condition. The host's indexing pipeline involves external cost (generation calls), maintenance windows, and state-consistency constraints; any approach that rewrites host state must negotiate with these constraints. PEG limits itself to "read-only host artifacts + independent state", and can therefore be deployed and rolled back independently before the host rebuilds, without introducing a half-updated state in the host. Theorem 4.1 is the precise statement of this condition, and Section 5.6 gives the verification related to retrieval.
 
-### 6.4 适用范围
+### 6.4 Scope of Applicability
 
-PEG 适用于正文改动频繁、且改动需要尽快可检索的段落级语料，例如条目型文档、事实卡片与问答对。它以段落为检索单位，不适合需要跨段落归纳的查询；这类查询仍需宿主的图与社区结构。需要合规级删除、删除后等价或时间建模时，应采用第 2.4 节中的重建型或单库方案。
+PEG applies to paragraph-level corpora where body text changes frequently and changes need to become retrievable quickly, such as entry-style documents, fact cards, and question-answer pairs. It uses the paragraph as the retrieval unit and is not suitable for queries requiring cross-paragraph induction; such queries still need the host's graph and community structure. When compliance-level deletion, post-deletion equivalence, or temporal modeling is needed, the rebuild-type or single-database approaches in Section 2.4 should be adopted.
 
-## 7. 局限
+## 7. Limitations
 
-1. 粒度固定为段落：跨段落归纳不在 PEG 的能力范围内。
-2. 标题唯一：同一标题的多次改写必须走替换路径；若误用追加，更新会被忽略且无提示（P4）。
-3. 连续改写不合并：每次替换各触发一次嵌入，未做窗口内合并。
-4. 评测限于检索与单次生成：未覆盖多轮对话、多提示与人工评审。
-5. 单一嵌入模型：检索指标依赖 bge-m3，更换模型需重新评估。
-6. 语料有限：固定子集，未覆盖超大语料下的索引与检索行为。
-7. 未实现时间回溯：当前状态只保留最新可见版本与删除状态。
-8. 嵌入上下文：默认上下文长度小于最长社区报告，实验使用更大上下文的等价嵌入模型；该替换只影响宿主侧社区报告向量，不影响 PEG 的段落向量。
-9. 宿主 basic search 的上下文构建器会把命中结果按文本单元表顺序重排，相似度顺序在返回结果中丢失；此外本次增量实例的文本单元向量表只覆盖新增文档。第 5.7 节的宿主指标改在向量表完整的实例上测量。
-10. 时间戳过滤基线不可构造：宿主只记录索引时刻，同标题改写不更新该字段，删除的文档不保留记录。
-11. 查询嵌入未做缓存：分数近似并列时名次会在重跑间交换，指标按一题波动。文中的比较均在同一次运行内完成。
-12. 第 5.8 节只检验可见性，未检验多个写入者交错、回滚等价与并发写入。
-13. 生成答案只用一个提示、一次采样、一个模型，未做人工评审或第二模型交叉评分；两次运行的合计 EM 在 0.600–0.650 之间波动。
-14. 宿主索引存在重建方差（第 5.11 节）：同一语料三次重建的基础 $\mathrm{Hit@1}$ 极差 0.067，实体数差约 1.2%。
-15. **软删除的存储层边界**：墓碑只保证检索不可见；宿主存储中的向量仍可被恢复（[5]），因此 PEG 不满足合规级删除要求。
-16. **操作层面的先例**：标题主键、墓碑、原地替换与跳过未变在工程中已有标准化做法；本文的贡献是封闭化、契约与代价，不是发明。
-17. **宿主全局层陈旧**：社区报告与合并实体描述不会随 PEG 的替换或墓碑更新；需要全局层同步时，必须在宿主侧重建。
+1. Granularity is fixed at the paragraph: cross-paragraph induction is outside PEG's capability.
+2. Title uniqueness: multiple rewrites of the same title must go through the replace path; if append is misused, the update is ignored without any indication (P4).
+3. Successive rewrites are not merged: each replace triggers one embedding; no within-window merging is done.
+4. Evaluation is limited to retrieval and single-generation: multi-turn dialogue, multiple prompts, and human review are not covered.
+5. Single embedding model: retrieval metrics depend on bge-m3; changing the model requires re-evaluation.
+6. Limited corpus: a fixed subset; indexing and retrieval behavior on very large corpora is not covered.
+7. No temporal rollback implemented: the current state retains only the latest visible version and deletion state.
+8. Embedding context: the default context length is smaller than the longest community report; the experiments use an equivalent embedding model with a larger context; this substitution affects only the host-side community report vectors, not PEG's paragraph vectors.
+9. The host basic search's context builder reorders hits by text-unit table order, so the similarity order is lost in the returned results; in addition, the text-unit vector table of this incremental instance covers only the newly added documents. The host metrics in Section 5.7 are instead measured on an instance with a complete vector table.
+10. A timestamp-filtering baseline cannot be constructed: the host records only the indexing moment, same-title rewrites do not update this field, and deleted documents leave no record.
+11. Query embeddings are not cached: when scores are nearly tied, ranks swap between reruns, and metrics fluctuate by one question. All comparisons in the text are completed within the same run.
+12. Section 5.8 tests only visibility, not interleaving of multiple writers, rollback equivalence, or concurrent writes.
+13. Generated answers use only one prompt, one sample, and one model; no human review or second-model cross-scoring is done; the combined EM of two runs fluctuates between 0.600 and 0.650.
+14. Host indexing has rebuild variance (Section 5.11): the base $\mathrm{Hit@1}$ range across three rebuilds of the same corpus is 0.067, and the entity count differs by about 1.2%.
+15. **Storage-layer boundary of soft deletion**: the tombstone guarantees only that retrieval cannot see it; vectors in host storage can still be recovered ([5]), so PEG does not satisfy compliance-level deletion requirements.
+16. **Precedents at the operation level**: title primary keys, tombstones, in-place replacement, and skipping unchanged content already have standardized practices in engineering; this paper's contribution is closure, contract, and cost, not invention.
+17. **Staleness of the host's global layer**: community reports and merged entity descriptions are not updated by PEG's replacement or tombstone; when global-layer synchronization is needed, it must be rebuilt on the host side.
 
-## 8. 结论
+## 8. Conclusion
 
-PEG 整理并封闭了一套段落级失效处理操作：以标题对齐的向量维护当前版本，用追加、替换与墓碑吸收改动，在检索时只返回可见段落。五条行为性质由定义直接可得；定理 4.1 证明它不触碰宿主的图、社区、报告、文档表、文本单元表与向量表；命题 4.2 给出操作代价的上界。
+PEG consolidates and closes a set of paragraph-level failure-handling operations: it maintains the current version with title-aligned vectors, absorbs changes with append, replace, and tombstone, and returns only visible paragraphs at retrieval time. The five behavioral properties follow directly from the definitions; Theorem 4.1 proves that it does not touch the host's graph, communities, reports, document table, text-unit table, or vector table; Proposition 4.2 gives the upper bound on operation cost.
 
-实验显示，参照宿主在 10 次改写上可见 0 次、在 5 次删除后仍返回陈旧段落 5 次，PEG 分别为 10/10 与 0/5；PEG 的写入不产生生成调用，代价与改动段落数成正比。基线对比表明段落向量检索本身已接近饱和，第 5.8 节进一步表明更简单的旁路也能让改动可见，因此 PEG 可辩护的价值在于它的封闭操作、契约与不触碰宿主这一条件。
+Experiments show that the reference host sees 0 of 10 rewrites and still returns stale paragraphs 5 times after 5 deletions, while PEG gives 10/10 and 0/5 respectively; PEG's writes produce no generation calls, and the cost is proportional to the number of changed paragraphs. The baseline comparison shows that paragraph vector retrieval is itself near saturation, and Section 5.8 further shows that simpler bypasses can also make changes visible, so PEG's defensible value lies in its closed operations, contract, and the condition of not touching the host.
 
-## 附录 A：证明汇总
+## Appendix A: Proof Summary
 
-**P1.** 检索正文取自 $X$；替换覆盖该标题唯一位置；无第二份正文。
+**P1.** The retrieval body text is taken from $X$; a replace overwrites the unique position of that title; there is no second copy of the body text.
 
-**P2.** 连续替换写同一位置，后写覆盖前写；标题唯一，无中间版本残留。
+**P2.** Successive replacements write the same position, and later writes overwrite earlier ones; the title is unique, so no intermediate version remains.
 
-**P3.** 检索可行域为可见段落集合；删除后该标题不在其中，且无重复位置。
+**P3.** The retrieval feasible region is the set of visible paragraphs; after deletion the title is not in it, and there is no duplicate position.
 
-**P4.** 追加在标题已存在时直接返回，不写任何字段。
+**P4.** Append returns directly when the title already exists, writing no field.
 
-**P5.** 检索函数的定义域为 $(T,X,V,\sigma)$，不含计数 $c$。
+**P5.** The retrieval function's domain is $(T,X,V,\sigma)$, which does not contain the counter $c$.
 
-**定理 4.1.** PEG 的写入集合为其自身状态文件；与宿主六类状态面均不相交，且不调用宿主索引更新接口。
+**Theorem 4.1.** PEG's write set is its own state file; it is disjoint from all six state surfaces of the host, and it does not call the host's index update interface.
 
-**命题 4.2.** 追加与替换各一次嵌入，墓碑零次。
+**Proposition 4.2.** Append and replace take one embedding each, the tombstone zero.
 
-## 参考文献
+## References
 
 [1] Edge D, Trinh H, Cheng N, et al. From Local to Global: A Graph RAG Approach to Query-Focused Summarization. arXiv:2404.16130, 2024.
 
