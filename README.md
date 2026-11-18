@@ -127,7 +127,7 @@ Same prompt, same model, one generation per question: PEG context EM 0.600 / F1 
 | Host base indexing 300 paragraphs | 1,710 | 241 s |
 | Host incremental 100 paragraphs | 647 | — |
 
-Integration time covers reading the host document table and embedding the paragraph texts; reading the table takes under 70 ms.
+Integration time covers reading the host document table and embedding the paragraph texts; reading the table takes under 70 ms. The 6.7 s and 11.5 s rows measure different flows (a batch-encoding average in the main evaluation vs. a standalone integration run that reads the table and builds the state), so they cannot be subtracted.
 
 ## 4. Reading the Results
 
