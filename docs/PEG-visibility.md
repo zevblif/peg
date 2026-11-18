@@ -238,7 +238,7 @@ The deletion side is equally intuitive: the 5 tombstoned paragraphs ranked 1st o
 | Replace 10 paragraphs | 0 (embedding only) | Same order as 10 paragraph embeddings |
 | Tombstone 5 paragraphs | 0 | Only changes state bits |
 
-The 6.7 s for encoding 300 paragraphs is a batch average, about 22 ms per paragraph; the cost of replace and append grows linearly with the number of paragraphs. Reference host: base indexing 1,710 generation calls, 241 s; incremental update 647 generation calls. This number comes from the main evaluation run; Section 5.12 measures the same embedding flow at 8.4 s (median of five repeats, range 8.1–9.2 s), about 25% higher, and the gap comes from the session rather than from a stage, so the two cannot be subtracted directly.
+The 6.7 s for encoding 300 paragraphs is a batch average with batch size 16, about 22 ms per paragraph; the cost of replace and append grows linearly with the number of paragraphs. Reference host: base indexing 1,710 generation calls, 241 s; incremental update 647 generation calls. This number comes from the main evaluation run; Section 5.12 measures the same embedding flow at 8.4 s (median of five repeats, range 8.1–9.2 s), about 25% higher, and the gap comes from the session rather than from a stage, so the two cannot be subtracted directly.
 
 ### 5.6 Mechanism Verification
 
