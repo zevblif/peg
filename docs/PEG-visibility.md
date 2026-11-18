@@ -238,7 +238,7 @@ The deletion side is equally intuitive: the 5 tombstoned paragraphs ranked 1st o
 | Replace 10 paragraphs | 0 (embedding only) | Same order as 10 paragraph embeddings |
 | Tombstone 5 paragraphs | 0 | Only changes state bits |
 
-The 6.7 s for encoding 300 paragraphs is a batch average, about 22 ms per paragraph; the cost of replace and append grows linearly with the number of paragraphs. Reference host: base indexing 1,710 generation calls, 241 s; incremental update 647 generation calls.
+The 6.7 s for encoding 300 paragraphs is a batch average, about 22 ms per paragraph; the cost of replace and append grows linearly with the number of paragraphs. Reference host: base indexing 1,710 generation calls, 241 s; incremental update 647 generation calls. This number comes from the main evaluation run; the 11.5 s in Section 5.12 comes from a separate integration run, so the two are not the same condition and cannot be subtracted directly.
 
 ### 5.6 Mechanism Verification
 
@@ -331,6 +331,15 @@ The existing costs are as follows: PEG encodes 300 paragraphs in 6.7 s and appen
 
 The integration cost of PEG can be measured directly: reading the host document table and building the paragraph state takes 11.5 s for 300 paragraphs and 12.7 s for 400 paragraphs; reading the table takes under 70 ms and the rest is embedding, and both runs make 0 generation calls. These are single runs after the embedding service was warm; cold and warm states change absolute seconds, so the magnitude and the call count matter, not the seconds themselves.
 
+The two paths at the same scale, split apart:
+
+| 300 paragraphs | Generation calls | Embedding | Other |
+|---|---:|---:|---:|
+| Host rebuild | 1,710 | 44.2 s | 196.9 s |
+| PEG integration | 0 | 11.5 s | <0.07 s |
+
+The host column comes from the workflow timings of the same rebuild (embedding 44.2 s, the rest extraction, communities, summaries and scheduling); the PEG column comes from the integration run. The real structural difference is the first column: 0 versus 1,710.
+
 The key difference is not seconds but whether generation calls are needed: a rebuild-type approach spends 1,710 calls, while PEG's integration spends 0. It states the applicable boundary: when exact deletion and post-deletion equivalence are needed, a rebuild-type approach should be chosen; only when changes need to be made visible without touching the host does PEG come into play.
 
 ## 6. Discussion
@@ -376,6 +385,7 @@ PEG applies to paragraph-level corpora where body text changes frequently and ch
 15. **Storage-layer boundary of soft deletion**: the tombstone guarantees only that retrieval cannot see it; vectors in host storage can still be recovered ([5]), so PEG does not satisfy compliance-level deletion requirements.
 16. **Precedents at the operation level**: title primary keys, tombstones, in-place replacement, and skipping unchanged content already have standardized practices in engineering; this paper's contribution is closure, contract, and cost, not invention.
 17. **Staleness of the host's global layer**: community reports and merged entity descriptions are not updated by PEG's replacement or tombstone; when global-layer synchronization is needed, it must be rebuilt on the host side.
+18. **Integration cost is a single-run measurement**: the 11.5 s / 12.7 s in Section 5.12 were measured after the embedding service was warm, without taking a median over repeated runs; the absolute values vary with warm/cold state, and only the call count (0 vs. 1,710) supports the conclusion.
 
 ## 8. Conclusion
 
