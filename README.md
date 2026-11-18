@@ -146,7 +146,7 @@ Same prompt, same model, one generation per question: PEG context EM 0.600 / F1 
 
 1. Granularity is fixed at the paragraph level; cross-paragraph multi-hop requires the host graph structure.
 2. Titles are unique; misuse with append silently ignores rewrites.
-3. Each replacement triggers one embedding; no in-window batching (see S2).
+3. Each replacement triggers one embedding; no in-window batching (see the storage design document).
 4. Covers only a single prompt and a single generation; answer metrics fluctuate with sampling (EM 0.600–0.650).
 5. A single embedding model; changing models requires re-measurement.
 6. The host index has rebuild variance; single-instance numbers should not be treated as constants.
