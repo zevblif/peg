@@ -123,8 +123,11 @@ Same prompt, same model, one generation per question: PEG context EM 0.600 / F1 
 |---|---:|---:|
 | PEG encoding 300 paragraphs | 0 (embedding only) | 6.7 s |
 | PEG appending 100 paragraphs | 0 (embedding only) | 2.4 s |
+| PEG integration into an existing 300-paragraph index | 0 (embedding only) | 11.5 s |
 | Host base indexing 300 paragraphs | 1,710 | 241 s |
 | Host incremental 100 paragraphs | 647 | — |
+
+Integration time covers reading the host document table and embedding the paragraph texts; reading the table takes under 70 ms.
 
 ## 4. Reading the Results
 

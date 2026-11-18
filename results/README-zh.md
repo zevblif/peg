@@ -16,5 +16,6 @@
 | `generation.json` | `generation` | 三臂答案 EM/F1 与探针 | 约 140 次生成调用 |
 | `local_effects.json` | `local_effects` | 邻域 Jaccard、删除副作用、规模延迟 | 零生成调用 |
 | `rebuild_variance.json` | `index_variance` | 三次重建的抽取密度与宿主指标 | 需 3 个重建实例 |
+| `integration.json` | `integration_cost` | 读取宿主文档表并建立 PEG 状态 | 零生成调用 |
 
 约定：涉及宿主检索的跨臂比较必须在同一次运行内完成；生成指标存在 ±1 题波动（论文局限 11）。

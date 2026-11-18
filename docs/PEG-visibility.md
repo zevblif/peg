@@ -6,7 +6,7 @@ English | [简体中文](PEG-visibility-zh.md)
 
 The index of a graph retrieval-augmented generation system consists of entity extraction, description merging, and community summarization; its rebuild cost is far higher than a single-document write, so the system has a gap period between two rebuilds: knowledge has been changed, but the index is still old. This paper does not propose a new incremental mechanism; instead, it consolidates the scattered failure-handling practices found in engineering—title primary keys, in-place replacement, tombstones, skipping unchanged content—into a closed set of paragraph-level operations, and gives their behavioral contract, cost upper bound, and non-invasive theorem on top of the GraphRAG v3.3.0 host.
 
-PEG's paragraph layer is a title-aligned quadruple: title, body text, unit vector, and visibility state; it absorbs increments through three operations—append, replace, and tombstone—and retrieval is the inner-product ranking of the query vector against visible paragraph vectors. The operations themselves are definitional, and this paper does not package them as new theorems; there are only two substantive claims: any operation sequence does not change host state, and the number of model calls for one incremental sequence is the sum of appends and replaces. These two confine PEG to a visibility layer, not an index layer.
+PEG's paragraph layer is a title-aligned quadruple: title, body text, unit vector, and visibility state; it absorbs increments through three operations—append, replace, and tombstone—and retrieval is the inner-product ranking of the query vector against visible paragraph vectors. The operations themselves are definitional, and this paper does not package them as new theorems; there are three substantive claims: any operation sequence does not change host state, the number of model calls for one incremental sequence is the sum of appends and replaces, and a premise checklist that tells practitioners which host designs break invalidation. The first two confine PEG to a visibility layer, not an index layer; the third gives readers a diagnostic they can apply to their own system.
 
 On a real host with real models, on the same fixed HotpotQA subset, the host sees 0 of 10 same-title rewrites, and still returns stale paragraphs 5 times after 5 deletions; PEG gives 10/10 and 0/5 respectively. Paragraph-layer retrieval obtains $\mathrm{Hit@1}=0.933$, $\mathrm{Hit@5}=1.000$, and MRR $=0.961$, tied with ordinary paragraph vector retrieval; the proportion of multi-hop questions whose two supporting paragraphs both enter the top-5 is 0.80. Writes produce no generation calls. A controlled experiment shows that an external revision table can likewise make rewrites visible, so PEG's difference is not in "whether changes can be seen" but in operational closure, properties, and cost.
 
@@ -33,7 +33,7 @@ This paper consolidates a set of practices that already exist in scattered engin
 These practices are not new: paragraph primary keys derived from the source, in-place replacement, soft-delete markers, and skipping unchanged content by hash have all appeared repeatedly in retrieval systems. Recent deletion research also states plainly that its proposition is "on the edge of tautology" ([3]). Therefore this paper does not claim to invent an incremental mechanism, but claims three things:
 
 1. Write "append, replace, tombstone" as quadruple operations on the same state, so that any legal interleaving yields a unique final state;
-2. Make explicit the premises under which these operations hold, and point out which one the host and common engineering practices respectively violate;
+2. Give a premise checklist that readers can apply to their own host design;
 3. Prove that this layer does not write host state, and give an upper bound on operation cost.
 
 This positioning yields two direct conclusions: PEG can make modifications and deletions take effect at the retrieval layer before the host rebuilds; PEG's writes trigger no state change in the host; PEG's capability boundary is determined by "visibility" rather than "graph-structure induction."
@@ -75,7 +75,7 @@ PEG's tombstone belongs to soft deletion: it clears the visibility state, not th
 | Engineering practice | Common | Common | — | — | Implementation-dependent | Implementation-dependent |
 | **PEG** | Title-unique | Yes | No (soft deletion) | No | Host-provided (stale) | **Yes** |
 
-The reading of this table is: the first three columns compare capabilities, the last column compares applicable conditions. PEG is weaker than the former two in deletion capability; its only exclusive property is "acts on an existing host and does not require rebuilding." Therefore this paper does not compare deletion correctness with Lightfoot, nor temporal modeling with post-graph-rag; it answers a different question: beside an already-running host, can changes be made visible with zero generation calls.
+The reading of this table is: the first three columns compare capabilities, the last column compares applicable conditions. PEG is weaker than the former two in deletion capability; its only exclusive property is "acts on an existing host and does not require rebuilding." PEG does not improve the global layer; it merely does not destroy it. When global-layer synchronisation is required, PEG does not apply. Therefore this paper does not compare deletion correctness with Lightfoot, nor temporal modeling with post-graph-rag; it answers a different question: beside an already-running host, can changes be made visible with zero generation calls.
 
 ## 3. PEG's Structure and Operations
 
@@ -165,7 +165,9 @@ The value of this theorem is not in proof difficulty but in checkability: each r
 
 **Proof.** Append and replace each require one paragraph embedding; tombstones call no model; batch processing does not change the count of each operation. $\square$
 
-### 4.4 Premises and Violators
+### 4.4 A Premise Checklist: Who Breaks Invalidation
+
+This section states the paper's third substantive claim: it does not prove a property of PEG, but gives a premise checklist readers can apply to their own host design.
 
 P1–P5 all rest on two premises: titles are unique, and operations are applied by title. When the premises fail, the properties fail accordingly. Pointing out who breaks the premises is more informative than repeating the proofs of the properties:
 
@@ -174,7 +176,7 @@ P1–P5 all rest on two premises: titles are unique, and operations are applied 
 | Title change corresponds to content change | GraphRAG v3.3.0's title criterion | Same-title rewrites do not enter the added set; old body text remains visible |
 | Deletion can be consumed downstream | The same incremental path | Deletions are only recorded; stale paragraphs are still returned |
 | Retrieval looks only at the visible set | Soft-deletion implementation ([5]) | Vectors remain in storage and can be recovered by bypassing the API |
-| Derived structures do not depend on history | Merged entity descriptions, model judge, top-k neighbors ([3]) | After deletion, the structure is not rebuild-equivalent |
+| Derived structures do not depend on history | Merged entity descriptions, model judge, top-k neighbors ([3] identifies these) | After deletion, the structure is not rebuild-equivalent |
 
 PEG's trade-off is: it gives up merged descriptions, judge, and top-k neighbors—structures that would break the premises; it never builds them in the first place, but only reads the host's artifacts. The cost is that these host structures remain stale after deletion. Section 7 states this cost explicitly.
 
@@ -325,9 +327,11 @@ Therefore host-side numbers should be read with intervals, and cross-instance di
 
 The first five groups of experiments measure effectiveness, not integration cost; yet for a system already running, integration cost is the decision variable.
 
-This paper did not run new timing experiments, but puts existing costs together: PEG encodes 300 paragraphs in 6.7 s and appends 100 paragraphs in 2.4 s, both with 0 generation calls; rebuilding the same corpus once on the host is 1,710 generation calls and 241 s. Lightfoot's deletion is a 14-second transaction, but it requires the index itself to be built from paragraph-level deterministic functions, so integration means replacing the store and re-indexing ([3]). PEG replaces nothing; it reads host artifacts only.
+The existing costs are as follows: PEG encodes 300 paragraphs in 6.7 s and appends 100 paragraphs in 2.4 s, both with 0 generation calls; rebuilding the same corpus once on the host is 1,710 generation calls and 241 s. Lightfoot's deletion is a 14-second transaction, but it requires the index itself to be built from paragraph-level deterministic functions, so integration means replacing the store and re-indexing ([3]). PEG replaces nothing; it reads host artifacts only.
 
-This difference is qualitative, and this paper does not package it as a measurement conclusion; it states the applicable boundary: when exact deletion and post-deletion equivalence are needed, a rebuild-type approach should be chosen; only when changes need to be made visible without touching the host does PEG come into play.
+The integration cost of PEG can be measured directly: reading the host document table and building the paragraph state takes 11.5 s for 300 paragraphs and 12.7 s for 400 paragraphs; reading the table takes under 70 ms and the rest is embedding, and both runs make 0 generation calls. These are single runs after the embedding service was warm; cold and warm states change absolute seconds, so the magnitude and the call count matter, not the seconds themselves.
+
+The key difference is not seconds but whether generation calls are needed: a rebuild-type approach spends 1,710 calls, while PEG's integration spends 0. It states the applicable boundary: when exact deletion and post-deletion equivalence are needed, a rebuild-type approach should be chosen; only when changes need to be made visible without touching the host does PEG come into play.
 
 ## 6. Discussion
 

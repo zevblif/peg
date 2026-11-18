@@ -1,0 +1,25 @@
+{
+  "config": {
+    "embed_model": "bge-m3-8k"
+  },
+  "runs": [
+    {
+      "run_root": "E:\\Trae Project\\Research\\PEG\\peg\\artifacts\\runs\\base",
+      "paragraphs": 300,
+      "read_ms": 67.0,
+      "embed_ms": 11425.6,
+      "total_ms": 11492.6,
+      "generation_calls": 0,
+      "host_documents": 300
+    },
+    {
+      "run_root": "E:\\Trae Project\\Research\\PEG\\peg\\artifacts\\runs\\edit",
+      "paragraphs": 400,
+      "read_ms": 8.1,
+      "embed_ms": 12686.7,
+      "total_ms": 12694.8,
+      "generation_calls": 0,
+      "host_documents": 400
+    }
+  ]
+}
