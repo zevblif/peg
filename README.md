@@ -4,7 +4,7 @@ English | [简体中文](README-zh.md)
 
 This repository measures how same-title rewrites and deletions actually behave in the index of a real Microsoft GraphRAG v3.3.0 host, and provides a paragraph-level visibility channel (PEG) that does not modify the host.
 
-Conclusion first: **PEG does not improve the host's graph induction capability, nor does it improve conventional retrieval accuracy.** What it guarantees is that "before the index is rebuilt, modified text and deletion state are visible at the retrieval layer," and it states this guarantee as an operation contract with a non-invasiveness theorem.
+Capability boundary: **PEG does not improve the host's graph induction capability, nor does it improve conventional retrieval accuracy.** What it guarantees is that "before the index is rebuilt, modified text and deletion state are visible at the retrieval layer," and it states this guarantee as an operation contract with a non-invasiveness theorem.
 
 - Paper: [docs/PEG-visibility.md](docs/PEG-visibility.md)
 
@@ -78,7 +78,7 @@ One-command entry points: `scripts/reproduce.ps1` (main experiments) and `script
 
 ## 3. Main Results
 
-### 3.1 Visibility of Rewrites and Deletions (the strongest result)
+### 3.1 Visibility of Rewrites and Deletions
 
 | Behavior | GraphRAG v3.3.0 | PEG |
 |---|---|---|
@@ -126,23 +126,23 @@ Same prompt, same model, one generation per question: PEG context EM 0.600 / F1 
 | Host base indexing 300 paragraphs | 1,710 | 241 s |
 | Host incremental 100 paragraphs | 647 | — |
 
-## 4. What Can and Cannot Be Said
+## 4. Reading the Results
 
-**Can say**
+**PEG can do the following**
 
 - The host `update` only absorbs newly added titles; same-title rewrites and deletions are invisible in the index (0/10 and 5/5).
 - A paragraph-level independent channel (re-embedding + tombstones) closes these two gaps (10/10 and 0/5).
 - The five behavioral properties, the non-invasiveness theorem, and the operation cost upper bound hold; writes do not change host state (paper Section 4).
 - Visibility can be implemented by simpler bypasses; PEG's difference lies in the algebra, properties, and cost.
 
-**Cannot say**
+**But these do not mean**
 
 - PEG improves conventional retrieval accuracy: the paragraph vector baseline scores the same (0.925 / 1.000 / 0.958).
 - Fusion outperforms PEG alone: neither multi-hop coverage nor answer quality supports it.
 - End-to-end production quality: only single-prompt, single-generation, and retrieval-level evaluations were performed.
 - Large-scale stability: at most 1,200 paragraphs and three rebuilds.
 
-## 5. Limitations (Read Alongside the Numbers)
+## 5. Limitations
 
 1. Granularity is fixed at the paragraph level; cross-paragraph multi-hop requires the host graph structure.
 2. Titles are unique; misuse with append silently ignores rewrites.
