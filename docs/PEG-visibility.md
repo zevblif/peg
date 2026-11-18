@@ -8,7 +8,7 @@ The index of a graph retrieval-augmented generation system consists of entity ex
 
 PEG's paragraph layer is a title-aligned quadruple: title, body text, unit vector, and visibility state; it absorbs increments through three operations—append, replace, and tombstone—and retrieval is the inner-product ranking of the query vector against visible paragraph vectors. The operations themselves are definitional, and this paper does not package them as new theorems; there are three substantive claims: any operation sequence does not change host state, the number of model calls for one incremental sequence is the sum of appends and replaces, and a premise checklist that tells practitioners which host designs break invalidation. The first two confine PEG to a visibility layer, not an index layer; the third gives readers a diagnostic they can apply to their own system.
 
-On a real host with real models, on the same fixed HotpotQA subset, the host sees 0 of 10 same-title rewrites, and still returns stale paragraphs 5 times after 5 deletions; PEG gives 10/10 and 0/5 respectively. Paragraph-layer retrieval obtains $\mathrm{Hit@1}=0.933$, $\mathrm{Hit@5}=1.000$, and MRR $=0.961$, tied with ordinary paragraph vector retrieval; the proportion of multi-hop questions whose two supporting paragraphs both enter the top-5 is 0.80. Writes produce no generation calls. A controlled experiment shows that an external revision table can likewise make rewrites visible, so PEG's difference is not in "whether changes can be seen" but in operational closure, properties, and cost.
+On a real host with real models, on the same fixed HotpotQA subset, the host sees 0 of 10 same-title rewrites, and still returns stale paragraphs 5 times after 5 deletions; PEG gives 10/10 and 0/5 respectively. Paragraph-layer retrieval obtains $\mathrm{Hit@1}=0.933$ , $\mathrm{Hit@5}=1.000$ , and MRR $=0.961$ , tied with ordinary paragraph vector retrieval; the proportion of multi-hop questions whose two supporting paragraphs both enter the top-5 is 0.80. Writes produce no generation calls. A controlled experiment shows that an external revision table can likewise make rewrites visible, so PEG's difference is not in "whether changes can be seen" but in operational closure, properties, and cost.
 
 PEG does not provide exact deletion, does not repair the host's community reports or merged entity descriptions, and does not improve ordinary retrieval accuracy. It addresses different problems from approaches that require index rebuilding to guarantee deletion equivalence (Lightfoot) and approaches that place the graph and summaries in a single database (post-graph-rag): PEG's only exclusive condition is "does not modify the host."
 
@@ -85,23 +85,23 @@ The paragraph-layer state is the quadruple
 
 $S = (T, X, V, \sigma)$
 
-where $T = (t_1, \dots, t_N)$ is the paragraph title sequence, $X = (x_1, \dots, x_N)$ is the corresponding body text, the $i$-th row of $V \in \mathbb{R}^{N \times d}$ is the unit embedding vector of $x_i$, and $\sigma \in \{\text{active}, \text{deleted}\}^N$ is the visibility state. Each title also has an integer counter $c_i$, which records only the number of rewrites and does not participate in retrieval.
+where $T = (t_1, \dots, t_N)$ is the paragraph title sequence, $X = (x_1, \dots, x_N)$ is the corresponding body text, the $i$ -th row of $V \in \mathbb{R}^{N \times d}$ is the unit embedding vector of $x_i$ , and $\sigma \in \{\text{active}, \text{deleted}\}^N$ is the visibility state. Each title also has an integer counter $c_i$ , which records only the number of rewrites and does not participate in retrieval.
 
-Titles are unique in $T$. This is PEG's core premise: it allows results to be aligned directly with document titles returned by the host, and it also gives the same paragraph only one position throughout its lifetime.
+Titles are unique in $T$ . This is PEG's core premise: it allows results to be aligned directly with document titles returned by the host, and it also gives the same paragraph only one position throughout its lifetime.
 
 ### 3.2 Incremental Operations
 
 | Operation | Corresponding event | Precondition | State change | Model calls |
 |---|---|---|---|---|
-| Append $\mathrm{append}(t,x)$ | New paragraph enters the corpus | $t \notin T$ | Add one item at the end; vector obtained by embedding $x$; state active | 1 paragraph embedding |
-| Replace $\mathrm{replace}(t,x)$ | Existing paragraph is rewritten | $t \in T$ | Overwrite the body text and vector of item $i$; increment counter by 1 | 1 paragraph embedding |
+| Append $\mathrm{append}(t,x)$ | New paragraph enters the corpus | $t \notin T$ | Add one item at the end; vector obtained by embedding $x$ ; state active | 1 paragraph embedding |
+| Replace $\mathrm{replace}(t,x)$ | Existing paragraph is rewritten | $t \in T$ | Overwrite the body text and vector of item $i$ ; increment counter by 1 | 1 paragraph embedding |
 | Tombstone $\mathrm{delete}(A)$ | Paragraph is removed | $t \in T$ | Set the corresponding state to deleted; body text and vector retained | 0 |
 
-Formally, let the position function be $\mathrm{pos}(t)$:
+Formally, let the position function be $\mathrm{pos}(t)$ :
 
-- $\mathrm{append}(t,x)$: if $t \notin T$, set $x_{N+1}=x$, $V_{N+1}=\mathrm{emb}(x)/\Vert\mathrm{emb}(x)\Vert$, $\sigma_{N+1}=\text{active}$, $c_{N+1}=1$; otherwise no field is modified.
-- $\mathrm{replace}(t,x)$: set $i=\mathrm{pos}(t)$, $x_i=x$, $V_i=\mathrm{emb}(x)/\Vert\mathrm{emb}(x)\Vert$, $c_i=c_i+1$.
-- $\mathrm{delete}(A)$: for each $t \in A \cap T$, set $\sigma_{\mathrm{pos}(t)}=\text{deleted}$; ignore $t \notin T$.
+- $\mathrm{append}(t,x)$ : if $t \notin T$ , set $x_{N+1}=x$ , $V_{N+1}=\mathrm{emb}(x)/\Vert\mathrm{emb}(x)\Vert$ , $\sigma_{N+1}=\text{active}$ , $c_{N+1}=1$ ; otherwise no field is modified.
+- $\mathrm{replace}(t,x)$ : set $i=\mathrm{pos}(t)$ , $x_i=x$ , $V_i=\mathrm{emb}(x)/\Vert\mathrm{emb}(x)\Vert$ , $c_i=c_i+1$ .
+- $\mathrm{delete}(A)$ : for each $t \in A \cap T$ , set $\sigma_{\mathrm{pos}(t)}=\text{deleted}$ ; ignore $t \notin T$ .
 
 The difference among the three operations lies in whether re-embedding occurs: append and replace each require one paragraph embedding, while a tombstone changes only one state bit. The embedding function is computed over the entire paragraph text, so a rewrite must re-embed the whole paragraph; a new vector cannot be derived from the old vector and the changed fragment.
 
@@ -119,7 +119,7 @@ Operation cost is 100 embeddings plus 10 embeddings; tombstones produce no embed
 
 ### 3.4 Paragraph-Level Retrieval
 
-Given a query $q$, let $r=\mathrm{emb}(q)/\Vert\mathrm{emb}(q)\Vert$ and similarity $s_i=\langle V_i,r\rangle$. The paragraph layer returns
+Given a query $q$ , let $r=\mathrm{emb}(q)/\Vert\mathrm{emb}(q)\Vert$ and similarity $s_i=\langle V_i,r\rangle$ . The paragraph layer returns
 
 $\mathrm{TopK}(q,k)=\arg\max_{i:\ \sigma_i=\text{active}} s_i \quad (\lvert\cdot\rvert=k)$
 
@@ -131,15 +131,15 @@ together with the corresponding title sequence and the current body text of thes
 
 The following five are not theorems, but behavioral contracts unfolded from the operation definitions. Writing them out is to give implementations and tests a clear object, not to add theoretical weight.
 
-**P1 (Replacement is visible).** After executing $\mathrm{replace}(t,x)$ on $t$, any retrieval that returns $t$ returns the body text $x$. This follows directly from retrieval reading $X$ and from title uniqueness.
+**P1 (Replacement is visible).** After executing $\mathrm{replace}(t,x)$ on $t$ , any retrieval that returns $t$ returns the body text $x$ . This follows directly from retrieval reading $X$ and from title uniqueness.
 
 **P2 (Successive replacement takes the last one).** After executing $m$ replacements in sequence on the same title, the returned body text is $x^{(m)}$ from the last one. This follows directly from writing the same position and from later writes overwriting earlier ones.
 
-**P3 (Tombstoned is invisible).** After executing a tombstone on $t$, no retrieval returns $t$. This follows directly from the retrieval feasible region being the active set.
+**P3 (Tombstoned is invisible).** After executing a tombstone on $t$ , no retrieval returns $t$ . This follows directly from the retrieval feasible region being the active set.
 
-**P4 (Append does not overwrite).** If $t \in T$, append changes no field. This follows directly from append's precondition. Its engineering meaning is that append is idempotent: repeated imports do not produce duplicates.
+**P4 (Append does not overwrite).** If $t \in T$ , append changes no field. This follows directly from append's precondition. Its engineering meaning is that append is idempotent: repeated imports do not produce duplicates.
 
-**P5 (Counter is irrelevant to retrieval).** Retrieval output does not depend on the counter $c$. This follows directly from the retrieval function's domain containing only $(T,X,V,\sigma)$. Therefore PEG does not provide "newer ranks higher" ordering.
+**P5 (Counter is irrelevant to retrieval).** Retrieval output does not depend on the counter $c$ . This follows directly from the retrieval function's domain containing only $(T,X,V,\sigma)$ . Therefore PEG does not provide "newer ranks higher" ordering.
 
 ### 4.2 The Non-Invasive Theorem
 
@@ -155,15 +155,15 @@ The following five are not theorems, but behavioral contracts unfolded from the 
 | Host vector table and cache | No | PEG's vectors exist only in its own state file |
 | Host service process | No | PEG reads host artifacts in a read-only manner |
 
-PEG's write set is its own state file; it is disjoint from every state surface in the table above, and it does not call the host's index update interface. Therefore after any operation sequence ends, the host state is the same as before the operations. $\square$
+PEG's write set is its own state file; it is disjoint from every state surface in the table above, and it does not call the host's index update interface. Therefore after any operation sequence ends, the host state is the same as before the operations.
 
 The value of this theorem is not in proof difficulty but in checkability: each row of the table above corresponds to a testable assertion, and Section 5.6 verifies the part related to retrieval through mechanism verification.
 
 ### 4.3 Operation Cost
 
-**Proposition 4.2 (Operation cost).** If an incremental sequence contains $n_a$ appends, $n_r$ replaces, and $n_d$ tombstones, then the number of model calls is $n_a+n_r$, independent of paragraph length and of the size of the tombstone set.
+**Proposition 4.2 (Operation cost).** If an incremental sequence contains $n_a$ appends, $n_r$ replaces, and $n_d$ tombstones, then the number of model calls is $n_a+n_r$ , independent of paragraph length and of the size of the tombstone set.
 
-**Proof.** Append and replace each require one paragraph embedding; tombstones call no model; batch processing does not change the count of each operation. $\square$
+**Proof.** Append and replace each require one paragraph embedding; tombstones call no model; batch processing does not change the count of each operation.
 
 ### 4.4 A Premise Checklist: Who Breaks Invalidation
 
@@ -197,11 +197,11 @@ All experiments in this paper use the same dataset and the same model configurat
 
 ### 5.2 Retrieval Performance
 
-Paragraph layer: base questions ($n=30$) $\mathrm{Hit@1}=0.933$, $\mathrm{Hit@5}=1.000$, MRR $=0.961$; incremental questions ($n=10$) $\mathrm{Hit@1}=0.900$, $\mathrm{Hit@5}=1.000$, MRR $=0.950$.
+Paragraph layer: base questions ( $n=30$ ) $\mathrm{Hit@1}=0.933$ , $\mathrm{Hit@5}=1.000$ , MRR $=0.961$ ; incremental questions ( $n=10$ ) $\mathrm{Hit@1}=0.900$ , $\mathrm{Hit@5}=1.000$ , MRR $=0.950$ .
 
-Multi-hop coverage: the proportion of questions whose supporting paragraphs all enter the top-5 is 0.80, and entering the top-10 is 0.95 ($n=40$); under the same definition, host graph retrieval gives 0.40 and 0.575 respectively.
+Multi-hop coverage: the proportion of questions whose supporting paragraphs all enter the top-5 is 0.80, and entering the top-10 is 0.95 ( $n=40$ ); under the same definition, host graph retrieval gives 0.40 and 0.575 respectively.
 
-Confidence intervals: 2,000 bootstrap resampling rounds on 40 questions (seed 17), paragraph layer $\mathrm{Hit@1}=0.925$[0.825, 1.000], MRR $=0.958$[0.904, 1.000]; because the incremental group has only 10 questions, $\mathrm{Hit@1}=0.900$[0.700, 1.000].
+Confidence intervals: 2,000 bootstrap resampling rounds on 40 questions (seed 17), paragraph layer $\mathrm{Hit@1}=0.925$ [0.825, 1.000], MRR $=0.958$ [0.904, 1.000]; because the incremental group has only 10 questions, $\mathrm{Hit@1}=0.900$ [0.700, 1.000].
 
 Fold-wise recheck (90 + 30 questions, 3 folds): paragraph-layer base $\mathrm{Hit@1}$ is 0.867, 0.967, 0.867; incremental questions are 1.000, 0.900, 1.000. The paragraph layer depends only on paragraph vectors and not on the host index, so the fold-wise numbers agree with the full set.
 
@@ -263,7 +263,7 @@ To judge whether "paragraph vector retrieval" itself is sufficient, three lower-
 | Text-unit vector | 0.933 / 1.000 / 0.961 | 0.900 / 1.000 / 0.950 | 158 ms |
 | Host local search | 0.567 / 0.833 / 0.678 | 0.600 / 0.900 / 0.708 | — |
 
-There are three conclusions: paragraph-granularity vector retrieval is already near saturation on this corpus ($\mathrm{Hit@5}=1.000$), and PEG's retrieval quality comes from paragraph granularity and the embedding model; BM25 is markedly lower ($\mathrm{Hit@1}$ 0.633 vs. 0.933), indicating that the corpus relies on semantic matching; host graph retrieval is lower (0.575 combined vs. 0.933), because candidates are diluted by entities and relations. Therefore PEG's incremental value lies in visibility, not in ordinary retrieval accuracy.
+There are three conclusions: paragraph-granularity vector retrieval is already near saturation on this corpus ( $\mathrm{Hit@5}=1.000$ ), and PEG's retrieval quality comes from paragraph granularity and the embedding model; BM25 is markedly lower ( $\mathrm{Hit@1}$ 0.633 vs. 0.933), indicating that the corpus relies on semantic matching; host graph retrieval is lower (0.575 combined vs. 0.933), because candidates are diluted by entities and relations. Therefore PEG's incremental value lies in visibility, not in ordinary retrieval accuracy.
 
 This host-side row is measured on an index instance with a complete vector table. In this incremental index instance, the text-unit vector table contains only the 100 vectors of the newly added documents, and the base documents are not among them; measuring on that instance would underestimate the host. That instance is still used for the visibility experiment in Section 5.3, because version semantics are unrelated to the completeness of the vector table.
 
@@ -319,7 +319,7 @@ Independently rebuilding the same 300-paragraph corpus three times, neither extr
 | 2 | 2,192 | 422 | 1,422 | 0.700 | 0.867 | 0.774 |
 | 3 | 2,216 | 426 | 1,410 | 0.767 | 0.833 | 0.800 |
 
-Across the three runs, the entity count differs by 26 (about 1.2%), the community count by 9, and the generation calls by 20; the $\mathrm{Hit@1}$ range on the 30 base questions is 0.067 (0.700 to 0.767), and the MRR range is 0.026. PEG's paragraph layer does not use the host's extraction results, and its metrics on the same question set are entirely unchanged across the three rebuilds ($\mathrm{Hit@1}=0.933$, $\mathrm{Hit@5}=1.000$, MRR $=0.961$), because it depends only on the embeddings of fixed body text.
+Across the three runs, the entity count differs by 26 (about 1.2%), the community count by 9, and the generation calls by 20; the $\mathrm{Hit@1}$ range on the 30 base questions is 0.067 (0.700 to 0.767), and the MRR range is 0.026. PEG's paragraph layer does not use the host's extraction results, and its metrics on the same question set are entirely unchanged across the three rebuilds ( $\mathrm{Hit@1}=0.933$ , $\mathrm{Hit@5}=1.000$ , MRR $=0.961$ ), because it depends only on the embeddings of fixed body text.
 
 Therefore host-side numbers should be read with intervals, and cross-instance differences should not be smaller than this fluctuation; all cross-arm comparisons in this paper are completed within the same run. The table contains no incremental documents, so the incremental questions are 0 on all three base indexes; this is determined by the corpus composition and is not part of the variance.
 
@@ -395,7 +395,7 @@ Experiments show that the reference host sees 0 of 10 rewrites and still returns
 
 ## Appendix A: Proof Summary
 
-**P1.** The retrieval body text is taken from $X$; a replace overwrites the unique position of that title; there is no second copy of the body text.
+**P1.** The retrieval body text is taken from $X$ ; a replace overwrites the unique position of that title; there is no second copy of the body text.
 
 **P2.** Successive replacements write the same position, and later writes overwrite earlier ones; the title is unique, so no intermediate version remains.
 
@@ -403,7 +403,7 @@ Experiments show that the reference host sees 0 of 10 rewrites and still returns
 
 **P4.** Append returns directly when the title already exists, writing no field.
 
-**P5.** The retrieval function's domain is $(T,X,V,\sigma)$, which does not contain the counter $c$.
+**P5.** The retrieval function's domain is $(T,X,V,\sigma)$ , which does not contain the counter $c$ .
 
 **Theorem 4.1.** PEG's write set is its own state file; it is disjoint from all six state surfaces of the host, and it does not call the host's index update interface.
 
